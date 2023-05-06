@@ -6,7 +6,6 @@ import { useSignOut } from 'services/auth/mutations';
 
 export const Account = (): JSX.Element => {
   const { mutate } = useSignOut();
-  const insets = useSafeAreaInsets();
   const {
     colors: { background },
   } = useTheme();
@@ -16,7 +15,6 @@ export const Account = (): JSX.Element => {
       style={{
         flex: 1,
         backgroundColor: background,
-        paddingTop: insets.top,
         alignItems: 'center',
       }}
     >

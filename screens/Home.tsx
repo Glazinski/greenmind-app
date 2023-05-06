@@ -81,12 +81,7 @@ export const Home = (): JSX.Element => {
   };
 
   return (
-    <View
-      style={[
-        styles.container,
-        { backgroundColor: background, paddingTop: insets.top + 10 },
-      ]}
-    >
+    <View style={[styles.container, { backgroundColor: background }]}>
       <Surface style={styles.dataContainer} mode="flat">
         <Text variant="titleLarge" style={styles.dataTitle}>
           GrowBox
