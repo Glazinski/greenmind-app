@@ -1,13 +1,72 @@
-import { View, Text, Button } from 'react-native';
+import { CommonActions } from '@react-navigation/native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { BottomNavigation, Text, Button } from 'react-native-paper';
+import Icon from '@expo/vector-icons/MaterialCommunityIcons';
 
-import { useSignOut } from 'services/auth/mutations';
+import { Home } from './screens/Home';
+import { Account } from './screens/Account';
+
+const Tab = createBottomTabNavigator();
 
 export const AuthenticatedApp = () => {
-  const { mutate } = useSignOut();
-
   return (
-    <View style={{ marginTop: 100 }}>
-      <Button title="Sign out" onPress={() => mutate()} />
-    </View>
+    <Tab.Navigator
+      screenOptions={{
+        headerShown: false,
+      }}
+      tabBar={({ navigation, state, descriptors, insets }) => (
+        <BottomNavigation.Bar
+          navigationState={state}
+          safeAreaInsets={insets}
+          onTabPress={({ route, preventDefault }) => {
+            const event = navigation.emit({
+              type: 'tabPress',
+              target: route.key,
+              canPreventDefault: true,
+            });
+
+            if (event.defaultPrevented) {
+              preventDefault();
+            } else {
+              navigation.dispatch({
+                ...CommonActions.navigate(route.name, route.params),
+                target: state.key,
+              });
+            }
+          }}
+          renderIcon={({ route, focused, color }) =>
+            descriptors[route.key].options.tabBarIcon?.({
+              focused,
+              color,
+              size: 24,
+            }) || null
+          }
+          getLabelText={({ route }) =>
+            descriptors[route.key].options.tabBarLabel as string
+          }
+        />
+      )}
+    >
+      <Tab.Screen
+        name="Home"
+        component={Home}
+        options={{
+          tabBarLabel: 'Home',
+          tabBarIcon: ({ color, size }) => {
+            return <Icon name="home" size={size} color={color} />;
+          },
+        }}
+      />
+      <Tab.Screen
+        name="Account"
+        component={Account}
+        options={{
+          tabBarLabel: 'Account',
+          tabBarIcon: ({ color, size }) => {
+            return <Icon name="account" size={size} color={color} />;
+          },
+        }}
+      />
+    </Tab.Navigator>
   );
 };
