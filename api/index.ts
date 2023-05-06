@@ -1,5 +1,6 @@
 import axios from 'axios';
+import Constants from 'expo-constants';
 
 export const api = axios.create({
-  baseURL: 'http://192.168.1.14:3000/api/v1/',
+  baseURL: Constants.expoConfig?.extra?.apiBaseUrl,
 });
