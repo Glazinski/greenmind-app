@@ -112,18 +112,9 @@ const DrawerContent = ({ navigation, state }: DrawerContentComponentProps) => {
       {renderDrawerItem('Home', 'home')}
       {renderDrawerItem('Devices', 'devices')}
       {renderDrawerItem('Account', 'account')}
-      {renderDrawerItem('Settings', 'cog')}
     </PaperDrawer.Section>
   );
 };
-
-function Settings() {
-  return (
-    <View>
-      <Text>Settings</Text>
-    </View>
-  );
-}
 
 const DrawerNavigator = () => {
   const theme = useTheme();
@@ -146,7 +137,6 @@ const DrawerNavigator = () => {
       <Drawer.Screen name="Home" component={Home} />
       <Drawer.Screen name="Devices" component={Devices} />
       <Drawer.Screen name="Account" component={Account} />
-      <Drawer.Screen name="Settings" component={Settings} />
     </Drawer.Navigator>
   );
 };

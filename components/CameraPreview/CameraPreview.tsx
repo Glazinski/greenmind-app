@@ -1,17 +1,18 @@
 import React from 'react';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { Camera, CameraType } from 'expo-camera';
 
 import { useCameraStore } from 'store/useCameraStore';
 
 import { CircleCameraButton } from './CircleCameraButton';
+import { CameraReverseButton } from './CameraReverseButton';
 
 export const CameraPreview = () => {
   const { setIsCameraOpen, setCapturedImage } = useCameraStore();
   const cameraRef = React.useRef<Camera | null>(null);
   const [type, setType] = React.useState(CameraType.back);
+  const [isTakingPicture, setIsTakingPicture] = React.useState(false);
 
-  // TODO: Implement usage of it
   const toggleCameraType = () => {
     setType((current) =>
       current === CameraType.back ? CameraType.front : CameraType.back
@@ -19,12 +20,13 @@ export const CameraPreview = () => {
   };
 
   const takePicture = async () => {
-    console.log(cameraRef);
     if (!cameraRef.current) return;
 
+    setIsTakingPicture(true);
     const photo = await cameraRef.current.takePictureAsync();
     setIsCameraOpen(false);
     setCapturedImage(photo.uri);
+    setIsTakingPicture(false);
   };
 
   return (
@@ -35,7 +37,31 @@ export const CameraPreview = () => {
         cameraRef.current = r;
       }}
     >
-      <CircleCameraButton onPress={takePicture} />
+      <View style={styles.container}>
+        <CircleCameraButton onPress={takePicture} isLoading={isTakingPicture} />
+        <CameraReverseButton onPress={toggleCameraType} />
+        <View style={styles.buttonOverlay} />
+      </View>
     </Camera>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    position: 'absolute',
+    bottom: 0,
+    width: '100%',
+    height: '100%',
+    justifyContent: 'flex-end',
+    zIndex: -1,
+  },
+  buttonOverlay: {
+    position: 'absolute',
+    left: 0,
+    bottom: 0,
+    width: '100%',
+    height: 160,
+    backgroundColor: 'black',
+    zIndex: -1,
+  },
+});
