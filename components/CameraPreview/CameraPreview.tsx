@@ -9,13 +9,7 @@ import { CircleCameraButton } from './CircleCameraButton';
 export const CameraPreview = () => {
   const { setIsCameraOpen, setCapturedImage } = useCameraStore();
   const cameraRef = React.useRef<Camera | null>(null);
-  const { current: camera } = cameraRef;
   const [type, setType] = React.useState(CameraType.back);
-  const [permission, requestPermission] = Camera.useCameraPermissions();
-
-  React.useEffect(() => {
-    console.log('hello');
-  }, []);
 
   // TODO: Implement usage of it
   const toggleCameraType = () => {
@@ -25,9 +19,10 @@ export const CameraPreview = () => {
   };
 
   const takePicture = async () => {
-    if (!camera) return;
+    console.log(cameraRef);
+    if (!cameraRef.current) return;
 
-    const photo = await camera.takePictureAsync();
+    const photo = await cameraRef.current.takePictureAsync();
     setIsCameraOpen(false);
     setCapturedImage(photo.uri);
   };
