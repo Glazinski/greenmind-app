@@ -1,9 +1,17 @@
 import * as React from 'react';
 import { View } from 'react-native';
-import { Button, Text, TextInput, useTheme, Appbar } from 'react-native-paper';
+import {
+  Button,
+  Text,
+  TextInput,
+  useTheme,
+  Appbar,
+  HelperText,
+} from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native';
 import { Controller } from 'react-hook-form';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack/src/types';
+import { useTranslation } from 'react-i18next';
 
 import type { UnauthenticatedAppParamList } from 'UnauthenticatedApp';
 
@@ -27,6 +35,7 @@ export const AuthForm = ({
   errors,
   isLoading,
 }: AuthFormProps) => {
+  const { t } = useTranslation();
   const {
     colors: { primary, background, error },
   } = useTheme();
@@ -38,7 +47,8 @@ export const AuthForm = ({
       >
     >();
   const [passwordSecureEntry, setPasswordSecureEntry] = React.useState(true);
-  const text = type === 'signIn' ? 'Sign in' : 'Sign up';
+  const buttonAndTitleText = type === 'signIn' ? t('sign_in') : t('sign_up');
+  const linkText = type === 'signIn' ? t('sign_up') : t('sign_in');
 
   return (
     <>
@@ -57,7 +67,7 @@ export const AuthForm = ({
         ]}
       >
         <Text style={styles.headline} variant="headlineMedium">
-          {text}
+          {buttonAndTitleText}
         </Text>
         <Controller
           control={control}
@@ -68,7 +78,7 @@ export const AuthForm = ({
               onBlur={onBlur}
               value={value}
               style={styles.textInput}
-              label="Email"
+              label={t<string>('email')}
               mode="outlined"
               autoComplete="email"
               keyboardType="email-address"
@@ -76,9 +86,9 @@ export const AuthForm = ({
             />
           )}
         />
-        <Text style={[styles.textInputError, { color: error }]}>
+        <HelperText type="error" visible={!!errors?.email?.message}>
           {errors?.email?.message}
-        </Text>
+        </HelperText>
         <Controller
           control={control}
           name="password"
@@ -88,7 +98,7 @@ export const AuthForm = ({
               onBlur={onBlur}
               value={value}
               style={styles.textInput}
-              label="Password"
+              label={t<string>('password')}
               mode="outlined"
               secureTextEntry={passwordSecureEntry}
               error={!!errors?.password?.message}
@@ -103,9 +113,9 @@ export const AuthForm = ({
             />
           )}
         />
-        <Text style={[styles.textInputError, { color: error }]}>
+        <HelperText type="error" visible={!!errors?.password?.message}>
           {errors?.password?.message}
-        </Text>
+        </HelperText>
         {type === 'signUp' && (
           <>
             <Controller
@@ -117,7 +127,7 @@ export const AuthForm = ({
                   onBlur={onBlur}
                   value={value}
                   style={styles.textInput}
-                  label="Password confirmation"
+                  label={t<string>('password_confirmation')}
                   mode="outlined"
                   secureTextEntry={passwordSecureEntry}
                   error={!!errors?.passwordConfirmation?.message}
@@ -134,9 +144,12 @@ export const AuthForm = ({
                 />
               )}
             />
-            <Text style={[styles.textInputError, { color: error }]}>
+            <HelperText
+              type="error"
+              visible={!!errors?.passwordConfirmation?.message}
+            >
               {errors?.passwordConfirmation?.message}
-            </Text>
+            </HelperText>
           </>
         )}
         {apiError && (
@@ -154,7 +167,7 @@ export const AuthForm = ({
             loading={isLoading}
             disabled={isLoading}
           >
-            {text}
+            {buttonAndTitleText}
           </Button>
           <View style={styles.footerLinkContainer}>
             <Button
@@ -163,7 +176,7 @@ export const AuthForm = ({
               }
             >
               <Text style={[styles.footerLinkButton, { color: primary }]}>
-                {type === 'signIn' ? 'Sign up' : 'Sign in'}
+                {linkText}
               </Text>
             </Button>
           </View>

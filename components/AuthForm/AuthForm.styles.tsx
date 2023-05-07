@@ -17,9 +17,6 @@ export const styles = StyleSheet.create({
   textInput: {
     width: '100%',
   },
-  textInputError: {
-    marginBottom: 10,
-  },
   footerContainer: {
     marginTop: 'auto',
   },

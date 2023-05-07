@@ -16,6 +16,31 @@ interface Task {
   status: number;
 }
 
+interface Device {
+  id: number;
+  name: string;
+  user: number;
+}
+
+export const useDevices = () =>
+  useQuery({
+    // queryFn: () => api.get<Device[]>(`/devices`).then((res) => res.data),
+    queryFn: () =>
+      api.get<Device[]>(`/devices`).then((res) => [
+        {
+          id: 1,
+          name: 'Device1',
+          user: 1,
+        },
+        {
+          id: 2,
+          name: 'Device2',
+          user: 1,
+        },
+      ]),
+    queryKey: ['devices'],
+  });
+
 export const useDeviceLogs = () =>
   useQuery({
     queryFn: () =>

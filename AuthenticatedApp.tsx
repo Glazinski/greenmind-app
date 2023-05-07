@@ -1,19 +1,23 @@
 import { View } from 'react-native';
 import { CommonActions } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { createDrawerNavigator } from '@react-navigation/drawer';
+import {
+  createDrawerNavigator,
+  DrawerContentComponentProps,
+} from '@react-navigation/drawer';
 import {
   BottomNavigation,
   Drawer as PaperDrawer,
   useTheme,
   Text,
+  IconButton,
 } from 'react-native-paper';
 import Icon from '@expo/vector-icons/MaterialCommunityIcons';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { Home } from './screens/Home';
 import { Account } from './screens/Account';
-import { DrawerContentComponentProps } from '@react-navigation/drawer/src/types';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { Devices } from './screens/Devices';
 
 const Tab = createBottomTabNavigator();
 const Drawer = createDrawerNavigator();
@@ -80,6 +84,9 @@ const TabNavigator = () => (
 );
 
 const DrawerContent = ({ navigation, state }: DrawerContentComponentProps) => {
+  const {
+    colors: { background },
+  } = useTheme();
   const currentRouteName = state.routes[state.index].name;
   const insets = useSafeAreaInsets();
 
@@ -92,26 +99,21 @@ const DrawerContent = ({ navigation, state }: DrawerContentComponentProps) => {
     />
   );
 
-  const renderDrawerItems = (names: string[]) =>
-    names.map((name) => (
-      <PaperDrawer.Item
-        key={name}
-        label={name}
-        onPress={() => navigation.navigate(name)}
-        active={currentRouteName.includes(name)}
-        icon="home"
-      />
-    ));
-
   return (
-    <>
-      <PaperDrawer.Section style={{ marginTop: insets.top + 20 }}>
-        {renderDrawerItem('Home', 'home')}
-        {renderDrawerItem('Devices', 'devices')}
-        {renderDrawerItem('Account', 'account')}
-        {renderDrawerItem('Settings', 'cog')}
-      </PaperDrawer.Section>
-    </>
+    <PaperDrawer.Section
+      style={{
+        flex: 1,
+        height: '130%',
+        paddingTop: insets.top + 20,
+        marginBottom: 0,
+        backgroundColor: background,
+      }}
+    >
+      {renderDrawerItem('Home', 'home')}
+      {renderDrawerItem('Devices', 'devices')}
+      {renderDrawerItem('Account', 'account')}
+      {renderDrawerItem('Settings', 'cog')}
+    </PaperDrawer.Section>
   );
 };
 
@@ -129,17 +131,20 @@ const DrawerNavigator = () => {
   return (
     <Drawer.Navigator
       drawerContent={DrawerContent}
-      screenOptions={{
+      screenOptions={({ navigation }) => ({
         headerStyle: {
           backgroundColor: theme.colors.background,
         },
         headerShadowVisible: false,
         headerTitle: '',
-      }}
+        headerLeft: (props) => (
+          <IconButton icon="menu" onPress={() => navigation.toggleDrawer()} />
+        ),
+      })}
     >
       {/*<Drawer.Screen name="Tabs" component={TabNavigator} />*/}
       <Drawer.Screen name="Home" component={Home} />
-      <Drawer.Screen name="Devices" component={Settings} />
+      <Drawer.Screen name="Devices" component={Devices} />
       <Drawer.Screen name="Account" component={Account} />
       <Drawer.Screen name="Settings" component={Settings} />
     </Drawer.Navigator>

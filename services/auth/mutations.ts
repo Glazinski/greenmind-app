@@ -1,6 +1,6 @@
 import { useMutation } from '@tanstack/react-query';
 
-import { api } from 'api';
+import { api, setAuthToken } from 'api';
 import { useAuthStore } from 'store/useAuthStore';
 import { SignInUser, SignUpUser } from 'schemas/auth';
 
@@ -18,6 +18,7 @@ const defaultMutationConfig = (
     const expirationTimestamp = new Date().getTime() + 1800 * 1000; // 30 minutes
 
     setAuthData(data.token, expirationTimestamp);
+    setAuthToken(data.token);
   },
 });
 
@@ -53,6 +54,7 @@ export const useSignOut = () => {
     onSuccess: async () => {
       try {
         setAuthData(null, null);
+        setAuthToken(null);
       } catch (error) {
         console.error(error);
       }

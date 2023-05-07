@@ -1,7 +1,7 @@
-import { MD3LightTheme as DefaultTheme } from 'react-native-paper';
+import { MD3LightTheme, MD3DarkTheme } from 'react-native-paper';
 
 export const lightTheme = {
-  ...DefaultTheme,
+  ...MD3LightTheme,
   colors: {
     primary: 'rgb(18, 109, 52)',
     onPrimary: 'rgb(255, 255, 255)',
@@ -42,6 +42,52 @@ export const lightTheme = {
     },
     surfaceDisabled: 'rgba(26, 28, 25, 0.12)',
     onSurfaceDisabled: 'rgba(26, 28, 25, 0.38)',
+    backdrop: 'rgba(43, 50, 43, 0.4)',
+  },
+};
+
+export const darkTheme = {
+  ...MD3DarkTheme,
+  colors: {
+    primary: 'rgb(132, 217, 148)',
+    onPrimary: 'rgb(0, 57, 22)',
+    primaryContainer: 'rgb(0, 83, 35)',
+    onPrimaryContainer: 'rgb(160, 246, 174)',
+    secondary: 'rgb(183, 204, 182)',
+    onSecondary: 'rgb(35, 52, 37)',
+    secondaryContainer: 'rgb(57, 75, 59)',
+    onSecondaryContainer: 'rgb(211, 232, 210)',
+    tertiary: 'rgb(161, 206, 215)',
+    onTertiary: 'rgb(0, 54, 62)',
+    tertiaryContainer: 'rgb(32, 77, 85)',
+    onTertiaryContainer: 'rgb(189, 234, 244)',
+    error: 'rgb(255, 180, 171)',
+    onError: 'rgb(105, 0, 5)',
+    errorContainer: 'rgb(147, 0, 10)',
+    onErrorContainer: 'rgb(255, 180, 171)',
+    background: 'rgb(26, 28, 25)',
+    onBackground: 'rgb(226, 227, 222)',
+    surface: 'rgb(26, 28, 25)',
+    onSurface: 'rgb(226, 227, 222)',
+    surfaceVariant: 'rgb(65, 73, 65)',
+    onSurfaceVariant: 'rgb(193, 201, 190)',
+    outline: 'rgb(139, 147, 137)',
+    outlineVariant: 'rgb(65, 73, 65)',
+    shadow: 'rgb(0, 0, 0)',
+    scrim: 'rgb(0, 0, 0)',
+    inverseSurface: 'rgb(226, 227, 222)',
+    inverseOnSurface: 'rgb(46, 49, 46)',
+    inversePrimary: 'rgb(18, 109, 52)',
+    elevation: {
+      level0: 'transparent',
+      level1: 'rgb(31, 37, 31)',
+      level2: 'rgb(35, 43, 35)',
+      level3: 'rgb(38, 49, 39)',
+      level4: 'rgb(39, 51, 40)',
+      level5: 'rgb(41, 55, 42)',
+    },
+    surfaceDisabled: 'rgba(226, 227, 222, 0.12)',
+    onSurfaceDisabled: 'rgba(226, 227, 222, 0.38)',
     backdrop: 'rgba(43, 50, 43, 0.4)',
   },
 };

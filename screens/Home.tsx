@@ -10,7 +10,6 @@ import {
   Button,
   Snackbar,
 } from 'react-native-paper';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { useDeviceLogs, useDeviceTasks } from 'services/device/queries';
 import { useDeviceWater } from 'services/device/mutations';
@@ -20,7 +19,6 @@ import { GrowBoxDataCell } from 'components/GrowBoxData/GrowBoxDataCell';
 
 export const Home = (): JSX.Element => {
   const [isSnackbarVisible, setIsSnackbarVisible] = React.useState(false);
-  const insets = useSafeAreaInsets();
   const {
     colors: { background, tertiary },
   } = useTheme();

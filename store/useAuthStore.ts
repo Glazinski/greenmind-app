@@ -9,14 +9,7 @@ interface AuthState {
     accessToken: string | null,
     expirationTimestamp: number | null
   ) => void;
-  _hasHydrated: boolean;
-  setHasHydrated: (state: boolean) => void;
 }
-
-// export const useAuthStore = create<AuthState>((set) => ({
-//   accessToken: null,
-//   setAccessToken: (accessToken) => set({ accessToken }),
-// }));
 
 export const useAuthStore = create<AuthState>()(
   persist(
@@ -25,19 +18,10 @@ export const useAuthStore = create<AuthState>()(
       expirationTimestamp: null,
       setAuthData: (accessToken, expirationTimestamp) =>
         set(() => ({ accessToken, expirationTimestamp })),
-      _hasHydrated: false,
-      setHasHydrated: (state) => {
-        set({
-          _hasHydrated: state,
-        });
-      },
     }),
     {
       name: 'auth-storage',
       storage: createJSONStorage(() => AsyncStorage),
-      onRehydrateStorage: () => (state) => {
-        state?.setHasHydrated?.(true);
-      },
     }
   )
 );
