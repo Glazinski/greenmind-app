@@ -1,6 +1,7 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { Camera, CameraType } from 'expo-camera';
+import { FlipType, manipulateAsync, SaveFormat } from 'expo-image-manipulator';
 
 import { useCameraStore } from 'store/useCameraStore';
 
@@ -23,7 +24,16 @@ export const CameraPreview = () => {
     if (!cameraRef.current) return;
 
     setIsTakingPicture(true);
-    const photo = await cameraRef.current.takePictureAsync();
+    let photo = await cameraRef.current.takePictureAsync();
+
+    if (type === CameraType.front) {
+      photo = await manipulateAsync(
+        photo.uri,
+        [{ rotate: 180 }, { flip: FlipType.Vertical }],
+        { compress: 1, format: SaveFormat.PNG }
+      );
+    }
+
     setIsCameraOpen(false);
     setCapturedImage(photo.uri);
     setIsTakingPicture(false);
