@@ -1,0 +1,9 @@
+{
+  "extends": ["eslint:recommended", "plugin:@typescript-eslint/recommended" ,"@react-native-community", "eslint-config-prettier"],
+  "parser": "@typescript-eslint/parser",
+  "plugins": ["@typescript-eslint"],
+  "rules": {
+    "no-unused-vars": "warn",
+    "react/react-in-jsx-scope": "off"
+  }
+}

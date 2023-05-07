@@ -53,12 +53,7 @@ export const Devices = () => {
   return (
     <View style={[styles.container, { backgroundColor: background }]}>
       <View style={styles.addDeviceContainer}>
-        <Button
-          style={{ width: '50%' }}
-          icon="plus"
-          mode="outlined"
-          onPress={() => {}}
-        >
+        <Button style={{ width: '50%' }} icon="plus" mode="outlined">
           <Text style={{ color: primary }}>Add</Text>
         </Button>
       </View>

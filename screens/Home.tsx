@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { StyleSheet, ScrollView } from 'react-native';
 import { useTheme } from 'react-native-paper';
 
@@ -14,7 +14,7 @@ export const Home = (): JSX.Element => {
   //
   //   if (!device) {
   //     console.log('NO DEVICE');
-  //     router.push('/device-configuration');
+  //     // router.push('/device-configuration');
   //   }
   // }, []);
 
