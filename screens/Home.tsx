@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, ScrollView } from 'react-native';
 import { useTheme } from 'react-native-paper';
 
-import { GrowBox } from 'components/GrowBoxData/GrowBox';
+import { GrowBox } from 'components/GrowBox/GrowBox';
 
 export const Home = (): JSX.Element => {
   const {

@@ -9,6 +9,7 @@ import { useAuth } from 'services/auth/useAuth';
 
 import { AuthenticatedApp } from './AuthenticatedApp';
 import { UnauthenticatedApp } from './UnauthenticatedApp';
+import { CameraPreviewContainer } from './components/CameraPreview/CameraPreviewContainer';
 
 export default function App() {
   const { isSignedIn } = useAuth();
@@ -16,6 +17,7 @@ export default function App() {
   return (
     <Providers>
       {isSignedIn ? <AuthenticatedApp /> : <UnauthenticatedApp />}
+      <CameraPreviewContainer />
       <StatusBar style="auto" />
     </Providers>
   );

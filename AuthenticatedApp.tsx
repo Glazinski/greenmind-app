@@ -137,7 +137,7 @@ const DrawerNavigator = () => {
         },
         headerShadowVisible: false,
         headerTitle: '',
-        headerLeft: (props) => (
+        headerLeft: () => (
           <IconButton icon="menu" onPress={() => navigation.toggleDrawer()} />
         ),
       })}

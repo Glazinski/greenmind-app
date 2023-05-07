@@ -26,17 +26,14 @@ export const GrowBox = () => {
       </Text>
       <GrowBoxImage />
       {deviceLog && (
-        <View style={{ marginTop: 20 }}>
+        <View style={styles.dataContainer}>
           <GrowBoxDataRow>
-            <GrowBoxDataCell label="Temperature" value={deviceLog?.temp} />
-            <GrowBoxDataCell
-              label="Soil humidity"
-              value={deviceLog?.soil_hum}
-            />
+            <GrowBoxDataCell label="Temperature" value={deviceLog.temp} />
+            <GrowBoxDataCell label="Soil humidity" value={deviceLog.soil_hum} />
           </GrowBoxDataRow>
           <GrowBoxDataRow>
-            <GrowBoxDataCell label="Air humidity" value={deviceLog?.air_hum} />
-            <GrowBoxDataCell label="Light" value={deviceLog?.light} />
+            <GrowBoxDataCell label="Air humidity" value={deviceLog.air_hum} />
+            <GrowBoxDataCell label="Light" value={deviceLog.light} />
           </GrowBoxDataRow>
         </View>
       )}
@@ -48,5 +45,8 @@ export const GrowBox = () => {
 const styles = StyleSheet.create({
   dataTitle: {
     marginBottom: 10,
+  },
+  dataContainer: {
+    marginTop: 20,
   },
 });
