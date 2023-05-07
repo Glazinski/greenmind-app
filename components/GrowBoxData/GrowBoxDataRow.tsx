@@ -7,6 +7,8 @@ export const GrowBoxDataRow = ({ children }: React.PropsWithChildren) => {
       style={{
         flexDirection: 'row',
         justifyContent: 'space-between',
+        gap: 10,
+        marginBottom: 10,
       }}
     >
       {children}

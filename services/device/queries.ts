@@ -39,6 +39,11 @@ export const useDevices = () =>
         },
       ]),
     queryKey: ['devices'],
+    select: (data) =>
+      data.map((device) => ({
+        ...device,
+        id: device.id.toString(),
+      })),
   });
 
 export const useDeviceLogs = () =>

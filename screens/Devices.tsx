@@ -8,11 +8,11 @@ import {
 } from 'react-native-paper';
 
 import { useDevices } from 'services/device/queries';
-import { useDeviceStore } from 'store/useDeviceStore';
+import { useActiveDeviceStore } from 'store/useActiveDeviceStore';
 
 export const Devices = () => {
-  const { deviceId, setActiveDevice } = useDeviceStore();
-  const { data, isLoading, isError } = useDevices();
+  const { deviceId, setDeviceId, setDeviceName } = useActiveDeviceStore();
+  const { data: devices, isLoading, isError } = useDevices();
   const {
     colors: { background, primary },
   } = useTheme();
@@ -30,17 +30,21 @@ export const Devices = () => {
       return <Text>Error...</Text>;
     }
 
-    if (!data?.length) {
+    if (!devices?.length) {
       return <Text>No devices</Text>;
     }
 
     return (
       <RadioButton.Group
         value={deviceId || '-1'}
-        onValueChange={(value) => setActiveDevice(value)}
+        onValueChange={(value) => {
+          const deviceToBeSet = devices.find(({ id }) => id === value);
+          setDeviceId(deviceToBeSet!.id);
+          setDeviceName(deviceToBeSet!.name);
+        }}
       >
-        {data.map(({ id, name }) => (
-          <RadioButton.Item key={id} label={name} value={id.toString()} />
+        {devices.map(({ id, name }) => (
+          <RadioButton.Item key={id} label={name} value={id} />
         ))}
       </RadioButton.Group>
     );
@@ -55,7 +59,7 @@ export const Devices = () => {
           mode="outlined"
           onPress={() => {}}
         >
-          <Text style={{ color: primary }}>Dodaj</Text>
+          <Text style={{ color: primary }}>Add</Text>
         </Button>
       </View>
       {renderContent()}

@@ -3,15 +3,19 @@ import { persist, createJSONStorage } from 'zustand/middleware';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 interface DeviceState {
-  deviceId: string | null;
-  setActiveDevice: (deviceId: string | null) => void;
+  deviceId: string;
+  deviceName: string;
+  setDeviceId: (deviceId: string) => void;
+  setDeviceName: (deviceName: string) => void;
 }
 
-export const useDeviceStore = create<DeviceState>()(
+export const useActiveDeviceStore = create<DeviceState>()(
   persist(
     (set) => ({
       deviceId: '',
-      setActiveDevice: (deviceId) => set(() => ({ deviceId })),
+      deviceName: '',
+      setDeviceId: (deviceId) => set(() => ({ deviceId })),
+      setDeviceName: (deviceName) => set(() => ({ deviceName })),
     }),
     {
       name: 'device-storage',
