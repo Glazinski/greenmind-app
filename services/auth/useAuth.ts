@@ -21,7 +21,7 @@ export const useAuth = () => {
     }
 
     setAuthToken(accessToken);
-  }, [accessToken, expirationTimestamp, hydrated]);
+  }, [accessToken, expirationTimestamp, hydrated, setAuthData]);
 
   return {
     isSignedIn: !!accessToken,

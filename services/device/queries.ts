@@ -32,11 +32,6 @@ export const useDevices = () =>
           name: 'Device1',
           user: 1,
         },
-        {
-          id: 2,
-          name: 'Device2',
-          user: 1,
-        },
       ]),
     queryKey: ['devices'],
     select: (data) =>

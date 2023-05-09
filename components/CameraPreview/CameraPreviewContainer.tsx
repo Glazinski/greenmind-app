@@ -1,4 +1,5 @@
 import React from 'react';
+import { useWindowDimensions } from 'react-native';
 import { Camera } from 'expo-camera';
 
 import { useCameraStore } from 'store/useCameraStore';
