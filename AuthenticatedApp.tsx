@@ -1,5 +1,5 @@
-import { View } from 'react-native';
 import { CommonActions } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import {
   createDrawerNavigator,
@@ -9,18 +9,21 @@ import {
   BottomNavigation,
   Drawer as PaperDrawer,
   useTheme,
-  Text,
   IconButton,
 } from 'react-native-paper';
 import Icon from '@expo/vector-icons/MaterialCommunityIcons';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { Home } from './screens/Home';
-import { Account } from './screens/Account';
 import { Devices } from './screens/Devices';
+import { Plants } from './screens/Plants';
+import { Account } from './screens/Account';
+import { AddPlant } from './screens/AddPlant';
+import { EditPlant } from './screens/EditPlant';
 
 const Tab = createBottomTabNavigator();
 const Drawer = createDrawerNavigator();
+const Stack = createNativeStackNavigator();
 
 const TabNavigator = () => (
   <Tab.Navigator
@@ -111,6 +114,7 @@ const DrawerContent = ({ navigation, state }: DrawerContentComponentProps) => {
     >
       {renderDrawerItem('Home', 'home')}
       {renderDrawerItem('Devices', 'devices')}
+      {renderDrawerItem('Plants', 'leaf')}
       {renderDrawerItem('Account', 'account')}
     </PaperDrawer.Section>
   );
@@ -136,11 +140,18 @@ const DrawerNavigator = () => {
       {/*<Drawer.Screen name="Tabs" component={TabNavigator} />*/}
       <Drawer.Screen name="Home" component={Home} />
       <Drawer.Screen name="Devices" component={Devices} />
+      <Drawer.Screen name="Plants" component={Plants} />
       <Drawer.Screen name="Account" component={Account} />
     </Drawer.Navigator>
   );
 };
 
 export const AuthenticatedApp = () => {
-  return <DrawerNavigator />;
+  return (
+    <Stack.Navigator screenOptions={{ headerShown: false }}>
+      <Stack.Screen name="Index" component={DrawerNavigator} />
+      <Stack.Screen name="AddPlant" component={AddPlant} />
+      <Stack.Screen name="EditPlant" component={EditPlant} />
+    </Stack.Navigator>
+  );
 };

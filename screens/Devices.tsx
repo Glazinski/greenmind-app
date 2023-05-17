@@ -4,17 +4,18 @@ import {
   Text,
   useTheme,
   RadioButton,
-  Button,
+  FAB,
 } from 'react-native-paper';
 
 import { useDevices } from 'services/device/queries';
 import { useActiveDeviceStore } from 'store/useActiveDeviceStore';
+import React from 'react';
 
 export const Devices = () => {
   const { deviceId, setDeviceId, setDeviceName } = useActiveDeviceStore();
   const { data: devices, isLoading, isError } = useDevices();
   const {
-    colors: { background, primary },
+    colors: { background },
   } = useTheme();
 
   const renderContent = () => {
@@ -52,12 +53,8 @@ export const Devices = () => {
 
   return (
     <View style={[styles.container, { backgroundColor: background }]}>
-      <View style={styles.addDeviceContainer}>
-        <Button style={{ width: '50%' }} icon="plus" mode="outlined">
-          <Text style={{ color: primary }}>Add</Text>
-        </Button>
-      </View>
       {renderContent()}
+      <FAB icon="plus" style={styles.fab} onPress={() => console.log('')} />
     </View>
   );
 };
@@ -66,7 +63,11 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-  addDeviceContainer: {
-    alignItems: 'center',
+  fab: {
+    position: 'absolute',
+    marginRight: 16,
+    marginBottom: 40,
+    right: 0,
+    bottom: 0,
   },
 });

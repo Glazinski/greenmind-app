@@ -3,5 +3,12 @@
   "sign_up": "Sign up",
   "password": "Password",
   "email": "Email",
-  "password_confirmation": "Password confirmation"
+  "password_confirmation": "Password confirmation",
+  "try_again": "Try again",
+  "add": "Add",
+  "edit": "Edit",
+  "basic_information": "Basic information",
+  "ideal_conditions": "Ideal conditions",
+  "other_information": "Other information",
+  "confirmation_message": "Are you sure that the information you have provided is correct and complete?"
 }
