@@ -5,9 +5,12 @@ export const step1Schema = z.object({
   appearance: z.string().nonempty(),
 });
 
-const minMaxSchema = z.string().refine((value) => !isNaN(parseFloat(value)), {
-  message: 'Must be a number',
-});
+const minMaxSchema = z
+  .string()
+  .nonempty()
+  .refine((value) => !isNaN(parseFloat(value)), {
+    message: 'Must be a number',
+  });
 
 export const step2Schema = z.object({
   light_min: minMaxSchema,
@@ -19,11 +22,11 @@ export const step2Schema = z.object({
 });
 
 export const step3Schema = z.object({
-  fertilizing: z.string(),
-  repotting: z.string(),
-  pruning: z.string(),
-  common_diseases: z.string(),
-  blooming_time: z.string(),
+  fertilizing: z.string().nonempty(),
+  repotting: z.string().nonempty(),
+  pruning: z.string().nonempty(),
+  common_diseases: z.string().nonempty(),
+  blooming_time: z.string().nonempty(),
 });
 
 export const plantSchema = step1Schema
