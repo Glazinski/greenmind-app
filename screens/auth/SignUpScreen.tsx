@@ -3,34 +3,35 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { AxiosError } from 'axios';
 
-import { useSignIn } from 'services/auth/mutations';
 import { AuthForm } from 'components/AuthForm';
-import { signInSchema, SignInUser } from 'schemas/auth';
+import { useSignUp } from 'services/auth/mutations';
+import { signUpSchema, SignUpUser } from 'schemas/auth';
 
-export const SignIn = (): JSX.Element => {
-  const { mutate, error, isLoading } = useSignIn();
+export const SignUpScreen = (): JSX.Element => {
+  const { mutate, error, isLoading } = useSignUp();
   const {
     control,
     handleSubmit,
     formState: { errors },
-  } = useForm<SignInUser>({
+  } = useForm<SignUpUser>({
     defaultValues: {
       email: '',
       password: '',
+      passwordConfirmation: '',
     },
-    resolver: zodResolver(signInSchema),
+    resolver: zodResolver(signUpSchema),
   });
 
-  const onSubmit = (data: SignInUser) => mutate(data);
+  const onSubmit = (data: SignUpUser) => mutate(data);
 
   return (
     <AuthForm
-      type="signIn"
+      type="signUp"
       handleSubmit={handleSubmit(onSubmit)}
       control={control}
       apiError={
         error instanceof AxiosError
-          ? (error.response?.data?.error as string)
+          ? (error.response?.data?.errors?.[0] as string)
           : ''
       }
       errors={errors}

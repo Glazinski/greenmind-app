@@ -7,21 +7,11 @@ import {
   RadioButton,
   FAB,
 } from 'react-native-paper';
-import type { CompositeScreenProps } from '@react-navigation/native';
-import type { DrawerScreenProps } from '@react-navigation/drawer';
-import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 
 import { useDevices } from 'services/device/queries';
 import { useActiveDeviceStore } from 'store/useActiveDeviceStore';
-import { RootStackParamList } from 'navigation/RootNavigator';
-import { DrawerParamList } from 'navigation/DrawerNavigator';
 
-type DevicesScreenProps = CompositeScreenProps<
-  DrawerScreenProps<DrawerParamList, 'Devices'>,
-  NativeStackScreenProps<RootStackParamList>
->;
-
-export const Devices = ({ navigation }: DevicesScreenProps) => {
+export const DevicesScreen = ({ navigation }: any) => {
   const { deviceId, setDeviceId, setDeviceName } = useActiveDeviceStore();
   const { data: devices, isLoading, isError } = useDevices();
   const {

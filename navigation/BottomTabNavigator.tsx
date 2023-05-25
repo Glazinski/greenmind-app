@@ -2,8 +2,8 @@ import { BottomNavigation } from 'react-native-paper';
 import { CommonActions } from '@react-navigation/native';
 import Icon from '@expo/vector-icons/MaterialCommunityIcons';
 
-import { Home } from 'screens/Home';
-import { Account } from 'screens/Account';
+import { HomeScreen } from 'screens/HomeScreen';
+import { AccountScreen } from 'screens/AccountScreen';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 const Tab = createBottomTabNavigator();
@@ -48,7 +48,7 @@ export const TabNavigator = () => (
   >
     <Tab.Screen
       name="Home"
-      component={Home}
+      component={HomeScreen}
       options={{
         tabBarLabel: 'Home',
         tabBarIcon: ({ color, size }) => {
@@ -58,7 +58,7 @@ export const TabNavigator = () => (
     />
     <Tab.Screen
       name="Account"
-      component={Account}
+      component={AccountScreen}
       options={{
         tabBarLabel: 'Account',
         tabBarIcon: ({ color, size }) => {

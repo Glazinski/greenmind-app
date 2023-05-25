@@ -5,7 +5,9 @@ import { useTheme, FAB } from 'react-native-paper';
 import { PlantList } from 'components/Plant/PlantList';
 import { HomeDrawerScreenProps } from 'navigation/types';
 
-export const Plants = ({ navigation }: HomeDrawerScreenProps<'Plants'>) => {
+export const PlantsScreen = ({
+  navigation,
+}: HomeDrawerScreenProps<'Plants'>) => {
   const {
     colors: { background },
   } = useTheme();

@@ -9,10 +9,10 @@ import {
 } from '@react-navigation/drawer';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-import { Home } from 'screens/Home';
-import { Devices } from 'screens/Devices';
-import { Plants } from 'screens/Plants';
-import { Account } from 'screens/Account';
+import { HomeScreen } from 'screens/HomeScreen';
+import { DevicesScreen } from 'screens/DevicesScreen';
+import { PlantsScreen } from 'screens/PlantsScreen';
+import { AccountScreen } from 'screens/AccountScreen';
 
 import { HomeDrawerParamList } from './types';
 
@@ -70,10 +70,10 @@ export const DrawerNavigator = () => {
       })}
     >
       {/*<Drawer.Screen name="Tabs" component={TabNavigator} />*/}
-      <Drawer.Screen name="Home" component={Home} />
-      <Drawer.Screen name="Devices" component={Devices} />
-      <Drawer.Screen name="Plants" component={Plants} />
-      <Drawer.Screen name="Account" component={Account} />
+      <Drawer.Screen name="Home" component={HomeScreen} />
+      <Drawer.Screen name="Devices" component={DevicesScreen} />
+      <Drawer.Screen name="Plants" component={PlantsScreen} />
+      <Drawer.Screen name="Account" component={AccountScreen} />
     </Drawer.Navigator>
   );
 };

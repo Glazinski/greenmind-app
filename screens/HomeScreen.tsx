@@ -4,7 +4,7 @@ import { useTheme } from 'react-native-paper';
 
 import { GrowBox } from 'components/GrowBox/GrowBox';
 
-export const Home = (): JSX.Element => {
+export const HomeScreen = (): JSX.Element => {
   const {
     colors: { background },
   } = useTheme();

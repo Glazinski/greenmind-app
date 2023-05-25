@@ -1,15 +1,15 @@
 import { createStackNavigator } from '@react-navigation/stack';
 
-import { SignIn } from 'screens/auth/SignIn';
-import { SignUp } from 'screens/auth/SignUp';
+import { SignInScreen } from 'screens/auth/SignInScreen';
+import { SignUpScreen } from 'screens/auth/SignUpScreen';
 
-import { UnauthenticatedRootStackScreenProps } from './types';
+import { UnauthenticatedRootStackParamList } from './types';
 
-const AuthStack = createStackNavigator<UnauthenticatedRootStackScreenProps>();
+const AuthStack = createStackNavigator<UnauthenticatedRootStackParamList>();
 
 export const AuthNavigator = () => (
   <AuthStack.Navigator screenOptions={{ headerShown: false }}>
-    <AuthStack.Screen name="SignIn" component={SignIn} />
-    <AuthStack.Screen name="SignUp" component={SignUp} />
+    <AuthStack.Screen name="SignIn" component={SignInScreen} />
+    <AuthStack.Screen name="SignUp" component={SignUpScreen} />
   </AuthStack.Navigator>
 );

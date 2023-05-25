@@ -3,7 +3,7 @@ import { useTheme, List } from 'react-native-paper';
 
 import { useSignOut } from 'services/auth/mutations';
 
-export const Account = (): JSX.Element => {
+export const AccountScreen = (): JSX.Element => {
   const { mutate } = useSignOut();
   const {
     colors: { background },
