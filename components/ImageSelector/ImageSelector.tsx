@@ -1,19 +1,22 @@
 import React from 'react';
-import { View, Image, StyleSheet } from 'react-native';
-import { Text, Surface, IconButton, Button } from 'react-native-paper';
+import { Image, StyleSheet } from 'react-native';
+import { Surface, IconButton } from 'react-native-paper';
 import * as ImagePicker from 'expo-image-picker';
 
-import { useCameraStore } from 'store/useCameraStore';
+import { Camera } from 'components/Camera';
 
-export const GrowBoxImage = () => {
-  const { capturedImage, setIsCameraOpen } = useCameraStore();
+interface ImageSelectorProps {
+  onChange?: (image: string) => void;
+}
+
+export const ImageSelector = ({ onChange }: ImageSelectorProps) => {
   const [selectedImage, setSelectedImage] = React.useState<string | null>(null);
+  const [isCameraOpen, setIsCameraOpen] = React.useState(false);
 
-  React.useEffect(() => {
-    if (capturedImage) {
-      setSelectedImage(capturedImage);
-    }
-  }, [capturedImage, setSelectedImage]);
+  const handleChange = (image: string) => {
+    onChange?.(image);
+    setSelectedImage(image);
+  };
 
   const pickImageAsync = async () => {
     const result = await ImagePicker.launchImageLibraryAsync({
@@ -22,7 +25,7 @@ export const GrowBoxImage = () => {
     });
 
     if (!result.canceled) {
-      setSelectedImage(result.assets[0].uri);
+      handleChange(result.assets[0].uri);
     }
   };
 
@@ -46,6 +49,11 @@ export const GrowBoxImage = () => {
         icon="camera"
         mode="contained"
         onPress={() => setIsCameraOpen(true)}
+      />
+      <Camera
+        isCameraOpen={isCameraOpen}
+        onDismiss={() => setIsCameraOpen(false)}
+        onChange={(image) => handleChange(image)}
       />
     </Surface>
   );

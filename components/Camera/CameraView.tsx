@@ -8,19 +8,21 @@ import {
 import { Camera, CameraType } from 'expo-camera';
 import { FlipType, manipulateAsync, SaveFormat } from 'expo-image-manipulator';
 import BottomSheet from '@gorhom/bottom-sheet';
-import { useTheme } from 'react-native-paper';
-
-import { useCameraStore } from 'store/useCameraStore';
+import { useTheme, Portal } from 'react-native-paper';
 
 import { CircleCameraButton } from './CircleCameraButton';
 import { CameraReverseButton } from './CameraReverseButton';
 
-export const CameraPreview = () => {
+interface CameraPreviewProps {
+  onDismiss: () => void;
+  onChange: (image: string) => void;
+}
+
+export const CameraView = ({ onDismiss, onChange }: CameraPreviewProps) => {
   const {
     colors: { background },
   } = useTheme();
   const { height } = useWindowDimensions();
-  const { setIsCameraOpen, setCapturedImage } = useCameraStore();
   const cameraRef = React.useRef<Camera | null>(null);
   const [type, setType] = React.useState(CameraType.back);
   const [isTakingPicture, setIsTakingPicture] = React.useState(false);
@@ -57,8 +59,9 @@ export const CameraPreview = () => {
 
   const handleSheetClose = React.useCallback(() => {
     setIsBottomSheetOpen(false);
-    setIsCameraOpen(false);
-  }, [setIsBottomSheetOpen, setIsCameraOpen]);
+    onDismiss();
+    // setIsCameraOpen(false);
+  }, [setIsBottomSheetOpen, onDismiss]);
 
   const toggleCameraType = () => {
     setType((current) =>
@@ -80,42 +83,46 @@ export const CameraPreview = () => {
       );
     }
 
-    setIsCameraOpen(false);
-    setCapturedImage(photo.uri);
+    // setIsCameraOpen(false);
+    onDismiss();
+    onChange(photo.uri);
+    // setCapturedImage(photo.uri);
     setIsTakingPicture(false);
     setIsBottomSheetOpen(false);
   };
 
   return (
-    <BottomSheet
-      ref={bottomSheetRef}
-      snapPoints={snapPoints}
-      onChange={handleSheetChanges}
-      onClose={handleSheetClose}
-      enablePanDownToClose
-      backgroundStyle={{
-        backgroundColor: background,
-      }}
-    >
-      {isBottomSheetOpen && (
-        <Camera
-          style={StyleSheet.absoluteFillObject}
-          type={type}
-          ref={(r) => {
-            cameraRef.current = r;
-          }}
-        >
-          <View style={styles.container}>
-            <CircleCameraButton
-              onPress={takePicture}
-              isLoading={isTakingPicture}
-            />
-            <CameraReverseButton onPress={toggleCameraType} />
-            <View style={styles.buttonOverlay} />
-          </View>
-        </Camera>
-      )}
-    </BottomSheet>
+    <Portal>
+      <BottomSheet
+        ref={bottomSheetRef}
+        snapPoints={snapPoints}
+        onChange={handleSheetChanges}
+        onClose={handleSheetClose}
+        enablePanDownToClose
+        backgroundStyle={{
+          backgroundColor: background,
+        }}
+      >
+        {isBottomSheetOpen && (
+          <Camera
+            style={StyleSheet.absoluteFillObject}
+            type={type}
+            ref={(r) => {
+              cameraRef.current = r;
+            }}
+          >
+            <View style={styles.container}>
+              <CircleCameraButton
+                onPress={takePicture}
+                isLoading={isTakingPicture}
+              />
+              <CameraReverseButton onPress={toggleCameraType} />
+              <View style={styles.buttonOverlay} />
+            </View>
+          </Camera>
+        )}
+      </BottomSheet>
+    </Portal>
   );
 };
 

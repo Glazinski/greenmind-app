@@ -5,8 +5,8 @@ import { useTranslation } from 'react-i18next';
 
 import { useDevice, useDeviceLogs } from 'services/device/queries';
 import { useActiveDeviceStore } from 'store/useActiveDeviceStore';
+import { ImageSelector } from 'components/ImageSelector';
 
-import { GrowBoxImage } from './GrowBoxImage';
 import { GrowBoxDataRow } from './GrowBoxDataRow';
 import { GrowBoxDataCell } from './GrowBoxDataCell';
 import { GrowBoxWaterPlant } from './GrowBoxWaterPlant';
@@ -39,7 +39,7 @@ export const GrowBox = () => {
       <Text variant="titleLarge" style={styles.dataTitle}>
         {device.name}
       </Text>
-      <GrowBoxImage />
+      <ImageSelector />
       {deviceLog && (
         <View style={styles.dataContainer}>
           <GrowBoxDataRow>
