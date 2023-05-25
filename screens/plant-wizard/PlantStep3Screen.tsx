@@ -1,35 +1,22 @@
 import React from 'react';
-import { View } from 'react-native';
-import { Dialog, Portal, Text, Button } from 'react-native-paper';
-import { useNavigation } from '@react-navigation/native';
+import { Button, Dialog, Portal, Text } from 'react-native-paper';
 import { useTranslation } from 'react-i18next';
 
+import { PlantFormStep } from 'components/PlantForm/PlantFormStep';
+import { PlantFormStep3 } from 'components/PlantForm/PlantFormStep3';
+import { BackendPlant, PlantFormData, step3Schema } from 'schemas/plants';
+import { Layout } from 'components/Layout';
+import { PlantWizardStackScreenProps } from 'navigation/types';
+import { useAddPlant, useEditPlant } from 'services/plants/mutations';
 import { usePlantFormStore } from 'store/usePlantFormStore';
-import {
-  BackendPlant,
-  PlantFormData,
-  step1Schema,
-  step2Schema,
-  step3Schema,
-} from 'schemas/plants';
 
-import { PlantFormStep } from './PlantFormStep';
-import { PlantFormStep1 } from './PlantFormStep1';
-import { PlantFormStep2 } from './PlantFormStep2';
-import { PlantFormStep3 } from './PlantFormStep3';
-import { useAddPlant, useEditPlant } from '../../services/plants/mutations';
-
-interface PlantFormProps {
-  type: 'add' | 'edit';
-  plantId?: number;
-}
-
-export const PlantForm = ({ type, plantId }: PlantFormProps) => {
-  const navigation = useNavigation();
-  const { t } = useTranslation();
+export const PlantStep3Screen = ({
+  navigation,
+  route,
+}: PlantWizardStackScreenProps<'PlantStep3'>) => {
   const [visible, setVisible] = React.useState(false);
-  const resetSteps = usePlantFormStore((state) => state.resetSteps);
-  const resetStepsData = usePlantFormStore((state) => state.resetStepsData);
+  const { t } = useTranslation();
+  const { type, plantId } = route.params;
   const steps = usePlantFormStore((state) => state.steps);
   const {
     mutate: addPlant,
@@ -50,14 +37,14 @@ export const PlantForm = ({ type, plantId }: PlantFormProps) => {
   React.useEffect(() => {
     return () => {
       hideDialog();
-      resetSteps();
-      resetStepsData();
     };
-  }, [resetSteps, resetStepsData]);
+  }, []);
 
   function onSuccess() {
-    resetStepsData();
-    navigation.goBack();
+    hideDialog();
+    navigation.navigate('Index', {
+      screen: 'Plants',
+    });
   }
 
   const showDialog = () => setVisible(true);
@@ -65,6 +52,14 @@ export const PlantForm = ({ type, plantId }: PlantFormProps) => {
   function hideDialog() {
     setVisible(false);
   }
+
+  const renderSubmitButtonContent = () => {
+    if (isError) return t('try_again');
+
+    if (type === 'add') return t('add');
+
+    return t('edit');
+  };
 
   const handleSubmit = async () => {
     let data = {};
@@ -76,8 +71,10 @@ export const PlantForm = ({ type, plantId }: PlantFormProps) => {
     const {
       light_min,
       light_max,
-      humidity_min,
-      humidity_max,
+      air_humidity_min,
+      air_humidity_max,
+      soil_humidity_min,
+      soil_humidity_max,
       temp_min,
       temp_max,
     } = data as PlantFormData;
@@ -89,46 +86,24 @@ export const PlantForm = ({ type, plantId }: PlantFormProps) => {
           id: plantId,
           light_min: Number(light_min),
           light_max: Number(light_max),
-          humidity_min: Number(humidity_min),
-          humidity_max: Number(humidity_max),
+          air_humidity_min: Number(air_humidity_min),
+          air_humidity_max: Number(air_humidity_max),
+          soil_humidity_min: Number(soil_humidity_min),
+          soil_humidity_max: Number(soil_humidity_max),
           temp_min: Number(temp_min),
           temp_max: Number(temp_max),
         } as BackendPlant);
   };
 
-  const renderSubmitButtonContent = () => {
-    if (isError) return t('try_again');
-
-    if (type === 'add') return t('add');
-
-    return t('edit');
-  };
-
   return (
-    <View>
-      <PlantFormStep
-        index={0}
-        title={t('basic_information')}
-        schema={step1Schema}
-        renderFields={(control) => <PlantFormStep1 control={control} />}
-      />
-
-      <PlantFormStep
-        index={1}
-        title={t('ideal_conditions')}
-        schema={step2Schema}
-        renderFields={(control) => <PlantFormStep2 control={control} />}
-      />
-
+    <Layout>
       <PlantFormStep
         index={2}
-        title={t('other_information')}
+        title={'Other information'}
         schema={step3Schema}
         renderFields={(control) => <PlantFormStep3 control={control} />}
-        lastStepButtonContent={type === 'add' ? <>Add</> : <>Edit</>}
         onSubmit={showDialog}
       />
-
       <Portal>
         <Dialog visible={visible} onDismiss={hideDialog}>
           <Dialog.Content>
@@ -146,6 +121,6 @@ export const PlantForm = ({ type, plantId }: PlantFormProps) => {
           </Dialog.Actions>
         </Dialog>
       </Portal>
-    </View>
+    </Layout>
   );
 };

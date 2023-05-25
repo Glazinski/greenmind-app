@@ -14,7 +14,9 @@ import { Devices } from 'screens/Devices';
 import { Plants } from 'screens/Plants';
 import { Account } from 'screens/Account';
 
-const Drawer = createDrawerNavigator();
+import { HomeDrawerParamList } from './types';
+
+const Drawer = createDrawerNavigator<HomeDrawerParamList>();
 
 const DrawerContent = ({ navigation, state }: DrawerContentComponentProps) => {
   const {

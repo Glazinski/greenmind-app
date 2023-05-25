@@ -10,13 +10,15 @@ import {
 import { BackendPlant } from '../../schemas/plants';
 import { useDeletePlant } from '../../services/plants/mutations';
 import { useNavigation } from '@react-navigation/native';
+import { HomeDrawerScreenProps } from '../../navigation/types';
 
 interface PlantItemProps {
   plant: BackendPlant;
 }
 
 export const PlantItem = ({ plant }: PlantItemProps) => {
-  const navigation = useNavigation();
+  const navigation =
+    useNavigation<HomeDrawerScreenProps<'Plants'>['navigation']>();
   const { id, name } = plant;
   const [visible, setVisible] = React.useState(false);
   const { mutate: deletePlant } = useDeletePlant();
@@ -28,8 +30,12 @@ export const PlantItem = ({ plant }: PlantItemProps) => {
   return (
     <TouchableRipple
       onPress={() =>
-        navigation.navigate('EditPlant', {
-          plantId: id,
+        navigation.navigate('PlantWizard', {
+          screen: 'PlantStep1',
+          params: {
+            type: 'edit',
+            plantId: id,
+          },
         })
       }
       style={styles.container}

@@ -17,8 +17,10 @@ export const step2Schema = z.object({
   light_max: minMaxSchema,
   temp_min: minMaxSchema,
   temp_max: minMaxSchema,
-  humidity_min: minMaxSchema,
-  humidity_max: minMaxSchema,
+  air_humidity_min: minMaxSchema,
+  air_humidity_max: minMaxSchema,
+  soil_humidity_min: minMaxSchema,
+  soil_humidity_max: minMaxSchema,
 });
 
 export const step3Schema = z.object({
@@ -40,8 +42,10 @@ const backendPlant = step1Schema
       light_max: z.number(),
       temp_min: z.number(),
       temp_max: z.number(),
-      humidity_min: z.number(),
-      humidity_max: z.number(),
+      air_humidity_min: z.number(),
+      air_humidity_max: z.number(),
+      soil_humidity_min: z.number(),
+      soil_humidity_max: z.number(),
     }).shape
   )
   .extend(step3Schema.shape);

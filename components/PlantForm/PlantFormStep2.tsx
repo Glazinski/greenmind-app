@@ -40,7 +40,8 @@ export const PlantFormStep2 = ({ control }: PlantFormStep2Props) => {
   return (
     <View>
       {renderMinMaxRow('Temperature', 'temp')}
-      {renderMinMaxRow('Humidity', 'humidity')}
+      {renderMinMaxRow('Air humidity', 'air_humidity')}
+      {renderMinMaxRow('Soil humidity', 'soil_humidity')}
       {renderMinMaxRow('Light', 'light')}
     </View>
   );

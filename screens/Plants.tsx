@@ -1,11 +1,11 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import { useTheme, FAB } from 'react-native-paper';
-import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 
 import { PlantList } from 'components/Plant/PlantList';
+import { HomeDrawerScreenProps } from 'navigation/types';
 
-export const Plants = ({ navigation }: NativeStackScreenProps<any, any>) => {
+export const Plants = ({ navigation }: HomeDrawerScreenProps<'Plants'>) => {
   const {
     colors: { background },
   } = useTheme();
@@ -16,7 +16,15 @@ export const Plants = ({ navigation }: NativeStackScreenProps<any, any>) => {
       <FAB
         icon="plus"
         style={styles.fab}
-        onPress={() => navigation.navigate('AddPlant')}
+        // onPress={() => navigation.navigate('AddPlant')}
+        onPress={() =>
+          navigation.navigate('PlantWizard', {
+            screen: 'PlantStep1',
+            params: {
+              type: 'add',
+            },
+          })
+        }
       />
     </View>
   );

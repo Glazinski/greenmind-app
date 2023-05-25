@@ -1,19 +1,24 @@
 import React from 'react';
-import { View, StyleSheet } from 'react-native';
-import { Button, Text, useTheme } from 'react-native-paper';
+import { View, StyleSheet, BackHandler } from 'react-native';
+import { Button, Text } from 'react-native-paper';
 import { useForm, DeepPartial, Control } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
+import {
+  useFocusEffect,
+  useNavigation,
+  useRoute,
+} from '@react-navigation/native';
 
 import { usePlantFormStore } from 'store/usePlantFormStore';
 import { StepFormData } from 'schemas/plants';
+import { PlantWizardStackScreenProps } from 'navigation/types';
 
 interface PlantFormStepProps<TFormData extends StepFormData> {
   index: number;
   title: string;
   schema: z.ZodSchema<TFormData>;
   renderFields: (control: Control<TFormData>) => React.ReactNode;
-  lastStepButtonContent?: JSX.Element;
   onSubmit?: () => void;
 }
 
@@ -23,13 +28,15 @@ export const PlantFormStep = <TFormData extends StepFormData>({
   schema,
   renderFields,
   onSubmit,
-  lastStepButtonContent,
 }: PlantFormStepProps<TFormData>) => {
-  const activeStep = usePlantFormStore((state) => state.activeStep);
-  const formData = usePlantFormStore((state) => state.steps[index]);
-  const setSteps = usePlantFormStore((state) => state.setSteps);
-  const nextStep = usePlantFormStore((state) => state.nextStep);
-  const { control, handleSubmit, reset } = useForm<TFormData>({
+  const navigation =
+    useNavigation<PlantWizardStackScreenProps<'PlantStep1'>['navigation']>();
+  const { type, plantId } =
+    useRoute<PlantWizardStackScreenProps<'PlantStep1'>['route']>().params;
+  const { activeStep, steps, setSteps, nextStep, prevStep } =
+    usePlantFormStore();
+  const formData = steps[index];
+  const { control, handleSubmit, reset, getValues } = useForm<TFormData>({
     defaultValues: formData as unknown as DeepPartial<TFormData>,
     resolver: zodResolver(schema),
   });
@@ -38,10 +45,44 @@ export const PlantFormStep = <TFormData extends StepFormData>({
     reset(formData as unknown as DeepPartial<TFormData>);
   }, [formData, reset]);
 
+  useFocusEffect(
+    React.useCallback(() => {
+      const onBackPress = () => {
+        if (index !== 0) {
+          setSteps(index, getValues());
+        }
+        prevStep();
+        return false;
+      };
+
+      const subscription = BackHandler.addEventListener(
+        'hardwareBackPress',
+        onBackPress
+      );
+
+      return () => subscription.remove();
+    }, [getValues, index, setSteps, prevStep])
+  );
+
   const handleSubmitAndPersist = (data: TFormData) => {
     setSteps(index, data);
+    if (index !== Object.keys(steps).length - 1) {
+      nextStep();
+      // @ts-ignore
+      navigation.navigate(`PlantStep${index + 2}`, {
+        type,
+        plantId,
+      });
+    }
     onSubmit?.();
-    nextStep();
+  };
+
+  const getButtonContent = () => {
+    if (index === Object.keys(steps).length - 1) {
+      return type === 'add' ? <>Add</> : <>Edit</>;
+    }
+
+    return <>Go next</>;
   };
 
   if (activeStep !== index) return null;
@@ -52,48 +93,15 @@ export const PlantFormStep = <TFormData extends StepFormData>({
         {title}
       </Text>
       {renderFields(control)}
-      <PlantFormStepButtons
-        onNext={handleSubmit(handleSubmitAndPersist)}
-        lastStepButtonContent={lastStepButtonContent}
-      />
-    </View>
-  );
-};
-
-interface PlantFormStepButtonsProps {
-  onNext: () => void;
-  lastStepButtonContent?: JSX.Element;
-}
-
-export const PlantFormStepButtons = ({
-  onNext,
-  lastStepButtonContent,
-}: PlantFormStepButtonsProps) => {
-  const activeStep = usePlantFormStore((state) => state.activeStep);
-  const prevStep = usePlantFormStore((state) => state.prevStep);
-
-  const {
-    colors: { secondary },
-  } = useTheme();
-
-  const handleNextPress = async () => {
-    onNext();
-  };
-
-  return (
-    <View style={styles.buttonsContainer}>
-      {activeStep > 0 && (
+      <View style={styles.buttonsContainer}>
         <Button
           mode="contained"
-          onPress={prevStep}
-          style={[styles.button, { backgroundColor: secondary }]}
+          onPress={handleSubmit(handleSubmitAndPersist)}
+          style={styles.button}
         >
-          Go back
+          {getButtonContent()}
         </Button>
-      )}
-      <Button mode="contained" onPress={handleNextPress} style={styles.button}>
-        {lastStepButtonContent || 'Go next'}
-      </Button>
+      </View>
     </View>
   );
 };

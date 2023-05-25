@@ -1,5 +1,4 @@
 import { View } from 'react-native';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useTheme, List } from 'react-native-paper';
 
 import { useSignOut } from 'services/auth/mutations';

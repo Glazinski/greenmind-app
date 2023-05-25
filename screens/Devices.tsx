@@ -1,3 +1,4 @@
+import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import {
   ActivityIndicator,
@@ -6,12 +7,21 @@ import {
   RadioButton,
   FAB,
 } from 'react-native-paper';
+import type { CompositeScreenProps } from '@react-navigation/native';
+import type { DrawerScreenProps } from '@react-navigation/drawer';
+import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 
 import { useDevices } from 'services/device/queries';
 import { useActiveDeviceStore } from 'store/useActiveDeviceStore';
-import React from 'react';
+import { RootStackParamList } from 'navigation/RootNavigator';
+import { DrawerParamList } from 'navigation/DrawerNavigator';
 
-export const Devices = () => {
+type DevicesScreenProps = CompositeScreenProps<
+  DrawerScreenProps<DrawerParamList, 'Devices'>,
+  NativeStackScreenProps<RootStackParamList>
+>;
+
+export const Devices = ({ navigation }: DevicesScreenProps) => {
   const { deviceId, setDeviceId, setDeviceName } = useActiveDeviceStore();
   const { data: devices, isLoading, isError } = useDevices();
   const {
@@ -54,7 +64,11 @@ export const Devices = () => {
   return (
     <View style={[styles.container, { backgroundColor: background }]}>
       {renderContent()}
-      <FAB icon="plus" style={styles.fab} onPress={() => console.log('')} />
+      <FAB
+        icon="plus"
+        style={styles.fab}
+        onPress={() => navigation.navigate('DeviceStep1')}
+      />
     </View>
   );
 };
