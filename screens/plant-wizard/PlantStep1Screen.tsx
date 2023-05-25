@@ -1,3 +1,5 @@
+import { View, StyleSheet } from 'react-native';
+
 import { PlantFormStep } from 'components/PlantForm/PlantFormStep';
 import { PlantFormStep1 } from 'components/PlantForm/PlantFormStep1';
 import { Layout } from 'components/Layout';
@@ -5,6 +7,7 @@ import { step1Schema } from 'schemas/plants';
 import { usePlantFormStore } from 'store/usePlantFormStore';
 import { usePrivatePlants } from 'services/plants/queries';
 import { PlantWizardStackScreenProps } from 'navigation/types';
+import { ImageSelector } from 'components/ImageSelector';
 
 export const PlantStep1Screen = ({
   route,
@@ -64,8 +67,21 @@ export const PlantStep1Screen = ({
         index={0}
         title={'Basic information'}
         schema={step1Schema}
-        renderFields={(control) => <PlantFormStep1 control={control} />}
+        renderFields={(control) => (
+          <>
+            <View style={styles.imageSelector}>
+              <ImageSelector />
+            </View>
+            <PlantFormStep1 control={control} />
+          </>
+        )}
       />
     </Layout>
   );
 };
+
+const styles = StyleSheet.create({
+  imageSelector: {
+    marginBottom: 16,
+  },
+});
