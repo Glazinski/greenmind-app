@@ -5,7 +5,6 @@ import React from 'react';
 import { StatusBar } from 'expo-status-bar';
 
 import { Providers } from 'components/Providers';
-import { Camera } from 'components/CameraPreview/Camera';
 import { useAuth } from 'services/auth/useAuth';
 
 import { AuthenticatedApp } from './AuthenticatedApp';
@@ -17,7 +16,6 @@ export default function App() {
   return (
     <Providers>
       {isSignedIn ? <AuthenticatedApp /> : <UnauthenticatedApp />}
-      <Camera />
       <StatusBar style="auto" />
     </Providers>
   );
