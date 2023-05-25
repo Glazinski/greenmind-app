@@ -1,11 +1,12 @@
 import React from 'react';
-import { StyleSheet } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import {
   Surface,
   Text,
   TouchableRipple,
   Menu,
   IconButton,
+  Avatar,
 } from 'react-native-paper';
 import { BackendPlant } from '../../schemas/plants';
 import { useDeletePlant } from '../../services/plants/mutations';
@@ -19,13 +20,34 @@ interface PlantItemProps {
 export const PlantItem = ({ plant }: PlantItemProps) => {
   const navigation =
     useNavigation<HomeDrawerScreenProps<'Plants'>['navigation']>();
-  const { id, name } = plant;
+  const {
+    id,
+    name,
+    light_min,
+    light_max,
+    temp_min,
+    temp_max,
+    soil_humidity_min,
+    soil_humidity_max,
+    air_humidity_min,
+    air_humidity_max,
+  } = plant;
   const [visible, setVisible] = React.useState(false);
-  const { mutate: deletePlant } = useDeletePlant();
+  const { mutate: deletePlant, isError } = useDeletePlant();
 
   const openMenu = () => setVisible(true);
 
   const closeMenu = () => setVisible(false);
+
+  const renderMinMaxLabel = (
+    label: string,
+    min: string | number,
+    max: string | number
+  ) => (
+    <Text>
+      {label}: {min} - {max}
+    </Text>
+  );
 
   return (
     <TouchableRipple
@@ -41,20 +63,37 @@ export const PlantItem = ({ plant }: PlantItemProps) => {
       style={styles.container}
       borderless={true}
     >
-      <Surface mode="flat" style={styles.item}>
-        <Text>{name}</Text>
-        <Menu
-          visible={visible}
-          onDismiss={closeMenu}
-          anchor={<IconButton icon="dots-vertical" onPress={openMenu} />}
-          anchorPosition="bottom"
-        >
-          <Menu.Item
-            onPress={() => deletePlant(id)}
-            title="Delete"
-            leadingIcon="delete"
-          />
-        </Menu>
+      <Surface style={styles.item}>
+        <Avatar.Image size={83} source={require('../../assets/icon.png')} />
+        <View style={styles.itemInformation}>
+          <Text variant="titleMedium">{name}</Text>
+          {renderMinMaxLabel('Light', light_min, light_max)}
+          {renderMinMaxLabel('Temperature', temp_min, temp_max)}
+          {renderMinMaxLabel(
+            'Soil humidity',
+            soil_humidity_min,
+            soil_humidity_max
+          )}
+          {renderMinMaxLabel(
+            'Air humidity',
+            air_humidity_min,
+            air_humidity_max
+          )}
+        </View>
+        <View style={styles.itemActions}>
+          <Menu
+            visible={visible}
+            onDismiss={closeMenu}
+            anchor={<IconButton icon="dots-vertical" onPress={openMenu} />}
+            anchorPosition="bottom"
+          >
+            <Menu.Item
+              onPress={() => deletePlant(id)}
+              title="Delete"
+              leadingIcon="delete"
+            />
+          </Menu>
+        </View>
       </Surface>
     </TouchableRipple>
   );
@@ -62,12 +101,21 @@ export const PlantItem = ({ plant }: PlantItemProps) => {
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 8,
+    marginTop: 12,
+    borderRadius: 12,
   },
   item: {
-    padding: 8,
+    paddingHorizontal: 16,
+    paddingVertical: 16,
     flexDirection: 'row',
     alignItems: 'center',
+  },
+  itemInformation: {
+    marginLeft: 16,
+  },
+  itemActions: {
+    alignSelf: 'flex-start',
+    marginLeft: 'auto',
     justifyContent: 'space-between',
   },
 });

@@ -1,5 +1,5 @@
 import React from 'react';
-import { View } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import { ActivityIndicator, Text } from 'react-native-paper';
 
 import { usePrivatePlants } from 'services/plants/queries';
@@ -12,13 +12,25 @@ export const PlantList = () => {
 
   if (isError) return <Text>Something went wrong</Text>;
 
-  if (!privatePlants?.length) return <Text>No data</Text>;
+  if (!privatePlants?.length) {
+    return (
+      <View style={styles.container}>
+        <Text>No plants found</Text>
+      </View>
+    );
+  }
 
   return (
-    <View>
+    <View style={styles.container}>
       {privatePlants?.map((privatePlant) => (
         <PlantItem key={privatePlant.id} plant={privatePlant} />
       ))}
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    paddingHorizontal: 16,
+  },
+});
