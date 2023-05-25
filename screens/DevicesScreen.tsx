@@ -4,7 +4,6 @@ import { ActivityIndicator, Text, FAB } from 'react-native-paper';
 import { useTranslation } from 'react-i18next';
 
 import { useDevices } from 'services/device/queries';
-import { useActiveDeviceStore } from 'store/useActiveDeviceStore';
 import { Layout } from 'components/Layout';
 import { DeviceList } from 'components/Device/DeviceList';
 import { HomeDrawerScreenProps } from 'navigation/types';
@@ -13,7 +12,6 @@ export const DevicesScreen = ({
   navigation,
 }: HomeDrawerScreenProps<'Devices'>) => {
   const { t } = useTranslation();
-  const { deviceId, setDeviceId, setDeviceName } = useActiveDeviceStore();
   const { data: devices, isLoading, isError } = useDevices();
 
   const renderContent = () => {
@@ -33,7 +31,7 @@ export const DevicesScreen = ({
   };
 
   return (
-    <Layout>
+    <Layout style={styles.container}>
       {renderContent()}
       <FAB
         icon="plus"
@@ -50,7 +48,7 @@ export const DevicesScreen = ({
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    paddingHorizontal: 16,
   },
   fab: {
     position: 'absolute',

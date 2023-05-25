@@ -1,22 +1,40 @@
 import React from 'react';
 import { StyleSheet, ScrollView } from 'react-native';
-import { useTheme } from 'react-native-paper';
+import { useTheme, ActivityIndicator, Text, Button } from 'react-native-paper';
 
 import { GrowBox } from 'components/GrowBox/GrowBox';
+import { useDevices } from 'services/device/queries';
+import { Layout } from 'components/Layout';
+import { HomeDrawerScreenProps } from 'navigation/types';
 
-export const HomeScreen = (): JSX.Element => {
+export const HomeScreen = ({
+  navigation,
+}: HomeDrawerScreenProps<'Home'>): JSX.Element => {
   const {
     colors: { background },
   } = useTheme();
+  const { data: devices, isLoading } = useDevices();
 
-  // React.useEffect(() => {
-  //   const device = null;
-  //
-  //   if (!device) {
-  //     console.log('NO DEVICE');
-  //     // router.push('/device-configuration');
-  //   }
-  // }, []);
+  if (isLoading) return <ActivityIndicator size="large" />;
+
+  if (!devices || devices?.length === 0) {
+    return (
+      <Layout style={[styles.container, { backgroundColor: background }]}>
+        <Text variant="titleMedium">
+          No devices found. You need to add and configure new device to your
+          account.{' '}
+        </Text>
+        <Button
+          onPress={() => {
+            navigation.navigate('Devices');
+          }}
+          style={styles.configureButton}
+        >
+          Configure device
+        </Button>
+      </Layout>
+    );
+  }
 
   return (
     <ScrollView
@@ -33,11 +51,7 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 10,
   },
-  dataContainer: {
-    padding: 25,
-    borderRadius: 15,
-  },
-  dataTitle: {
-    marginBottom: 10,
+  configureButton: {
+    marginTop: 12,
   },
 });

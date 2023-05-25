@@ -19,20 +19,20 @@ interface Task {
 
 export const useDevices = () =>
   useQuery({
-    // queryFn: () => api.get<Device[]>(`/devices`).then((res) => res.data),
-    queryFn: () =>
-      api.get<BackendDevice[]>(`/devices`).then((res) => [
-        {
-          id: 1,
-          name: 'Device1',
-          user: 1,
-        },
-        {
-          id: 2,
-          name: 'Device2',
-          user: 1,
-        },
-      ]),
+    queryFn: () => api.get<BackendDevice[]>(`/devices`).then((res) => res.data),
+    // queryFn: () =>
+    //   api.get<BackendDevice[]>(`/devices`).then((res) => [
+    //     {
+    //       id: 1,
+    //       name: 'Device1',
+    //       user: 1,
+    //     },
+    //     {
+    //       id: 2,
+    //       name: 'Device2',
+    //       user: 1,
+    //     },
+    //   ]),
     queryKey: ['devices'],
     // select: (data) =>
     //   data.map((device) => ({

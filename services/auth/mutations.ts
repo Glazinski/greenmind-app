@@ -17,8 +17,8 @@ const defaultMutationConfig = (
   onSuccess: (data: AuthResponse) => {
     const expirationTimestamp = new Date().getTime() + 1800 * 1000; // 30 minutes
 
-    setAuthData(data.token, expirationTimestamp);
     setAuthToken(data.token);
+    setAuthData(data.token, expirationTimestamp);
   },
 });
 

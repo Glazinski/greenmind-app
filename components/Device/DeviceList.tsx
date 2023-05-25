@@ -72,23 +72,6 @@ export const DeviceList = ({ devices }: DeviceListProps) => {
       </Portal>
     </>
   );
-  // return (
-  //   <RadioButton.Group
-  //     value={deviceId || '-1'}
-  //     onValueChange={(value) => {
-  //       const deviceToBeSet = devices.find(({ id }) => id === value);
-  //       setDeviceId(deviceToBeSet!.id);
-  //       setDeviceName(deviceToBeSet!.name);
-  //     }}
-  //   >
-  //     {devices.map(({ id, name }) => (
-  //       <RadioButton.Item key={id} label={name} value={id} />
-  //       // <View>
-  //       //   <TouchableRipple><></></TouchableRipple>
-  //       // </View>
-  //     ))}
-  //   </RadioButton.Group>
-  // );
 };
 
 const styles = StyleSheet.create({
