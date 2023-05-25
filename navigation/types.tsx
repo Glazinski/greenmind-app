@@ -5,6 +5,15 @@ import type {
 import type { StackScreenProps } from '@react-navigation/stack';
 import type { DrawerScreenProps } from '@react-navigation/drawer';
 
+export type UnauthenticatedRootStackParamList = {
+  SignIn: undefined;
+  SignUp: undefined;
+};
+
+export type UnauthenticatedRootStackScreenProps<
+  T extends keyof UnauthenticatedRootStackParamList
+> = StackScreenProps<UnauthenticatedRootStackParamList, T>;
+
 export type RootStackParamList = {
   Index: NavigatorScreenParams<HomeDrawerParamList>;
   PlantWizard: NavigatorScreenParams<PlantWizardStackParamList>;
