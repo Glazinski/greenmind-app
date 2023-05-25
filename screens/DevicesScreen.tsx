@@ -1,65 +1,50 @@
 import React from 'react';
-import { View, StyleSheet } from 'react-native';
-import {
-  ActivityIndicator,
-  Text,
-  useTheme,
-  RadioButton,
-  FAB,
-} from 'react-native-paper';
+import { StyleSheet } from 'react-native';
+import { ActivityIndicator, Text, FAB } from 'react-native-paper';
+import { useTranslation } from 'react-i18next';
 
 import { useDevices } from 'services/device/queries';
 import { useActiveDeviceStore } from 'store/useActiveDeviceStore';
+import { Layout } from 'components/Layout';
+import { DeviceList } from 'components/Device/DeviceList';
+import { HomeDrawerScreenProps } from 'navigation/types';
 
-export const DevicesScreen = ({ navigation }: any) => {
+export const DevicesScreen = ({
+  navigation,
+}: HomeDrawerScreenProps<'Devices'>) => {
+  const { t } = useTranslation();
   const { deviceId, setDeviceId, setDeviceName } = useActiveDeviceStore();
   const { data: devices, isLoading, isError } = useDevices();
-  const {
-    colors: { background },
-  } = useTheme();
 
   const renderContent = () => {
     if (isLoading) {
-      return (
-        <View style={[styles.container, { backgroundColor: background }]}>
-          <ActivityIndicator size="large" />
-        </View>
-      );
+      return <ActivityIndicator size="large" />;
     }
 
     if (isError) {
-      return <Text>Error...</Text>;
+      return <Text>{t('something_went_wrong')}</Text>;
     }
 
     if (!devices?.length) {
-      return <Text>No devices</Text>;
+      return <Text>{t('no_devices_found')}</Text>;
     }
 
-    return (
-      <RadioButton.Group
-        value={deviceId || '-1'}
-        onValueChange={(value) => {
-          const deviceToBeSet = devices.find(({ id }) => id === value);
-          setDeviceId(deviceToBeSet!.id);
-          setDeviceName(deviceToBeSet!.name);
-        }}
-      >
-        {devices.map(({ id, name }) => (
-          <RadioButton.Item key={id} label={name} value={id} />
-        ))}
-      </RadioButton.Group>
-    );
+    return <DeviceList devices={devices} />;
   };
 
   return (
-    <View style={[styles.container, { backgroundColor: background }]}>
+    <Layout>
       {renderContent()}
       <FAB
         icon="plus"
         style={styles.fab}
-        onPress={() => navigation.navigate('DeviceStep1')}
+        onPress={() =>
+          navigation.navigate('DeviceWizard', {
+            screen: 'DeviceStep1',
+          })
+        }
       />
-    </View>
+    </Layout>
   );
 };
 

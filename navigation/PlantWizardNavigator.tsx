@@ -31,6 +31,7 @@ export const PlantWizardNavigator = () => {
       screenOptions={{
         headerShown: true,
         headerTitle: '',
+        headerShadowVisible: false,
         headerStyle: {
           backgroundColor: background,
         },

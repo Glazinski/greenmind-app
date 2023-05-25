@@ -1,4 +1,4 @@
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 import axios from 'axios';
 
@@ -11,3 +11,15 @@ export const useDeviceWater = () =>
         status: 0,
       }),
   });
+
+export const useDeleteDevice = (onSuccess?: () => void) => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: (id: number) => axios.delete(`/devices/${id}`),
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({ queryKey: ['devices'] });
+      onSuccess?.();
+    },
+  });
+};

@@ -1,8 +1,9 @@
 import * as React from 'react';
 import { ActivityIndicator, Text } from 'react-native-paper';
 import { StyleSheet, View } from 'react-native';
+import { useTranslation } from 'react-i18next';
 
-import { useDeviceLogs } from 'services/device/queries';
+import { useDevice, useDeviceLogs } from 'services/device/queries';
 import { useActiveDeviceStore } from 'store/useActiveDeviceStore';
 
 import { GrowBoxImage } from './GrowBoxImage';
@@ -11,18 +12,32 @@ import { GrowBoxDataCell } from './GrowBoxDataCell';
 import { GrowBoxWaterPlant } from './GrowBoxWaterPlant';
 
 export const GrowBox = () => {
-  const { deviceName } = useActiveDeviceStore();
-  const { data: deviceLogs, isLoading, isError } = useDeviceLogs();
+  const { t } = useTranslation();
+  const { deviceId } = useActiveDeviceStore();
+  const {
+    data: device,
+    isLoading: isDeviceLoading,
+    isError: isDeviceError,
+  } = useDevice(deviceId);
+  const {
+    data: deviceLogs,
+    isLoading: isDeviceLogsLoading,
+    isError: isDeviceLogsError,
+  } = useDeviceLogs();
   const deviceLog = deviceLogs && deviceLogs[deviceLogs.length - 1];
-
-  if (isError) return <Text>Something went wrong...</Text>;
+  const isLoading = isDeviceLoading || isDeviceLogsLoading;
+  const isError = isDeviceError || isDeviceLogsError;
 
   if (isLoading) return <ActivityIndicator />;
+
+  if (isError) return <Text>{t('something_went_wrong')}</Text>;
+
+  if (!device || !deviceLog) return <Text>No device data</Text>;
 
   return (
     <>
       <Text variant="titleLarge" style={styles.dataTitle}>
-        {deviceName}
+        {device.name}
       </Text>
       <GrowBoxImage />
       {deviceLog && (

@@ -8,5 +8,6 @@ export const usePrivatePlants = (onSuccess?: () => void) =>
     queryKey: ['plants'],
     queryFn: () =>
       api.get('/plants/private').then<BackendPlant[]>((res) => res.data),
+    // queryFn: () => api.get('/plants/private').then<BackendPlant[]>((res) => []),
     onSuccess,
   });

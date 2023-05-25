@@ -1,6 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 
 import { api } from 'api';
+import { BackendDevice } from 'schemas/devices';
 
 interface DeviceLog {
   temp: number;
@@ -16,29 +17,41 @@ interface Task {
   status: number;
 }
 
-interface Device {
-  id: number;
-  name: string;
-  user: number;
-}
-
 export const useDevices = () =>
   useQuery({
     // queryFn: () => api.get<Device[]>(`/devices`).then((res) => res.data),
     queryFn: () =>
-      api.get<Device[]>(`/devices`).then((res) => [
+      api.get<BackendDevice[]>(`/devices`).then((res) => [
         {
           id: 1,
           name: 'Device1',
           user: 1,
         },
+        {
+          id: 2,
+          name: 'Device2',
+          user: 1,
+        },
       ]),
     queryKey: ['devices'],
-    select: (data) =>
-      data.map((device) => ({
-        ...device,
-        id: device.id.toString(),
+    // select: (data) =>
+    //   data.map((device) => ({
+    //     ...device,
+    //     id: device.id.toString(),
+    //   })),
+  });
+
+export const useDevice = (id: number) =>
+  useQuery({
+    queryKey: ['devices', id],
+    queryFn: () =>
+      api.get<BackendDevice>(`/devices`).then((res) => ({
+        id: 1,
+        name: 'Device1',
+        user: 1,
       })),
+    // queryFn: () =>
+    //   api.get<BackendDevice>(`/devices/${id}`).then((res) => res.data),
   });
 
 export const useDeviceLogs = () =>

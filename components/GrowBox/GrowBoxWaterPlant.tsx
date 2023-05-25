@@ -1,8 +1,9 @@
-import { View } from 'react-native';
-import { Button, Snackbar, useTheme } from 'react-native-paper';
-import * as React from 'react';
-import { useDeviceTasks } from '../../services/device/queries';
-import { useDeviceWater } from '../../services/device/mutations';
+import React from 'react';
+import { View, StyleSheet } from 'react-native';
+import { Button, Snackbar, Portal, useTheme } from 'react-native-paper';
+
+import { useDeviceTasks } from 'services/device/queries';
+import { useDeviceWater } from 'services/device/mutations';
 
 export const GrowBoxWaterPlant = () => {
   const [isSnackbarVisible, setIsSnackbarVisible] = React.useState(false);
@@ -20,7 +21,7 @@ export const GrowBoxWaterPlant = () => {
       return;
     }
 
-    const hasTaskInQueue = tasks.some(
+    const hasTaskInQueue = tasks?.some(
       ({ task_number, status }) =>
         task_number === 0 && (status === 0 || status === 1)
     );
@@ -32,10 +33,10 @@ export const GrowBoxWaterPlant = () => {
 
   return (
     <>
-      <View style={{ width: '100%', alignItems: 'center', marginTop: 20 }}>
+      <View style={styles.container}>
         <Button
           icon="water"
-          style={{ backgroundColor: tertiary, width: '40%' }}
+          style={[styles.button, { backgroundColor: tertiary }]}
           mode="contained"
           onPress={() => handleWaterPlantPress()}
           loading={waterPlant.isLoading}
@@ -44,16 +45,33 @@ export const GrowBoxWaterPlant = () => {
           Water plant
         </Button>
       </View>
-      <Snackbar
-        visible={isSnackbarVisible}
-        onDismiss={onDismissSnackBar}
-        action={{
-          label: 'Ok',
-        }}
-        style={{ width: '100%' }}
-      >
-        Plant watering is either underway or in the queue
-      </Snackbar>
+      <Portal>
+        <Snackbar
+          visible={isSnackbarVisible}
+          onDismiss={onDismissSnackBar}
+          action={{
+            label: 'Ok',
+          }}
+          style={styles.snackbar}
+        >
+          Plant watering is either underway or in the queue
+        </Snackbar>
+      </Portal>
     </>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    width: '100%',
+    alignItems: 'center',
+    marginTop: 20,
+  },
+  button: {
+    width: '100%',
+  },
+  snackbar: {
+    width: '95%',
+    alignSelf: 'center',
+  },
+});

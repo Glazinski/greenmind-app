@@ -1,62 +1,98 @@
-import { StyleSheet, View } from 'react-native';
-import {
-  ActivityIndicator,
-  RadioButton,
-  Text,
-  useTheme,
-  TouchableRipple,
-} from 'react-native-paper';
+import React from 'react';
+import { StyleSheet, FlatList } from 'react-native';
 
-import { useDevices } from 'services/device/queries';
-import { useActiveDeviceStore } from 'store/useActiveDeviceStore';
+import { BackendDevice } from 'schemas/devices';
 
-export const DeviceList = () => {
-  const { deviceId, setDeviceId, setDeviceName } = useActiveDeviceStore();
-  const {
-    colors: { background },
-  } = useTheme();
-  const { data: devices, isLoading, isError } = useDevices();
+import { DeviceItem } from './DeviceItem';
+import { Button, Dialog, Portal, Text } from 'react-native-paper';
+import { useActiveDeviceStore } from '../../store/useActiveDeviceStore';
+import { useDeleteDevice } from '../../services/device/mutations';
 
-  if (isLoading) {
-    return (
-      <View style={[styles.container, { backgroundColor: background }]}>
-        <ActivityIndicator size="large" />
-      </View>
-    );
-  }
+interface DeviceListProps {
+  devices: BackendDevice[];
+}
 
-  if (isError) {
-    return <Text>Error...</Text>;
-  }
+export const DeviceList = ({ devices }: DeviceListProps) => {
+  const deviceId = useActiveDeviceStore((state) => state.deviceId);
+  const setDeviceId = useActiveDeviceStore((state) => state.setDeviceId);
+  const [visible, setVisible] = React.useState(false);
+  const [deviceIdToDelete, setDeviceIdToDelete] = React.useState(-1);
+  const { mutate: deleteDevice, isLoading } = useDeleteDevice(
+    onDeleteDeviceSuccess
+  );
 
-  if (!devices?.length) {
-    return <Text>No devices</Text>;
+  const showDialog = () => setVisible(true);
+
+  const hideDialog = () => setVisible(false);
+
+  const onUseThisDeviceClick = (id: number) => {
+    setDeviceId(id);
+  };
+
+  const onDeleteClick = (id: number) => {
+    setDeviceIdToDelete(id);
+    showDialog();
+  };
+
+  const handleDeleteConfirmation = async () => {
+    await deleteDevice(deviceIdToDelete);
+  };
+
+  function onDeleteDeviceSuccess() {
+    hideDialog();
   }
 
   return (
-    <RadioButton.Group
-      value={deviceId || '-1'}
-      onValueChange={(value) => {
-        const deviceToBeSet = devices.find(({ id }) => id === value);
-        setDeviceId(deviceToBeSet!.id);
-        setDeviceName(deviceToBeSet!.name);
-      }}
-    >
-      {devices.map(({ id, name }) => (
-        <RadioButton.Item key={id} label={name} value={id} />
-        // <View>
-        //   <TouchableRipple><></></TouchableRipple>
-        // </View>
-      ))}
-    </RadioButton.Group>
+    <>
+      <FlatList
+        style={styles.container}
+        data={devices}
+        renderItem={({ item }) => (
+          <DeviceItem
+            device={item}
+            onUseThisDeviceClick={() => onUseThisDeviceClick(item.id)}
+            onDeleteClick={() => onDeleteClick(item.id)}
+            isActive={item.id === deviceId}
+          />
+        )}
+        keyExtractor={({ id }) => id.toString()}
+      />
+      <Portal>
+        <Dialog visible={visible} onDismiss={hideDialog}>
+          <Dialog.Content>
+            <Text variant="bodyLarge">Are you sure you want to proceed?</Text>
+          </Dialog.Content>
+          <Dialog.Actions>
+            <Button onPress={hideDialog}>Cancel</Button>
+            <Button onPress={handleDeleteConfirmation} loading={isLoading}>
+              Yes
+            </Button>
+          </Dialog.Actions>
+        </Dialog>
+      </Portal>
+    </>
   );
+  // return (
+  //   <RadioButton.Group
+  //     value={deviceId || '-1'}
+  //     onValueChange={(value) => {
+  //       const deviceToBeSet = devices.find(({ id }) => id === value);
+  //       setDeviceId(deviceToBeSet!.id);
+  //       setDeviceName(deviceToBeSet!.name);
+  //     }}
+  //   >
+  //     {devices.map(({ id, name }) => (
+  //       <RadioButton.Item key={id} label={name} value={id} />
+  //       // <View>
+  //       //   <TouchableRipple><></></TouchableRipple>
+  //       // </View>
+  //     ))}
+  //   </RadioButton.Group>
+  // );
 };
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-  },
-  addDeviceContainer: {
-    alignItems: 'center',
+    paddingHorizontal: 16,
   },
 });

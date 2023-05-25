@@ -33,7 +33,7 @@ export const PlantItem = ({ plant }: PlantItemProps) => {
     air_humidity_max,
   } = plant;
   const [visible, setVisible] = React.useState(false);
-  const { mutate: deletePlant, isError } = useDeletePlant();
+  const { mutate: deletePlant } = useDeletePlant();
 
   const openMenu = () => setVisible(true);
 

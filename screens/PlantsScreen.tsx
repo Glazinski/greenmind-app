@@ -3,6 +3,7 @@ import { View, StyleSheet } from 'react-native';
 import { useTheme, FAB } from 'react-native-paper';
 
 import { PlantList } from 'components/Plant/PlantList';
+import { Layout } from 'components/Layout';
 import { HomeDrawerScreenProps } from 'navigation/types';
 
 export const PlantsScreen = ({
@@ -13,12 +14,11 @@ export const PlantsScreen = ({
   } = useTheme();
 
   return (
-    <View style={[styles.container, { backgroundColor: background }]}>
+    <Layout>
       <PlantList />
       <FAB
         icon="plus"
         style={styles.fab}
-        // onPress={() => navigation.navigate('AddPlant')}
         onPress={() =>
           navigation.navigate('PlantWizard', {
             screen: 'PlantStep1',
@@ -28,7 +28,7 @@ export const PlantsScreen = ({
           })
         }
       />
-    </View>
+    </Layout>
   );
 };
 

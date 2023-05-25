@@ -17,8 +17,7 @@ export type UnauthenticatedRootStackScreenProps<
 export type RootStackParamList = {
   Index: NavigatorScreenParams<HomeDrawerParamList>;
   PlantWizard: NavigatorScreenParams<PlantWizardStackParamList>;
-  DeviceStep1: undefined;
-  DeviceStep2: undefined;
+  DeviceWizard: NavigatorScreenParams<DeviceWizardStackParamList>;
 };
 
 export type RootStackScreenProps<T extends keyof RootStackParamList> =
@@ -52,5 +51,17 @@ export type PlantWizardStackScreenProps<
   T extends keyof PlantWizardStackParamList
 > = CompositeScreenProps<
   StackScreenProps<PlantWizardStackParamList, T>,
+  RootStackScreenProps<keyof RootStackParamList>
+>;
+
+export type DeviceWizardStackParamList = {
+  DeviceStep1: undefined;
+  DeviceStep2: undefined;
+};
+
+export type DeviceWizardStackScreenProps<
+  T extends keyof DeviceWizardStackParamList
+> = CompositeScreenProps<
+  StackScreenProps<DeviceWizardStackParamList, T>,
   RootStackScreenProps<keyof RootStackParamList>
 >;
