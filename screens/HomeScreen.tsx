@@ -21,8 +21,8 @@ export const HomeScreen = ({
     return (
       <Layout style={[styles.container, { backgroundColor: background }]}>
         <Text variant="titleMedium">
-          No devices found. You need to add and configure new device to your
-          account.{' '}
+          No device assigned. You need to add and configure new device or assign
+          existing one to your account.{' '}
         </Text>
         <Button
           onPress={() => {

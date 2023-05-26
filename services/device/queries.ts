@@ -2,6 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 
 import { api } from 'api';
 import { BackendDevice } from 'schemas/devices';
+import { useActiveDeviceStore } from '../../store/useActiveDeviceStore';
 
 interface DeviceLog {
   temp: number;
@@ -19,20 +20,20 @@ interface Task {
 
 export const useDevices = () =>
   useQuery({
-    // queryFn: () => api.get<BackendDevice[]>(`/devices`).then((res) => res.data),
-    queryFn: () =>
-      api.get<BackendDevice[]>(`/devices`).then((res) => [
-        {
-          id: 1,
-          name: 'Device1',
-          user: 1,
-        },
-        {
-          id: 2,
-          name: 'Device2',
-          user: 1,
-        },
-      ]),
+    queryFn: () => api.get<BackendDevice[]>(`/devices`).then((res) => res.data),
+    // queryFn: () =>
+    //   api.get<BackendDevice[]>(`/devices`).then((res) => [
+    //     {
+    //       id: 1,
+    //       name: 'Device1',
+    //       user: 1,
+    //     },
+    //     {
+    //       id: 2,
+    //       name: 'Device2',
+    //       user: 1,
+    //     },
+    //   ]),
     queryKey: ['devices'],
     // select: (data) =>
     //   data.map((device) => ({
@@ -53,6 +54,22 @@ export const useDevice = (id: number) =>
     // queryFn: () =>
     //   api.get<BackendDevice>(`/devices/${id}`).then((res) => res.data),
   });
+
+export const useAssignedDevice = () => {
+  const { deviceId } = useActiveDeviceStore();
+
+  return useQuery({
+    queryKey: ['devices', deviceId],
+    // queryFn: () =>
+    // api.get<BackendDevice>(`/devices/${deviceId}`).then((res) => ({
+    //   id: 1,
+    //   name: 'Device1',
+    //   user: 1,
+    // })),
+    queryFn: () =>
+      api.get<BackendDevice>(`/devices/${deviceId}`).then((res) => res.data),
+  });
+};
 
 export const useDeviceLogs = () =>
   useQuery({
