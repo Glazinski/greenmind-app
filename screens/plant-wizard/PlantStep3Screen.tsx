@@ -63,15 +63,13 @@ export const PlantStep3Screen = ({
   };
 
   const createImageToUpload = (image: string) => {
-    const uri =
-      Platform.OS === 'android' ? image : image.replace('file://', '');
     const filename = image.split('/').pop();
     const match = /\.(\w+)$/.exec(filename as string);
     const ext = match?.[1];
     const type = match ? `image/${match[1]}` : `image`;
 
     return {
-      uri,
+      uri: image,
       name: `image.${ext}`,
       type,
     };
@@ -93,7 +91,7 @@ export const PlantStep3Screen = ({
       }
     });
 
-    if (data?.image?.length > 0) {
+    if (data?.image?.length > 0 && data.image.includes('file://')) {
       formData.append(
         'plant[image]',
         createImageToUpload(data?.image) as unknown as string
@@ -124,9 +122,7 @@ export const PlantStep3Screen = ({
         <Dialog visible={visible} onDismiss={hideDialog}>
           <Dialog.Content>
             <Text variant="bodyLarge">
-              {isError
-                ? error?.response?.data?.error
-                : t('confirmation_message')}
+              {isError ? t('something_went_wrong') : t('confirmation_message')}
             </Text>
           </Dialog.Content>
           <Dialog.Actions>
