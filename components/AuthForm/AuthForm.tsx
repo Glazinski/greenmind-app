@@ -10,10 +10,9 @@ import {
 } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native';
 import { Controller } from 'react-hook-form';
-import type { NativeStackNavigationProp } from '@react-navigation/native-stack/src/types';
 import { useTranslation } from 'react-i18next';
 
-import type { UnauthenticatedAppParamList } from 'UnauthenticatedApp';
+import { UnauthenticatedRootStackScreenProps } from 'navigation/types';
 
 import { styles } from './AuthForm.styles';
 
@@ -41,10 +40,7 @@ export const AuthForm = ({
   } = useTheme();
   const navigation =
     useNavigation<
-      NativeStackNavigationProp<
-        UnauthenticatedAppParamList,
-        'SignIn' | 'SignUp'
-      >
+      UnauthenticatedRootStackScreenProps<'SignIn'>['navigation']
     >();
   const [passwordSecureEntry, setPasswordSecureEntry] = React.useState(true);
   const buttonAndTitleText = type === 'signIn' ? t('sign_in') : t('sign_up');
@@ -83,6 +79,7 @@ export const AuthForm = ({
               autoComplete="email"
               keyboardType="email-address"
               error={!!errors?.email?.message}
+              disabled={isLoading}
             />
           )}
         />
@@ -103,6 +100,7 @@ export const AuthForm = ({
               secureTextEntry={passwordSecureEntry}
               error={!!errors?.password?.message}
               autoComplete="password"
+              disabled={isLoading}
               right={
                 <TextInput.Icon
                   icon={passwordSecureEntry ? 'eye-off' : 'eye'}
@@ -132,6 +130,7 @@ export const AuthForm = ({
                   secureTextEntry={passwordSecureEntry}
                   error={!!errors?.passwordConfirmation?.message}
                   autoComplete="password"
+                  disabled={isLoading}
                   right={
                     <TextInput.Icon
                       icon={passwordSecureEntry ? 'eye-off' : 'eye'}

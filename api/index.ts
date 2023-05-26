@@ -29,3 +29,6 @@ export function setAuthToken(token: string | null) {
     delete api.defaults.headers.common['Authorization'];
   }
 }
+
+export const replaceLocalhostToIP = (str: string) =>
+  str.replace('localhost', Constants.expoConfig?.extra?.myIpAddress);

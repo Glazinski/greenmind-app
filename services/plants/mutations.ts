@@ -2,7 +2,6 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 
 import { api } from 'api';
-import { BackendPlant, PlantFormData } from 'schemas/plants';
 
 interface ErrorResponse {
   error: string[];
@@ -11,13 +10,10 @@ interface ErrorResponse {
 export const useAddPlant = (onSuccess?: () => void) => {
   const queryClient = useQueryClient();
 
-  return useMutation<unknown, AxiosError<ErrorResponse>, PlantFormData>({
+  return useMutation<unknown, AxiosError<ErrorResponse>, FormData>({
     mutationFn: (newPlant) =>
-      api.post('/plants', {
-        plant: {
-          ...newPlant,
-          public: false,
-        },
+      api.post('/plants', newPlant, {
+        headers: { 'Content-Type': 'multipart/form-data' },
       }),
     onSuccess: async () => {
       onSuccess?.();
@@ -29,10 +25,17 @@ export const useAddPlant = (onSuccess?: () => void) => {
 export const useEditPlant = (onSuccess?: () => void) => {
   const queryClient = useQueryClient();
 
-  return useMutation<unknown, AxiosError<ErrorResponse>, BackendPlant>({
-    mutationFn: (plant) =>
-      api.patch(`/plants/${plant.id}`, {
-        plant,
+  return useMutation<
+    unknown,
+    AxiosError<ErrorResponse>,
+    {
+      plant: FormData;
+      plantId: number;
+    }
+  >({
+    mutationFn: ({ plant, plantId }) =>
+      api.patch(`/plants/${plantId}`, plant, {
+        headers: { 'Content-Type': 'multipart/form-data' },
       }),
     onSuccess: async () => {
       await queryClient.invalidateQueries({ queryKey: ['plants'] });

@@ -1,6 +1,7 @@
 import { z } from 'zod';
 
 export const step1Schema = z.object({
+  image: z.string(),
   name: z.string().nonempty(),
   appearance: z.string().nonempty(),
 });
@@ -24,18 +25,23 @@ export const step2Schema = z.object({
 });
 
 export const step3Schema = z.object({
-  fertilizing: z.string().nonempty(),
-  repotting: z.string().nonempty(),
-  pruning: z.string().nonempty(),
-  common_diseases: z.string().nonempty(),
-  blooming_time: z.string().nonempty(),
+  fertilizing: z.string(),
+  repotting: z.string(),
+  pruning: z.string(),
+  common_diseases: z.string(),
+  blooming_time: z.string(),
 });
 
 export const plantSchema = step1Schema
   .extend(step2Schema.shape)
   .extend(step3Schema.shape);
 
-const backendPlant = step1Schema
+const backendPlant = z
+  .object({
+    image_url: z.string(),
+    name: z.string(),
+    appearance: z.string(),
+  })
   .extend(
     z.object({
       light_min: z.number(),

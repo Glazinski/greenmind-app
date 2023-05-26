@@ -30,13 +30,6 @@ export const PlantList = () => {
       keyExtractor={({ id }) => id.toString()}
     />
   );
-  // return (
-  //   <View style={styles.container}>
-  //     {privatePlants?.map((privatePlant) => (
-  //       <PlantItem key={privatePlant.id} plant={privatePlant} />
-  //     ))}
-  //   </View>
-  // );
 };
 
 const styles = StyleSheet.create({

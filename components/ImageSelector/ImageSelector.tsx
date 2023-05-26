@@ -3,15 +3,26 @@ import { Image, StyleSheet } from 'react-native';
 import { Surface, IconButton } from 'react-native-paper';
 import * as ImagePicker from 'expo-image-picker';
 
+import { replaceLocalhostToIP } from 'api';
 import { Camera } from 'components/Camera';
 
 interface ImageSelectorProps {
+  value?: string;
   onChange?: (image: string) => void;
 }
 
-export const ImageSelector = ({ onChange }: ImageSelectorProps) => {
-  const [selectedImage, setSelectedImage] = React.useState<string | null>(null);
+export const ImageSelector = ({ value, onChange }: ImageSelectorProps) => {
+  const [selectedImage, setSelectedImage] = React.useState<string | null>(
+    value || null
+  );
   const [isCameraOpen, setIsCameraOpen] = React.useState(false);
+
+  React.useEffect(() => {
+    if (value) {
+      onChange?.(value);
+      setSelectedImage(value);
+    }
+  }, [value, onChange]);
 
   const handleChange = (image: string) => {
     onChange?.(image);
@@ -30,7 +41,7 @@ export const ImageSelector = ({ onChange }: ImageSelectorProps) => {
   };
 
   const getSourceImage = React.useCallback(() => {
-    if (selectedImage) return { uri: selectedImage };
+    if (selectedImage) return { uri: replaceLocalhostToIP(selectedImage) };
 
     return require('../../assets/icon.png');
   }, [selectedImage]);

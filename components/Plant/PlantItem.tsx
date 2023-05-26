@@ -8,10 +8,12 @@ import {
   IconButton,
   Avatar,
 } from 'react-native-paper';
-import { BackendPlant } from '../../schemas/plants';
-import { useDeletePlant } from '../../services/plants/mutations';
 import { useNavigation } from '@react-navigation/native';
-import { HomeDrawerScreenProps } from '../../navigation/types';
+
+import { replaceLocalhostToIP } from 'api';
+import { BackendPlant } from 'schemas/plants';
+import { useDeletePlant } from 'services/plants/mutations';
+import { HomeDrawerScreenProps } from 'navigation/types';
 
 interface PlantItemProps {
   plant: BackendPlant;
@@ -22,6 +24,7 @@ export const PlantItem = ({ plant }: PlantItemProps) => {
     useNavigation<HomeDrawerScreenProps<'Plants'>['navigation']>();
   const {
     id,
+    image_url,
     name,
     light_min,
     light_max,
@@ -64,7 +67,14 @@ export const PlantItem = ({ plant }: PlantItemProps) => {
       borderless={true}
     >
       <Surface style={styles.item}>
-        <Avatar.Image size={83} source={require('../../assets/icon.png')} />
+        <Avatar.Image
+          size={83}
+          source={
+            image_url
+              ? { uri: replaceLocalhostToIP(image_url) }
+              : require('../../assets/icon.png')
+          }
+        />
         <View style={styles.itemInformation}>
           <Text variant="titleMedium">{name}</Text>
           {renderMinMaxLabel('Light', light_min, light_max)}

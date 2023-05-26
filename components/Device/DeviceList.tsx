@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, FlatList } from 'react-native';
+import { FlatList } from 'react-native';
 
 import { BackendDevice } from 'schemas/devices';
 
@@ -45,7 +45,6 @@ export const DeviceList = ({ devices }: DeviceListProps) => {
   return (
     <>
       <FlatList
-        style={styles.container}
         data={devices}
         renderItem={({ item }) => (
           <DeviceItem
@@ -73,9 +72,3 @@ export const DeviceList = ({ devices }: DeviceListProps) => {
     </>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    paddingHorizontal: 16,
-  },
-});

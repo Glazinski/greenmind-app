@@ -16,6 +16,7 @@ const MAX_STEP = 2;
 const MIN_STEP = 0;
 const DEFAULT_STEPS = {
   '0': {
+    image: '',
     name: '',
     appearance: '',
   },
@@ -24,8 +25,10 @@ const DEFAULT_STEPS = {
     light_max: '',
     temp_min: '',
     temp_max: '',
-    humidity_min: '',
-    humidity_max: '',
+    air_humidity_min: '',
+    air_humidity_max: '',
+    soil_humidity_min: '',
+    soil_humidity_max: '',
   },
   '2': {
     blooming_time: '',

@@ -3,7 +3,7 @@ import { View, StyleSheet } from 'react-native';
 import { Text, Button, useTheme } from 'react-native-paper';
 import type { StackScreenProps } from '@react-navigation/stack';
 
-import { DeviceWizardStackParamList } from 'navigation/DeviceWizardNavigator';
+import { DeviceWizardStackParamList } from 'navigation/types';
 import { Layout } from 'components/Layout';
 
 export const DeviceStep1 = ({

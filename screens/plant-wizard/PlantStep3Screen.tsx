@@ -9,6 +9,7 @@ import { Layout } from 'components/Layout';
 import { PlantWizardStackScreenProps } from 'navigation/types';
 import { useAddPlant, useEditPlant } from 'services/plants/mutations';
 import { usePlantFormStore } from 'store/usePlantFormStore';
+import { Platform } from 'react-native';
 
 export const PlantStep3Screen = ({
   navigation,
@@ -61,38 +62,53 @@ export const PlantStep3Screen = ({
     return t('edit');
   };
 
-  const handleSubmit = async () => {
-    let data = {};
+  const createImageToUpload = (image: string) => {
+    const uri =
+      Platform.OS === 'android' ? image : image.replace('file://', '');
+    const filename = image.split('/').pop();
+    const match = /\.(\w+)$/.exec(filename as string);
+    const ext = match?.[1];
+    const type = match ? `image/${match[1]}` : `image`;
 
+    return {
+      uri,
+      name: `image.${ext}`,
+      type,
+    };
+  };
+
+  const handleSubmit = async () => {
+    let data = {} as PlantFormData;
     Object.keys(steps).forEach((key) => {
       data = { ...data, ...steps[key] };
     });
 
-    const {
-      light_min,
-      light_max,
-      air_humidity_min,
-      air_humidity_max,
-      soil_humidity_min,
-      soil_humidity_max,
-      temp_min,
-      temp_max,
-    } = data as PlantFormData;
+    const formData = new FormData();
+    Object.keys(data).forEach((key) => {
+      if (key !== 'image') {
+        formData.append(
+          `plant[${key}]`,
+          data[key as keyof PlantFormData].toString()
+        );
+      }
+    });
 
-    type === 'add'
-      ? await addPlant(data as PlantFormData)
-      : await editPlant({
-          ...data,
-          id: plantId,
-          light_min: Number(light_min),
-          light_max: Number(light_max),
-          air_humidity_min: Number(air_humidity_min),
-          air_humidity_max: Number(air_humidity_max),
-          soil_humidity_min: Number(soil_humidity_min),
-          soil_humidity_max: Number(soil_humidity_max),
-          temp_min: Number(temp_min),
-          temp_max: Number(temp_max),
-        } as BackendPlant);
+    if (data?.image?.length > 0) {
+      formData.append(
+        'plant[image]',
+        createImageToUpload(data?.image) as unknown as string
+      );
+    }
+
+    if (type === 'add') {
+      await addPlant(formData);
+      return;
+    }
+
+    await editPlant({
+      plant: formData,
+      plantId: plantId as number,
+    });
   };
 
   return (
