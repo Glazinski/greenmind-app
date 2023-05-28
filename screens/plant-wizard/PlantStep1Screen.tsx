@@ -43,7 +43,11 @@ export const PlantStep1Screen = ({
         blooming_time,
       } = backendPlant;
 
-      setSteps('0', { name, appearance, image: image_url });
+      setSteps('0', {
+        name: name ?? '',
+        appearance: appearance ?? '',
+        image: image_url ?? '',
+      });
       setSteps('1', {
         light_min: light_min?.toString() || '',
         light_max: light_max?.toString() || '',
@@ -55,11 +59,11 @@ export const PlantStep1Screen = ({
         soil_humidity_max: soil_humidity_max?.toString() ?? '',
       });
       setSteps('2', {
-        fertilizing,
-        repotting,
-        pruning,
-        common_diseases,
-        blooming_time,
+        fertilizing: fertilizing ?? '',
+        repotting: repotting ?? '',
+        pruning: pruning ?? '',
+        common_diseases: common_diseases ?? '',
+        blooming_time: blooming_time ?? '',
       });
     }
   }

@@ -53,14 +53,16 @@ const DrawerContent = ({ navigation, state }: DrawerContentComponentProps) => {
 };
 
 export const DrawerNavigator = () => {
-  const theme = useTheme();
+  const {
+    colors: { background },
+  } = useTheme();
 
   return (
     <Drawer.Navigator
       drawerContent={DrawerContent}
       screenOptions={({ navigation }) => ({
         headerStyle: {
-          backgroundColor: theme.colors.background,
+          backgroundColor: background,
         },
         headerShadowVisible: false,
         headerTitle: '',

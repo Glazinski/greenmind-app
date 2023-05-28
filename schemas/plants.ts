@@ -38,22 +38,20 @@ export const plantSchema = step1Schema
 
 const backendPlant = z
   .object({
+    id: z.number(),
+    public: z.boolean(),
     image_url: z.string(),
     name: z.string(),
     appearance: z.string(),
+    light_min: z.number(),
+    light_max: z.number(),
+    temp_min: z.number(),
+    temp_max: z.number(),
+    air_humidity_min: z.number(),
+    air_humidity_max: z.number(),
+    soil_humidity_min: z.number(),
+    soil_humidity_max: z.number(),
   })
-  .extend(
-    z.object({
-      light_min: z.number(),
-      light_max: z.number(),
-      temp_min: z.number(),
-      temp_max: z.number(),
-      air_humidity_min: z.number(),
-      air_humidity_max: z.number(),
-      soil_humidity_min: z.number(),
-      soil_humidity_max: z.number(),
-    }).shape
-  )
   .extend(step3Schema.shape);
 
 export type Step1FormData = z.infer<typeof step1Schema>;
@@ -61,4 +59,4 @@ export type Step2FormData = z.infer<typeof step2Schema>;
 export type Step3FormData = z.infer<typeof step3Schema>;
 export type StepFormData = Step1FormData | Step2FormData | Step3FormData;
 export type PlantFormData = z.infer<typeof plantSchema>;
-export type BackendPlant = z.infer<typeof backendPlant> & { id: number };
+export type BackendPlant = z.infer<typeof backendPlant>;
