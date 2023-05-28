@@ -55,12 +55,8 @@ export const PlantItem = ({ plant }: PlantItemProps) => {
   return (
     <TouchableRipple
       onPress={() =>
-        navigation.navigate('PlantWizard', {
-          screen: 'PlantStep1',
-          params: {
-            type: 'edit',
-            plantId: id,
-          },
+        navigation.navigate('Plant', {
+          plantId: id,
         })
       }
       style={styles.container}
@@ -98,7 +94,24 @@ export const PlantItem = ({ plant }: PlantItemProps) => {
             anchorPosition="bottom"
           >
             <Menu.Item
-              onPress={() => deletePlant(id)}
+              onPress={() => {
+                closeMenu();
+                navigation.navigate('PlantWizard', {
+                  screen: 'PlantStep1',
+                  params: {
+                    type: 'edit',
+                    plantId: id,
+                  },
+                });
+              }}
+              title="Edit"
+              leadingIcon="pencil"
+            />
+            <Menu.Item
+              onPress={() => {
+                closeMenu();
+                deletePlant(id);
+              }}
               title="Delete"
               leadingIcon="delete"
             />

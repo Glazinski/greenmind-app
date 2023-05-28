@@ -1,20 +1,13 @@
 import React from 'react';
-import { View, StyleSheet, useWindowDimensions } from 'react-native';
+import { StyleSheet, useWindowDimensions } from 'react-native';
 import { FAB, Text, useTheme } from 'react-native-paper';
-import {
-  TabView,
-  TabBar,
-  SceneMap,
-  SceneRendererProps,
-} from 'react-native-tab-view';
+import { TabView, TabBar, SceneMap } from 'react-native-tab-view';
 
-import { PlantList } from 'components/Plant/PlantList';
 import { Layout } from 'components/Layout';
-import { MyOwnPlants } from 'components/Plant/MyOwnPlants';
-import { CommunityPlants } from 'components/Plant/CommunityPlants';
-import { FavoritePlants } from 'components/Plant/FavoritePlants';
+import { MyOwnPlants } from 'screens/plants/tabs/MyOwnPlants';
+import { CommunityPlants } from 'screens/plants/tabs/CommunityPlants';
+import { FavoritePlants } from 'screens/plants/tabs/FavoritePlants';
 import { HomeDrawerScreenProps } from 'navigation/types';
-import { usePrivatePlants, usePublicPlants } from 'services/plants/queries';
 
 const renderScene = SceneMap({
   myOwn: MyOwnPlants,
@@ -29,12 +22,6 @@ export const PlantsScreen = ({
     colors: { background, primary, onSurfaceVariant },
   } = useTheme();
   const layout = useWindowDimensions();
-  const { data: privatePlants, isLoading, isError } = usePrivatePlants();
-  const {
-    data: publicPlants,
-    isLoading: isPublicPlantsLoading,
-    isError: isPublicPlantsError,
-  } = usePublicPlants();
 
   const [index, setIndex] = React.useState(0);
   const [routes] = React.useState([
@@ -48,7 +35,6 @@ export const PlantsScreen = ({
       <TabView
         style={{ backgroundColor: background }}
         navigationState={{ index, routes }}
-        // renderScene={renderScene}
         renderScene={renderScene}
         onIndexChange={setIndex}
         initialLayout={{ width: layout.width }}
@@ -68,7 +54,6 @@ export const PlantsScreen = ({
           />
         )}
       />
-      {/*<PlantList />*/}
       <FAB
         icon="plus"
         style={styles.fab}

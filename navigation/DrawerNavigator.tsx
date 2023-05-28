@@ -11,7 +11,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { HomeScreen } from 'screens/HomeScreen';
 import { DevicesScreen } from 'screens/DevicesScreen';
-import { PlantsScreen } from 'screens/PlantsScreen';
+import { PlantsScreen } from 'screens/plants/PlantsScreen';
 import { AccountScreen } from 'screens/AccountScreen';
 
 import { HomeDrawerParamList } from './types';

@@ -2,8 +2,8 @@ import { View, StyleSheet, ScrollView } from 'react-native';
 import { Controller } from 'react-hook-form';
 import { Text } from 'react-native-paper';
 
-import { PlantFormStep } from 'components/PlantForm/PlantFormStep';
-import { PlantFormStep1 } from 'components/PlantForm/PlantFormStep1';
+import { PlantFormStep } from 'components/Plant/PlantForm/PlantFormStep';
+import { PlantFormStep1 } from 'components/Plant/PlantForm/PlantFormStep1';
 import { Layout } from 'components/Layout';
 import { BackendPlant, step1Schema } from 'schemas/plants';
 import { usePlantFormStore } from 'store/usePlantFormStore';

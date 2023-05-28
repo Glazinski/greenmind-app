@@ -18,6 +18,9 @@ export type RootStackParamList = {
   Index: NavigatorScreenParams<HomeDrawerParamList>;
   PlantWizard: NavigatorScreenParams<PlantWizardStackParamList>;
   DeviceWizard: NavigatorScreenParams<DeviceWizardStackParamList>;
+  Plant: {
+    plantId: number;
+  };
 };
 
 export type RootStackScreenProps<T extends keyof RootStackParamList> =

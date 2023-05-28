@@ -4,7 +4,7 @@ import { Control } from 'react-hook-form';
 
 import { Step2FormData } from 'schemas/plants';
 
-import { TextField } from '../TextField';
+import { TextField } from '../../TextField';
 
 interface PlantFormStep2Props {
   control: Control<Step2FormData>;

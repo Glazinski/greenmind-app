@@ -15,6 +15,7 @@ import { BackendDevice } from 'schemas/devices';
 interface DeviceItemProps {
   device: BackendDevice;
   onUseThisDeviceClick: () => void;
+  onStopUseThisDeviceClick: () => void;
   onDeleteClick: () => void;
   isActive: boolean;
 }
@@ -23,6 +24,7 @@ export const DeviceItem = ({
   device: { name },
   onDeleteClick,
   onUseThisDeviceClick,
+  onStopUseThisDeviceClick,
   isActive,
 }: DeviceItemProps) => {
   const {
@@ -53,14 +55,23 @@ export const DeviceItem = ({
             anchor={<IconButton icon="dots-vertical" onPress={openMenu} />}
             anchorPosition="bottom"
           >
-            {!isActive && (
+            {isActive ? (
+              <Menu.Item
+                onPress={() => {
+                  onStopUseThisDeviceClick();
+                  closeMenu();
+                }}
+                title="Stop using this device"
+                leadingIcon="close-circle"
+              />
+            ) : (
               <Menu.Item
                 onPress={() => {
                   onUseThisDeviceClick();
                   closeMenu();
                 }}
                 title="Use this device"
-                leadingIcon="power"
+                leadingIcon="check-circle"
               />
             )}
             <Menu.Item

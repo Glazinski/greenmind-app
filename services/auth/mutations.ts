@@ -11,14 +11,15 @@ interface AuthResponse {
 const defaultMutationConfig = (
   setAuthData: (
     accessToken: string | null,
-    expirationTimestamp: number | null
+    expirationTimestamp: number | null,
+    email: string | null
   ) => void
 ) => ({
-  onSuccess: (data: AuthResponse) => {
+  onSuccess: (data: AuthResponse, variables: SignInUser | SignUpUser) => {
     const expirationTimestamp = new Date().getTime() + 1800 * 1000; // 30 minutes
 
     setAuthToken(data.token);
-    setAuthData(data.token, expirationTimestamp);
+    setAuthData(data.token, expirationTimestamp, variables.email);
   },
 });
 
@@ -53,7 +54,7 @@ export const useSignOut = () => {
     mutationFn: () => new Promise((resolve) => resolve(undefined)),
     onSuccess: async () => {
       try {
-        setAuthData(null, null);
+        setAuthData(null, null, null);
         setAuthToken(null);
       } catch (error) {
         console.error(error);

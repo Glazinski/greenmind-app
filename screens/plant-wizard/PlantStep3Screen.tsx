@@ -2,8 +2,8 @@ import React from 'react';
 import { Button, Dialog, Portal, Text } from 'react-native-paper';
 import { useTranslation } from 'react-i18next';
 
-import { PlantFormStep } from 'components/PlantForm/PlantFormStep';
-import { PlantFormStep3 } from 'components/PlantForm/PlantFormStep3';
+import { PlantFormStep } from 'components/Plant/PlantForm/PlantFormStep';
+import { PlantFormStep3 } from 'components/Plant/PlantForm/PlantFormStep3';
 import { BackendPlant, PlantFormData, step3Schema } from 'schemas/plants';
 import { Layout } from 'components/Layout';
 import { PlantWizardStackScreenProps } from 'navigation/types';

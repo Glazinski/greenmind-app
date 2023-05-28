@@ -15,7 +15,7 @@ export const useAuth = () => {
     const isExpired = isTokenExpired(expirationTimestamp as number);
 
     if (isExpired) {
-      setAuthData(null, null);
+      setAuthData(null, null, null);
       setAuthToken(null);
       return;
     }

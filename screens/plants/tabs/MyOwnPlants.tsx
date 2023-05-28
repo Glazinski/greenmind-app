@@ -1,10 +1,9 @@
 import { usePrivatePlants } from 'services/plants/queries';
 
-import { PlantList } from './PlantList';
-import { Layout } from '../Layout';
+import { PlantList } from 'components/Plant/PlantList';
+import { Layout } from 'components/Layout';
 
 export const MyOwnPlants = () => {
-  console.log('MyOwn');
   const { data: privatePlants, isLoading, isError } = usePrivatePlants();
 
   return (

@@ -29,6 +29,10 @@ export const DeviceList = ({ devices }: DeviceListProps) => {
     setDeviceId(id);
   };
 
+  const onStopUseThisDeviceClick = () => {
+    setDeviceId(null);
+  };
+
   const onDeleteClick = (id: number) => {
     setDeviceIdToDelete(id);
     showDialog();
@@ -50,6 +54,7 @@ export const DeviceList = ({ devices }: DeviceListProps) => {
           <DeviceItem
             device={item}
             onUseThisDeviceClick={() => onUseThisDeviceClick(item.id)}
+            onStopUseThisDeviceClick={onStopUseThisDeviceClick}
             onDeleteClick={() => onDeleteClick(item.id)}
             isActive={item.id === deviceId}
           />

@@ -1,5 +1,5 @@
-import { PlantFormStep } from 'components/PlantForm/PlantFormStep';
-import { PlantFormStep2 } from 'components/PlantForm/PlantFormStep2';
+import { PlantFormStep } from 'components/Plant/PlantForm/PlantFormStep';
+import { PlantFormStep2 } from 'components/Plant/PlantForm/PlantFormStep2';
 import { Layout } from 'components/Layout';
 import { step2Schema } from 'schemas/plants';
 

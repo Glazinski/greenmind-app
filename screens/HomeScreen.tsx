@@ -6,10 +6,12 @@ import { GrowBox } from 'components/GrowBox/GrowBox';
 import { useDevices } from 'services/device/queries';
 import { Layout } from 'components/Layout';
 import { HomeDrawerScreenProps } from 'navigation/types';
+import { useActiveDeviceStore } from '../store/useActiveDeviceStore';
 
 export const HomeScreen = ({
   navigation,
 }: HomeDrawerScreenProps<'Home'>): JSX.Element => {
+  const { deviceId } = useActiveDeviceStore();
   const {
     colors: { background },
   } = useTheme();
@@ -21,8 +23,27 @@ export const HomeScreen = ({
     return (
       <Layout style={[styles.container, { backgroundColor: background }]}>
         <Text variant="titleMedium">
-          No device assigned. You need to add and configure new device or assign
+          No device found. You need to add and configure new device or assign
           existing one to your account.{' '}
+        </Text>
+        <Button
+          onPress={() => {
+            navigation.navigate('Devices');
+          }}
+          style={styles.configureButton}
+        >
+          Configure device
+        </Button>
+      </Layout>
+    );
+  }
+
+  if (!deviceId) {
+    return (
+      <Layout style={[styles.container, { backgroundColor: background }]}>
+        <Text variant="titleMedium">
+          Your account is not linked to any device. Please assign a device to
+          proceed.
         </Text>
         <Button
           onPress={() => {
@@ -41,7 +62,7 @@ export const HomeScreen = ({
       showsVerticalScrollIndicator={false}
       style={[styles.container, { backgroundColor: background }]}
     >
-      <GrowBox />
+      {deviceId && devices.length > 0 && <GrowBox />}
     </ScrollView>
   );
 };

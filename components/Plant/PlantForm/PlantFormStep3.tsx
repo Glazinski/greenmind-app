@@ -2,7 +2,7 @@ import { View } from 'react-native';
 import { Control } from 'react-hook-form';
 
 import { Step3FormData } from 'schemas/plants';
-import { TextField } from '../TextField';
+import { TextField } from '../../TextField';
 
 interface PlantFormStep3Props {
   control: Control<Step3FormData>;
