@@ -3,7 +3,11 @@ import { ActivityIndicator, Text } from 'react-native-paper';
 import { StyleSheet, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
 
-import { useDevice, useDeviceLogs } from 'services/device/queries';
+import {
+  useAssignedDevice,
+  useDevice,
+  useDeviceLogs,
+} from 'services/device/queries';
 import { useActiveDeviceStore } from 'store/useActiveDeviceStore';
 import { ImageSelector } from 'components/ImageSelector';
 
@@ -13,12 +17,11 @@ import { GrowBoxWaterPlant } from './GrowBoxWaterPlant';
 
 export const GrowBox = () => {
   const { t } = useTranslation();
-  const { deviceId } = useActiveDeviceStore();
   const {
     data: device,
     isLoading: isDeviceLoading,
     isError: isDeviceError,
-  } = useDevice(deviceId);
+  } = useAssignedDevice();
   const {
     data: deviceLogs,
     isLoading: isDeviceLogsLoading,
