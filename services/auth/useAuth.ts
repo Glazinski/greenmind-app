@@ -6,24 +6,30 @@ import { useStoreHydration } from 'store/useStoreHydration';
 import { isTokenExpired } from 'services/auth/tokenUtils';
 
 export const useAuth = () => {
-  const { accessToken, expirationTimestamp, setAuthData } = useAuthStore();
+  const [isLoading, setIsLoading] = React.useState(false);
+  const { accessToken, expirationTimestamp, setAuthData, email } =
+    useAuthStore();
   const hydrated = useStoreHydration(useAuthStore.persist);
 
   React.useEffect(() => {
-    if ((!accessToken && !expirationTimestamp) || !hydrated) return;
+    setIsLoading(true);
+    if (accessToken && expirationTimestamp && email && !hydrated) {
+      const isExpired = isTokenExpired(expirationTimestamp as number);
 
-    const isExpired = isTokenExpired(expirationTimestamp as number);
+      if (isExpired) {
+        setAuthToken(null);
+        setAuthData(null, null, null);
+        setIsLoading(false);
+        return;
+      }
 
-    if (isExpired) {
-      setAuthData(null, null, null);
-      setAuthToken(null);
-      return;
+      setAuthToken(accessToken);
     }
-
-    setAuthToken(accessToken);
-  }, [accessToken, expirationTimestamp, hydrated, setAuthData]);
+    setIsLoading(false);
+  }, [accessToken, expirationTimestamp, email, hydrated, setAuthData]);
 
   return {
     isSignedIn: !!accessToken,
+    isLoading: isLoading || !hydrated,
   };
 };

@@ -1,12 +1,13 @@
 import React from 'react';
 import { StyleSheet, ScrollView } from 'react-native';
-import { useTheme, ActivityIndicator, Text, Button } from 'react-native-paper';
+import { useTheme, Text, Button } from 'react-native-paper';
 
 import { GrowBox } from 'components/GrowBox/GrowBox';
-import { useDevices } from 'services/device/queries';
 import { Layout } from 'components/Layout';
+import { useDevices } from 'services/device/queries';
+import { FullPageLoadingSpinner } from 'components/FullPageLoadingSpinner';
 import { HomeDrawerScreenProps } from 'navigation/types';
-import { useActiveDeviceStore } from '../store/useActiveDeviceStore';
+import { useActiveDeviceStore } from 'store/useActiveDeviceStore';
 
 export const HomeScreen = ({
   navigation,
@@ -17,7 +18,7 @@ export const HomeScreen = ({
   } = useTheme();
   const { data: devices, isLoading } = useDevices();
 
-  if (isLoading) return <ActivityIndicator size="large" />;
+  if (isLoading) return <FullPageLoadingSpinner />;
 
   if (!devices || devices?.length === 0) {
     return (

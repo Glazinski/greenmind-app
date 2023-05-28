@@ -1,19 +1,15 @@
 import * as React from 'react';
-import { ActivityIndicator, Text } from 'react-native-paper';
+import { Text } from 'react-native-paper';
 import { StyleSheet, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
 
-import {
-  useAssignedDevice,
-  useDevice,
-  useDeviceLogs,
-} from 'services/device/queries';
-import { useActiveDeviceStore } from 'store/useActiveDeviceStore';
+import { useAssignedDevice, useDeviceLogs } from 'services/device/queries';
 import { ImageSelector } from 'components/ImageSelector';
 
 import { GrowBoxDataRow } from './GrowBoxDataRow';
 import { GrowBoxDataCell } from './GrowBoxDataCell';
 import { GrowBoxWaterPlant } from './GrowBoxWaterPlant';
+import { FullPageLoadingSpinner } from '../FullPageLoadingSpinner';
 
 export const GrowBox = () => {
   const { t } = useTranslation();
@@ -31,7 +27,7 @@ export const GrowBox = () => {
   const isLoading = isDeviceLoading || isDeviceLogsLoading;
   const isError = isDeviceError || isDeviceLogsError;
 
-  if (isLoading) return <ActivityIndicator />;
+  if (isLoading) return <FullPageLoadingSpinner />;
 
   if (isError) return <Text>{t('something_went_wrong')}</Text>;
 
