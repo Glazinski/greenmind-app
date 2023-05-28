@@ -5,7 +5,7 @@ import { BackendPlant } from 'schemas/plants';
 
 export const usePrivatePlants = (onSuccess?: (data: BackendPlant[]) => void) =>
   useQuery({
-    queryKey: ['plants', { public: false }],
+    queryKey: ['plants', { type: 'private' }],
     queryFn: () =>
       api.get('/plants/private').then<BackendPlant[]>((res) => res.data),
     // queryFn: () => api.get('/plants/private').then<BackendPlant[]>((res) => []),
@@ -16,9 +16,20 @@ export const usePrivatePlants = (onSuccess?: (data: BackendPlant[]) => void) =>
 
 export const usePublicPlants = (onSuccess?: (data: BackendPlant[]) => void) =>
   useQuery({
-    queryKey: ['plants', { public: true }],
+    queryKey: ['plants', { type: 'public' }],
     queryFn: () =>
       api.get('/plants/public').then<BackendPlant[]>((res) => res.data),
+    // queryFn: () => api.get('/plants/private').then<BackendPlant[]>((res) => []),
+    onSuccess: (data) => {
+      onSuccess?.(data);
+    },
+  });
+
+export const useFavoritePlants = (onSuccess?: (data: BackendPlant[]) => void) =>
+  useQuery({
+    queryKey: ['plants', { type: 'favorite' }],
+    queryFn: () =>
+      api.get('/plants/favorites').then<BackendPlant[]>((res) => res.data),
     // queryFn: () => api.get('/plants/private').then<BackendPlant[]>((res) => []),
     onSuccess: (data) => {
       onSuccess?.(data);

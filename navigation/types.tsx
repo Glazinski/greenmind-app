@@ -30,7 +30,6 @@ export type HomeDrawerParamList = {
   Home: undefined;
   Devices: undefined;
   Plants: undefined;
-  Account: undefined;
 };
 
 export type HomeDrawerScreenProps<T extends keyof HomeDrawerParamList> =

@@ -6,6 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { useAssignedDevice, useDeviceLogs } from 'services/device/queries';
 import { ImageSelector } from 'components/ImageSelector';
 
+import { GrowBoxPlantSelector } from './GrowBoxPlantSelector';
 import { GrowBoxDataRow } from './GrowBoxDataRow';
 import { GrowBoxDataCell } from './GrowBoxDataCell';
 import { GrowBoxWaterPlant } from './GrowBoxWaterPlant';
@@ -41,6 +42,7 @@ export const GrowBox = () => {
       <ImageSelector />
       {deviceLog && (
         <View style={styles.dataContainer}>
+          <GrowBoxPlantSelector style={styles.dataRow} />
           <GrowBoxDataRow>
             <GrowBoxDataCell label="Temperature" value={deviceLog.temp} />
             <GrowBoxDataCell label="Soil humidity" value={deviceLog.soil_hum} />
@@ -62,5 +64,8 @@ const styles = StyleSheet.create({
   },
   dataContainer: {
     marginTop: 20,
+  },
+  dataRow: {
+    marginBottom: 10,
   },
 });

@@ -36,7 +36,7 @@ export const GrowBoxDataCell = ({ label, value }: GrowBoxDataCellProps) => {
 
 const styles = StyleSheet.create({
   touchableContainer: {
-    borderRadius: 15,
+    borderRadius: 12,
     flex: 1,
   },
   container: {
