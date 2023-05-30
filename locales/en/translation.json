@@ -13,5 +13,6 @@
   "confirmation_message": "Are you sure that the information you have provided is correct and complete?",
   "something_went_wrong": "Something went wrong",
   "no_plants_found": "No plants found",
-  "no_devices_found": "No devices found"
+  "no_devices_found": "No devices found",
+  "no_device_data": "No device data"
 }

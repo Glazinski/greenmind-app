@@ -7,6 +7,7 @@ import {
   Menu,
   IconButton,
   Avatar,
+  useTheme,
 } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native';
 
@@ -20,6 +21,9 @@ interface PlantItemProps {
 }
 
 export const PlantItem = ({ plant }: PlantItemProps) => {
+  const {
+    colors: { secondaryContainer },
+  } = useTheme();
   const navigation =
     useNavigation<HomeDrawerScreenProps<'Plants'>['navigation']>();
   const {
@@ -62,7 +66,7 @@ export const PlantItem = ({ plant }: PlantItemProps) => {
       style={styles.container}
       borderless={true}
     >
-      <Surface style={styles.item}>
+      <Surface style={[styles.item, { backgroundColor: secondaryContainer }]}>
         <Avatar.Image
           size={83}
           source={

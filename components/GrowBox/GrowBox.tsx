@@ -1,19 +1,21 @@
 import * as React from 'react';
 import { Text } from 'react-native-paper';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet } from 'react-native';
 import { useTranslation } from 'react-i18next';
 
 import { useAssignedDevice, useDeviceLogs } from 'services/device/queries';
 import { ImageSelector } from 'components/ImageSelector';
+import { usePlant } from 'services/plants/queries';
+import { useActivePlantStore } from 'store/useActivePlantStore';
 
-import { GrowBoxPlantSelector } from './GrowBoxPlantSelector';
-import { GrowBoxDataRow } from './GrowBoxDataRow';
-import { GrowBoxDataCell } from './GrowBoxDataCell';
+import { GrowBoxDataTable } from './GrowBoxDataTable';
 import { GrowBoxWaterPlant } from './GrowBoxWaterPlant';
 import { FullPageLoadingSpinner } from '../FullPageLoadingSpinner';
+import { Layout } from '../Layout';
 
-export const GrowBox = () => {
+export const GrowBox = (): JSX.Element => {
   const { t } = useTranslation();
+  const activePlantId = useActivePlantStore((state) => state.plantId);
   const {
     data: device,
     isLoading: isDeviceLoading,
@@ -24,15 +26,28 @@ export const GrowBox = () => {
     isLoading: isDeviceLogsLoading,
     isError: isDeviceLogsError,
   } = useDeviceLogs();
-  const deviceLog = deviceLogs && deviceLogs[deviceLogs.length - 1];
+  const { data: activePlant } = usePlant(activePlantId);
+  const deviceLog = deviceLogs?.[deviceLogs.length - 1];
   const isLoading = isDeviceLoading || isDeviceLogsLoading;
   const isError = isDeviceError || isDeviceLogsError;
 
   if (isLoading) return <FullPageLoadingSpinner />;
 
-  if (isError) return <Text>{t('something_went_wrong')}</Text>;
+  if (isError) {
+    return (
+      <Layout>
+        <Text>{t('something_went_wrong')}</Text>
+      </Layout>
+    );
+  }
 
-  if (!device || !deviceLog) return <Text>No device data</Text>;
+  if (!device || !deviceLog) {
+    return (
+      <Layout>
+        <Text>{t('no_device_data')}</Text>
+      </Layout>
+    );
+  }
 
   return (
     <>
@@ -41,17 +56,7 @@ export const GrowBox = () => {
       </Text>
       <ImageSelector />
       {deviceLog && (
-        <View style={styles.dataContainer}>
-          <GrowBoxPlantSelector style={styles.dataRow} />
-          <GrowBoxDataRow>
-            <GrowBoxDataCell label="Temperature" value={deviceLog.temp} />
-            <GrowBoxDataCell label="Soil humidity" value={deviceLog.soil_hum} />
-          </GrowBoxDataRow>
-          <GrowBoxDataRow>
-            <GrowBoxDataCell label="Air humidity" value={deviceLog.air_hum} />
-            <GrowBoxDataCell label="Light" value={deviceLog.light} />
-          </GrowBoxDataRow>
-        </View>
+        <GrowBoxDataTable deviceLog={deviceLog} activePlant={activePlant} />
       )}
       <GrowBoxWaterPlant />
     </>
@@ -60,12 +65,6 @@ export const GrowBox = () => {
 
 const styles = StyleSheet.create({
   dataTitle: {
-    marginBottom: 10,
-  },
-  dataContainer: {
-    marginTop: 20,
-  },
-  dataRow: {
     marginBottom: 10,
   },
 });

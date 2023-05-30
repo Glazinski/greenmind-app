@@ -28,7 +28,7 @@ export const DeviceItem = ({
   isActive,
 }: DeviceItemProps) => {
   const {
-    colors: { secondaryContainer },
+    colors: { primaryContainer, secondaryContainer },
   } = useTheme();
   const [visible, setVisible] = React.useState(false);
 
@@ -41,7 +41,7 @@ export const DeviceItem = ({
       <Surface
         style={[
           styles.device,
-          isActive ? { backgroundColor: secondaryContainer } : {},
+          { backgroundColor: isActive ? primaryContainer : secondaryContainer },
         ]}
       >
         <Avatar.Image source={require('../../assets/icon.png')} />

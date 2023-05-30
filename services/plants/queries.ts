@@ -35,3 +35,11 @@ export const useFavoritePlants = (onSuccess?: (data: BackendPlant[]) => void) =>
       onSuccess?.(data);
     },
   });
+
+export const usePlant = (plantId: number | null) =>
+  useQuery({
+    queryKey: ['plants', plantId],
+    queryFn: () =>
+      api.get(`/plants/${plantId}`).then<BackendPlant>((res) => res.data),
+    enabled: typeof plantId === 'number',
+  });

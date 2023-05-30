@@ -11,10 +11,10 @@ export const useActiveDeviceStore = create<ActiveDeviceState>()(
   persist(
     (set) => ({
       deviceId: null,
-      setDeviceId: (deviceId) => set(() => ({ deviceId })),
+      setDeviceId: (deviceId) => set({ deviceId }),
     }),
     {
-      name: 'device-storage',
+      name: 'active-device-storage',
       storage: createJSONStorage(() => AsyncStorage),
     }
   )
