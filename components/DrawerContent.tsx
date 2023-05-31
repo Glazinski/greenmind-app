@@ -1,3 +1,4 @@
+import { View, StyleSheet } from 'react-native';
 import { DrawerContentComponentProps } from '@react-navigation/drawer';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import {
@@ -41,29 +42,35 @@ export const DrawerContent = ({
     return (
       <PaperDrawer.Item
         label={label}
-        onPress={() => signOut()}
         active={false}
+        onPress={() => signOut()}
         icon="logout"
       />
     );
   };
 
   return (
-    <>
-      <PaperDrawer.Section
-        style={{
-          flex: 1,
-          height: '130%',
-          paddingTop: insets.top + 20,
-          marginBottom: 0,
-          backgroundColor: background,
-        }}
-      >
+    <View
+      style={[
+        styles.container,
+        { paddingTop: insets.top + 20, backgroundColor: background },
+      ]}
+    >
+      <PaperDrawer.Section>
         {renderDrawerItem('Home', 'home')}
         {renderDrawerItem('Devices', 'devices')}
         {renderDrawerItem('Plants', 'leaf')}
+        {renderDrawerItem('Settings', 'cog')}
       </PaperDrawer.Section>
-      {renderSignOutItem()}
-    </>
+      <View>{renderSignOutItem()}</View>
+    </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    paddingBottom: 8,
+    justifyContent: 'space-between',
+  },
+});

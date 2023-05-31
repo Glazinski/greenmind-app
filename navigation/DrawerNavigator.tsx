@@ -4,6 +4,7 @@ import { createDrawerNavigator } from '@react-navigation/drawer';
 import { HomeScreen } from 'screens/HomeScreen';
 import { DevicesScreen } from 'screens/DevicesScreen';
 import { PlantsScreen } from 'screens/plants/PlantsScreen';
+import { SettingsScreen } from 'screens/SettingsScreen';
 import { DrawerContent } from 'components/DrawerContent';
 
 import { HomeDrawerParamList } from './types';
@@ -32,6 +33,7 @@ export const DrawerNavigator = () => {
       <Drawer.Screen name="Home" component={HomeScreen} />
       <Drawer.Screen name="Devices" component={DevicesScreen} />
       <Drawer.Screen name="Plants" component={PlantsScreen} />
+      <Drawer.Screen name="Settings" component={SettingsScreen} />
     </Drawer.Navigator>
   );
 };

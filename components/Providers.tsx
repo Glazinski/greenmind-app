@@ -6,11 +6,15 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 import { lightTheme, darkTheme } from 'lib/paper/theme';
+import { useColorSchemeStore } from '../store/useColorSchemeStore';
 
 const queryClient = new QueryClient();
 
 export const Providers = ({ children }: React.PropsWithChildren) => {
-  const colorScheme = useColorScheme();
+  const userColorScheme = useColorSchemeStore((state) => state.colorScheme);
+  const systemColorScheme = useColorScheme();
+  const colorScheme =
+    userColorScheme === 'system' ? systemColorScheme : userColorScheme;
 
   const theme = React.useMemo(
     () => (colorScheme === 'dark' ? darkTheme : lightTheme),
