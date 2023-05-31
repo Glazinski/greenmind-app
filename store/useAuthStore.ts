@@ -4,23 +4,16 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 interface AuthState {
   accessToken: string | null;
-  expirationTimestamp: number | null;
-  email: string | null;
-  setAuthData: (
-    accessToken: string | null,
-    expirationTimestamp: number | null,
-    email: string | null
-  ) => void;
+  userId: string | null;
+  setAuthData: (accessToken: string | null, userId: string | null) => void;
 }
 
 export const useAuthStore = create<AuthState>()(
   persist(
     (set) => ({
       accessToken: null,
-      expirationTimestamp: null,
-      email: null,
-      setAuthData: (accessToken, expirationTimestamp, email) =>
-        set({ accessToken, expirationTimestamp, email }),
+      userId: null,
+      setAuthData: (accessToken, userId) => set({ accessToken, userId }),
     }),
     {
       name: 'auth-storage',

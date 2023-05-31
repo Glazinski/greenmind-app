@@ -1,5 +1,4 @@
-import { View, StyleSheet, ScrollView } from 'react-native';
-import { Controller } from 'react-hook-form';
+import { ScrollView } from 'react-native';
 import { Text } from 'react-native-paper';
 
 import { PlantFormStep } from 'components/Plant/PlantForm/PlantFormStep';
@@ -9,7 +8,6 @@ import { BackendPlant, step1Schema } from 'schemas/plants';
 import { usePlantFormStore } from 'store/usePlantFormStore';
 import { usePrivatePlants } from 'services/plants/queries';
 import { PlantWizardStackScreenProps } from 'navigation/types';
-import { ImageSelector } from 'components/ImageSelector';
 
 export const PlantStep1Screen = ({
   route,
@@ -47,6 +45,7 @@ export const PlantStep1Screen = ({
         name: name ?? '',
         appearance: appearance ?? '',
         image: image_url ?? '',
+        public: backendPlant.public,
       });
       setSteps('1', {
         light_min: light_min?.toString() || '',
@@ -82,32 +81,8 @@ export const PlantStep1Screen = ({
         index={0}
         title={'Basic information'}
         schema={step1Schema}
-        renderFields={(control) => (
-          <>
-            <View style={styles.imageSelector}>
-              <Controller
-                render={({ field }) => {
-                  return (
-                    <ImageSelector
-                      onChange={field.onChange}
-                      value={field.value}
-                    />
-                  );
-                }}
-                name="image"
-                control={control}
-              />
-            </View>
-            <PlantFormStep1 control={control} />
-          </>
-        )}
+        renderFields={(control) => <PlantFormStep1 control={control} />}
       />
     </Layout>
   );
 };
-
-const styles = StyleSheet.create({
-  imageSelector: {
-    marginBottom: 16,
-  },
-});

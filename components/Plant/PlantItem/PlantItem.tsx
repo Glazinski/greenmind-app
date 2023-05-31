@@ -4,8 +4,6 @@ import {
   Surface,
   Text,
   TouchableRipple,
-  Menu,
-  IconButton,
   Avatar,
   useTheme,
 } from 'react-native-paper';
@@ -13,8 +11,9 @@ import { useNavigation } from '@react-navigation/native';
 
 import { replaceLocalhostToIP } from 'api';
 import { BackendPlant } from 'schemas/plants';
-import { useDeletePlant } from 'services/plants/mutations';
 import { HomeDrawerScreenProps } from 'navigation/types';
+
+import { PlantItemActions } from './PlantItemActions';
 
 interface PlantItemProps {
   plant: BackendPlant;
@@ -38,13 +37,8 @@ export const PlantItem = ({ plant }: PlantItemProps) => {
     soil_humidity_max,
     air_humidity_min,
     air_humidity_max,
+    user_id,
   } = plant;
-  const [visible, setVisible] = React.useState(false);
-  const { mutate: deletePlant } = useDeletePlant();
-
-  const openMenu = () => setVisible(true);
-
-  const closeMenu = () => setVisible(false);
 
   const renderMinMaxLabel = (
     label: string,
@@ -72,7 +66,7 @@ export const PlantItem = ({ plant }: PlantItemProps) => {
           source={
             image_url
               ? { uri: replaceLocalhostToIP(image_url) }
-              : require('../../assets/icon.png')
+              : require('../../../assets/icon.png')
           }
         />
         <View style={styles.itemInformation}>
@@ -91,35 +85,7 @@ export const PlantItem = ({ plant }: PlantItemProps) => {
           )}
         </View>
         <View style={styles.itemActions}>
-          <Menu
-            visible={visible}
-            onDismiss={closeMenu}
-            anchor={<IconButton icon="dots-vertical" onPress={openMenu} />}
-            anchorPosition="bottom"
-          >
-            <Menu.Item
-              onPress={() => {
-                closeMenu();
-                navigation.navigate('PlantWizard', {
-                  screen: 'PlantStep1',
-                  params: {
-                    type: 'edit',
-                    plantId: id,
-                  },
-                });
-              }}
-              title="Edit"
-              leadingIcon="pencil"
-            />
-            <Menu.Item
-              onPress={() => {
-                closeMenu();
-                deletePlant(id);
-              }}
-              title="Delete"
-              leadingIcon="delete"
-            />
-          </Menu>
+          <PlantItemActions plantId={id} plantUserId={user_id} />
         </View>
       </Surface>
     </TouchableRipple>

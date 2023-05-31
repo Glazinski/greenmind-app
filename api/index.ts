@@ -13,7 +13,7 @@ api.interceptors.response.use(
     if (error.response?.status === 401) {
       useAuthStore.setState({
         accessToken: null,
-        expirationTimestamp: null,
+        userId: null,
       });
       setAuthToken(null);
     }

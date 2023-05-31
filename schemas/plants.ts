@@ -2,6 +2,7 @@ import { z } from 'zod';
 
 export const step1Schema = z.object({
   image: z.string(),
+  public: z.boolean(),
   name: z.string().nonempty(),
   appearance: z.string().nonempty(),
 });
@@ -51,6 +52,10 @@ const backendPlant = z
     air_humidity_max: z.number(),
     soil_humidity_min: z.number(),
     soil_humidity_max: z.number(),
+    user_id: z.number(),
+    device_id: z.number(),
+    created_at: z.string(),
+    updated_at: z.string(),
   })
   .extend(step3Schema.shape);
 

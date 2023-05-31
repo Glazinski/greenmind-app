@@ -17,6 +17,7 @@ const MIN_STEP = 0;
 const DEFAULT_STEPS = {
   '0': {
     image: '',
+    public: false,
     name: '',
     appearance: '',
   },
