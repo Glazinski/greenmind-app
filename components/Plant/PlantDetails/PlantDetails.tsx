@@ -1,10 +1,13 @@
-import { View, Image, StyleSheet } from 'react-native';
-import { Text } from 'react-native-paper';
+import { View, Image, StyleSheet, ScrollView } from 'react-native';
 import { useTranslation } from 'react-i18next';
 
 import { replaceLocalhostToIP } from 'api';
 import { BackendPlant } from 'schemas/plants';
 import { Layout } from 'components/Layout';
+
+import { PlantDetailsInfoSection } from './PlantDetailsInfoSection';
+import { PlantDetailsInfoRow } from './PlantDetailsInfoRow';
+import { PlantDetailsInfoMaxMinRow } from './PlantDetailsInfoMaxMinRow';
 
 interface PlantDetailsProps {
   plant: BackendPlant;
@@ -12,10 +15,27 @@ interface PlantDetailsProps {
 
 export const PlantDetails = ({ plant }: PlantDetailsProps) => {
   const { t } = useTranslation();
-  const { image_url, name, appearance } = plant;
+  const {
+    image_url,
+    name,
+    appearance,
+    temp_min,
+    temp_max,
+    soil_humidity_min,
+    soil_humidity_max,
+    air_humidity_min,
+    air_humidity_max,
+    light_min,
+    light_max,
+    fertilizing,
+    repotting,
+    pruning,
+    blooming_time,
+    common_diseases,
+  } = plant;
 
   return (
-    <Layout>
+    <Layout as={ScrollView}>
       <Image
         style={styles.imageContainer}
         source={
@@ -25,16 +45,47 @@ export const PlantDetails = ({ plant }: PlantDetailsProps) => {
         }
         resizeMode="cover"
       />
-      <View style={styles.contentContainer}>
-        <Text variant="titleLarge">{t('basic_information')}</Text>
-        <View>
-          <Text variant="titleSmall">Name</Text>
-          <Text variant="bodySmall">{name}</Text>
-        </View>
-        <View>
-          <Text variant="titleSmall">Appearance</Text>
-          <Text variant="bodySmall">{appearance}</Text>
-        </View>
+      <View style={styles.dataContainer}>
+        <PlantDetailsInfoSection title={t('basic_information')} showDivider>
+          <PlantDetailsInfoRow label="Name" value={name} />
+          <PlantDetailsInfoRow label="Appearance" value={appearance} />
+        </PlantDetailsInfoSection>
+        <PlantDetailsInfoSection title={t('ideal_conditions')}>
+          <PlantDetailsInfoRow label="Temperature" value={temp_min} />
+          <PlantDetailsInfoRow label="Temperature" value={temp_max} />
+        </PlantDetailsInfoSection>
+        <PlantDetailsInfoSection title={t('ideal_conditions')} showDivider>
+          <PlantDetailsInfoMaxMinRow
+            label="Temperature"
+            min={temp_min}
+            max={temp_max}
+          />
+          <PlantDetailsInfoMaxMinRow
+            label="Soil humidity"
+            min={soil_humidity_min}
+            max={soil_humidity_max}
+          />
+          <PlantDetailsInfoMaxMinRow
+            label="Air humidity"
+            min={air_humidity_min}
+            max={air_humidity_max}
+          />
+          <PlantDetailsInfoMaxMinRow
+            label="Light"
+            min={light_min}
+            max={light_max}
+          />
+        </PlantDetailsInfoSection>
+        <PlantDetailsInfoSection title={t('other_information')}>
+          <PlantDetailsInfoRow label="Fertilizing" value={fertilizing} />
+          <PlantDetailsInfoRow label="Repotting" value={repotting} />
+          <PlantDetailsInfoRow label="Pruning" value={pruning} />
+          <PlantDetailsInfoRow label="Blooming time" value={blooming_time} />
+          <PlantDetailsInfoRow
+            label="Common diseases"
+            value={common_diseases}
+          />
+        </PlantDetailsInfoSection>
       </View>
     </Layout>
   );
@@ -45,7 +96,7 @@ const styles = StyleSheet.create({
     width: '100%',
     height: 250,
   },
-  contentContainer: {
-    padding: 16,
+  dataContainer: {
+    marginTop: 4,
   },
 });

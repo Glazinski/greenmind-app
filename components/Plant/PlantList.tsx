@@ -40,6 +40,7 @@ export const PlantList = ({ plants, isError, isLoading }: PlantListProps) => {
       data={plants}
       renderItem={({ item }) => <PlantItem plant={item} />}
       keyExtractor={({ id }) => id.toString()}
+      showsVerticalScrollIndicator={false}
     />
   );
 };

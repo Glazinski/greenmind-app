@@ -14,5 +14,6 @@
   "something_went_wrong": "Something went wrong",
   "no_plants_found": "No plants found",
   "no_devices_found": "No devices found",
-  "no_device_data": "No device data"
+  "no_device_data": "No device data",
+  "no_data":  "No data",
 }
