@@ -16,19 +16,20 @@ export const useDeviceWater = () =>
       }),
   });
 
-export const useEditDevice = () => {
+export const useEditDevice = (onSuccess?: () => void) => {
   const queryClient = useQueryClient();
 
   return useMutation<
     unknown,
     AxiosError,
     {
-      deviceId: number;
+      deviceId: number | null | undefined;
       formDevice: Partial<FormDevice>;
     }
   >({
     mutationFn: ({ deviceId, formDevice }) => {
       const deviceFormData = convertDeviceToFormData(formDevice);
+      console.log('deviceFormData', deviceFormData);
 
       return api.patch(`/devices/${deviceId}`, deviceFormData, {
         headers: { 'Content-Type': 'multipart/form-data' },
@@ -36,6 +37,7 @@ export const useEditDevice = () => {
     },
     onSuccess: async () => {
       await queryClient.invalidateQueries({ queryKey: ['devices'] });
+      onSuccess?.();
     },
   });
 };

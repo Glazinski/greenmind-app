@@ -1,14 +1,14 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import { Text, Button, useTheme } from 'react-native-paper';
-import type { StackScreenProps } from '@react-navigation/stack';
 
-import { DeviceWizardStackParamList } from 'navigation/types';
+import { DeviceWizardStackScreenProps } from 'navigation/types';
 import { Layout } from 'components/Layout';
 
 export const DeviceStep1 = ({
   navigation,
-}: StackScreenProps<DeviceWizardStackParamList, 'DeviceStep1'>) => {
+  route,
+}: DeviceWizardStackScreenProps<'DeviceStep1'>) => {
   const {
     colors: { background },
   } = useTheme();
@@ -38,7 +38,11 @@ export const DeviceStep1 = ({
           </Text>
         </View>
         <Button
-          onPress={() => navigation.navigate('DeviceStep2')}
+          onPress={() =>
+            navigation.navigate('DeviceStep2', {
+              ...route.params,
+            })
+          }
           style={styles.scanButton}
           mode="contained"
         >

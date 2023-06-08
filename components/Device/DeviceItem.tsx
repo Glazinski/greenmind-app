@@ -9,8 +9,10 @@ import {
   Menu,
   useTheme,
 } from 'react-native-paper';
+import { useNavigation } from '@react-navigation/native';
 
 import { BackendDevice } from 'schemas/devices';
+import { HomeDrawerScreenProps } from 'navigation/types';
 
 interface DeviceItemProps {
   device: BackendDevice;
@@ -21,12 +23,14 @@ interface DeviceItemProps {
 }
 
 export const DeviceItem = ({
-  device: { name },
+  device: { id, name },
   onDeleteClick,
   onUseThisDeviceClick,
   onStopUseThisDeviceClick,
   isActive,
 }: DeviceItemProps) => {
+  const navigation =
+    useNavigation<HomeDrawerScreenProps<'Devices'>['navigation']>();
   const {
     colors: { primaryContainer, secondaryContainer },
   } = useTheme();
@@ -74,6 +78,20 @@ export const DeviceItem = ({
                 leadingIcon="check-circle"
               />
             )}
+            <Menu.Item
+              onPress={() => {
+                closeMenu();
+                navigation.navigate('DeviceWizard', {
+                  screen: 'DeviceStep2',
+                  params: {
+                    type: 'edit',
+                    deviceId: id,
+                  },
+                });
+              }}
+              title="Edit"
+              leadingIcon="pencil"
+            />
             <Menu.Item
               onPress={() => {
                 onDeleteClick();

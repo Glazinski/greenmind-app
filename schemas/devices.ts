@@ -1,7 +1,7 @@
 import { z } from 'zod';
 
 export const formDeviceSchema = z.object({
-  name: z.string(),
+  name: z.string().nonempty(),
   image: z.string(),
 });
 

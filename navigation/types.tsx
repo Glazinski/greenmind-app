@@ -57,9 +57,14 @@ export type PlantWizardStackScreenProps<
   RootStackScreenProps<keyof RootStackParamList>
 >;
 
+type DeviceStepParams = {
+  type: 'add' | 'edit';
+  deviceId?: number;
+};
+
 export type DeviceWizardStackParamList = {
-  DeviceStep1: undefined;
-  DeviceStep2: undefined;
+  DeviceStep1: DeviceStepParams;
+  DeviceStep2: DeviceStepParams;
 };
 
 export type DeviceWizardStackScreenProps<

@@ -1,4 +1,4 @@
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, UseQueryOptions } from '@tanstack/react-query';
 import Constants from 'expo-constants';
 
 import { api } from 'api';
@@ -11,14 +11,21 @@ export const useDevices = () =>
     queryKey: ['devices'],
   });
 
-export const useAssignedDevice = () => {
-  const { deviceId } = useActiveDeviceStore();
-
-  return useQuery({
+export const useDevice = (
+  deviceId: number | null | undefined,
+  config?: UseQueryOptions<unknown, unknown, BackendDevice>
+) =>
+  useQuery({
     queryKey: ['devices', deviceId],
     queryFn: () =>
       api.get<BackendDevice>(`/devices/${deviceId}`).then((res) => res.data),
+    ...config,
   });
+
+export const useAssignedDevice = () => {
+  const { deviceId } = useActiveDeviceStore();
+
+  return useDevice(deviceId);
 };
 
 export const useDeviceLogs = () =>

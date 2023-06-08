@@ -39,6 +39,9 @@ export const DevicesScreen = ({
         onPress={() =>
           navigation.navigate('DeviceWizard', {
             screen: 'DeviceStep1',
+            params: {
+              type: 'add',
+            },
           })
         }
       />
