@@ -4,12 +4,11 @@ import { useTranslation } from 'react-i18next';
 
 import { PlantFormStep } from 'components/Plant/PlantForm/PlantFormStep';
 import { PlantFormStep3 } from 'components/Plant/PlantForm/PlantFormStep3';
-import { BackendPlant, PlantFormData, step3Schema } from 'schemas/plants';
+import { PlantFormData, step3Schema } from 'schemas/plants';
 import { Layout } from 'components/Layout';
 import { PlantWizardStackScreenProps } from 'navigation/types';
 import { useAddPlant, useEditPlant } from 'services/plants/mutations';
 import { usePlantFormStore } from 'store/usePlantFormStore';
-import { Platform } from 'react-native';
 
 export const PlantStep3Screen = ({
   navigation,
@@ -23,17 +22,14 @@ export const PlantStep3Screen = ({
     mutate: addPlant,
     isLoading: isAddLoading,
     isError: isAddError,
-    error: addError,
   } = useAddPlant(onSuccess);
   const {
     mutate: editPlant,
     isLoading: isEditLoading,
     isError: isEditError,
-    error: editError,
   } = useEditPlant(onSuccess);
   const isLoading = isAddLoading || isEditLoading;
   const isError = isAddError || isEditError;
-  const error = addError || editError;
 
   React.useEffect(() => {
     return () => {
