@@ -12,8 +12,8 @@ const isValueInRange = (value?: number, min?: number, max?: number) =>
   typeof value === 'number' &&
   typeof min === 'number' &&
   typeof max === 'number' &&
-  value > min &&
-  value < max;
+  value >= min &&
+  value <= max;
 
 interface GrowBoxDataCellProps {
   label: string;

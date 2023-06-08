@@ -7,8 +7,8 @@ import { replaceLocalhostToIP } from 'api';
 import { Camera } from 'components/Camera';
 
 interface ImageSelectorProps {
-  value?: string;
-  onChange?: (image: string) => void;
+  value: string;
+  onChange: (image: string) => void;
 }
 
 export const ImageSelector = ({ value, onChange }: ImageSelectorProps) => {
@@ -16,13 +16,6 @@ export const ImageSelector = ({ value, onChange }: ImageSelectorProps) => {
     value || null
   );
   const [isCameraOpen, setIsCameraOpen] = React.useState(false);
-
-  React.useEffect(() => {
-    if (value) {
-      onChange?.(value);
-      setSelectedImage(value);
-    }
-  }, [value, onChange]);
 
   const handleChange = (image: string) => {
     onChange?.(image);

@@ -85,7 +85,7 @@ export const PlantItem = ({ plant }: PlantItemProps) => {
           )}
         </View>
         <View style={styles.itemActions}>
-          <PlantItemActions plantId={id} plantUserId={user_id} />
+          <PlantItemActions plant={plant} />
         </View>
       </Surface>
     </TouchableRipple>

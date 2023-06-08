@@ -50,10 +50,6 @@ export const PlantDetails = ({ plant }: PlantDetailsProps) => {
           <PlantDetailsInfoRow label="Name" value={name} />
           <PlantDetailsInfoRow label="Appearance" value={appearance} />
         </PlantDetailsInfoSection>
-        <PlantDetailsInfoSection title={t('ideal_conditions')}>
-          <PlantDetailsInfoRow label="Temperature" value={temp_min} />
-          <PlantDetailsInfoRow label="Temperature" value={temp_max} />
-        </PlantDetailsInfoSection>
         <PlantDetailsInfoSection title={t('ideal_conditions')} showDivider>
           <PlantDetailsInfoMaxMinRow
             label="Temperature"

@@ -1,36 +1,59 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
-import { Surface, Text, useTheme } from 'react-native-paper';
+import { ActivityIndicator, Surface, Text, useTheme } from 'react-native-paper';
 
 import { GrowBoxPlantIndicator } from './GrowBoxPlantIndicator';
 import { useActivePlantStore } from '../../store/useActivePlantStore';
+import { usePlantsAssignedToDevice } from '../../services/plants/queries';
+import { useTranslation } from 'react-i18next';
 
 interface GrowBoxPlantSelectorProps {
   style?: object;
 }
 
-const assignedPlants = [
-  { id: 0, name: 'Plant1' },
-  { id: 1, name: 'Plant2' },
-  { id: 2, name: 'Plant3' },
-];
+// const assignedPlants = [
+//   { id: 0, name: 'Plant1' },
+//   { id: 1, name: 'Plant2' },
+//   { id: 2, name: 'Plant3' },
+// ];
 
 export const GrowBoxPlantSelector = ({
   style,
 }: GrowBoxPlantSelectorProps): JSX.Element => {
+  const { t } = useTranslation();
   const {
     colors: { secondary, secondaryContainer },
   } = useTheme();
   const { plantId, setPlantId } = useActivePlantStore();
+  const {
+    data: assignedPlants,
+    isLoading,
+    isError,
+  } = usePlantsAssignedToDevice();
 
   const handlePlantPress = (index: number): void => {
     setPlantId(index);
   };
 
-  const renderActivePlantName = (): string =>
-    typeof plantId === 'number' && plantId >= 0
+  const renderActivePlantName = (): string => {
+    return typeof plantId === 'number' &&
+      plantId >= 0 &&
+      assignedPlants?.[plantId]?.name
       ? assignedPlants[plantId].name
       : 'No plants assigned';
+  };
+
+  if (isLoading) {
+    return <ActivityIndicator />;
+  }
+
+  if (isError) {
+    return (
+      <Surface>
+        <Text variant="bodyLarge">{t('something_went_wrong')}</Text>
+      </Surface>
+    );
+  }
 
   return (
     <Surface
@@ -44,7 +67,7 @@ export const GrowBoxPlantSelector = ({
         </Text>
       </View>
       <View style={styles.plantsContainer}>
-        {assignedPlants.map(({ id }, index) => (
+        {assignedPlants?.map(({ id }, index) => (
           <GrowBoxPlantIndicator
             key={id}
             isActive={plantId === index}

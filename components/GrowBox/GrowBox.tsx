@@ -4,10 +4,11 @@ import { StyleSheet } from 'react-native';
 import { useTranslation } from 'react-i18next';
 
 import { useAssignedDevice, useDeviceLogs } from 'services/device/queries';
-import { ImageSelector } from 'components/ImageSelector';
 import { usePlant } from 'services/plants/queries';
 import { useActivePlantStore } from 'store/useActivePlantStore';
 
+import { GrowBoxAssignedPlant } from './GrowBoxAssignedPlant';
+import { GrowBoxImageSelector } from './GrowBoxImageSelector';
 import { GrowBoxDataTable } from './GrowBoxDataTable';
 import { GrowBoxWaterPlant } from './GrowBoxWaterPlant';
 import { FullPageLoadingSpinner } from '../FullPageLoadingSpinner';
@@ -54,7 +55,8 @@ export const GrowBox = (): JSX.Element => {
       <Text variant="titleLarge" style={styles.dataTitle}>
         {device.name}
       </Text>
-      <ImageSelector />
+      <GrowBoxImageSelector device={device} />
+      <GrowBoxAssignedPlant />
       {deviceLog && (
         <GrowBoxDataTable deviceLog={deviceLog} activePlant={activePlant} />
       )}

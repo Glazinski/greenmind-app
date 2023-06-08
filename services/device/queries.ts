@@ -1,40 +1,14 @@
 import { useQuery } from '@tanstack/react-query';
+import Constants from 'expo-constants';
 
 import { api } from 'api';
-import { BackendDevice, BackendDeviceLog } from 'schemas/devices';
+import { BackendDevice, BackendDeviceLog, BackendTask } from 'schemas/devices';
 import { useActiveDeviceStore } from 'store/useActiveDeviceStore';
-
-interface DeviceLog {
-  temp: number;
-  soil_hum: number;
-  air_hum: number;
-  light: number;
-}
-
-interface Task {
-  id: number;
-  device: number;
-  task_number: number;
-  status: number;
-}
 
 export const useDevices = () =>
   useQuery({
     queryFn: () => api.get<BackendDevice[]>(`/devices`).then((res) => res.data),
     queryKey: ['devices'],
-  });
-
-export const useDevice = (id: number) =>
-  useQuery({
-    queryKey: ['devices', id],
-    queryFn: () =>
-      api.get<BackendDevice>(`/devices`).then((res) => ({
-        id: 1,
-        name: 'Device1',
-        user: 1,
-      })),
-    // queryFn: () =>
-    //   api.get<BackendDevice>(`/devices/${id}`).then((res) => res.data),
   });
 
 export const useAssignedDevice = () => {
@@ -51,7 +25,9 @@ export const useDeviceLogs = () =>
   useQuery({
     queryFn: () =>
       api
-        .get<BackendDeviceLog[]>('/python_microservice/data')
+        .get<BackendDeviceLog[]>(
+          `${Constants.expoConfig?.extra?.microserviceUrl}/data`
+        )
         .then((res) => res.data),
     queryKey: ['devices', 1, 'data'],
     refetchInterval: 1000 * 30,
@@ -61,7 +37,9 @@ export const useDeviceTasks = () =>
   useQuery({
     queryFn: () =>
       api
-        .get<Task[]>('http://growbox.atthost24.pl/tasks')
+        .get<BackendTask[]>(
+          `${Constants.expoConfig?.extra?.microserviceUrl}/tasks`
+        )
         .then((res) => res.data),
     queryKey: ['devices', 1, 'tasks'],
   });

@@ -62,49 +62,19 @@ export const PlantStep3Screen = ({
     return t('edit');
   };
 
-  const createImageToUpload = (image: string) => {
-    const filename = image.split('/').pop();
-    const match = /\.(\w+)$/.exec(filename as string);
-    const ext = match?.[1];
-    const type = match ? `image/${match[1]}` : `image`;
-
-    return {
-      uri: image,
-      name: `image.${ext}`,
-      type,
-    };
-  };
-
   const handleSubmit = async () => {
     let data = {} as PlantFormData;
     Object.keys(steps).forEach((key) => {
       data = { ...data, ...steps[key] };
     });
 
-    const formData = new FormData();
-    Object.keys(data).forEach((key) => {
-      if (key !== 'image') {
-        formData.append(
-          `plant[${key}]`,
-          data[key as keyof PlantFormData].toString()
-        );
-      }
-    });
-
-    if (data?.image?.length > 0 && data.image.includes('file://')) {
-      formData.append(
-        'plant[image]',
-        createImageToUpload(data?.image) as unknown as string
-      );
-    }
-
     if (type === 'add') {
-      await addPlant(formData);
+      await addPlant(data);
       return;
     }
 
     await editPlant({
-      plant: formData,
+      plant: data,
       plantId: plantId as number,
     });
   };

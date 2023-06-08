@@ -37,17 +37,17 @@ export const GrowBoxDataTable = ({
   return (
     <>
       <View style={styles.dataContainer}>
-        <GrowBoxPlantSelector style={styles.dataRow} />
+        {/*<GrowBoxPlantSelector style={styles.dataRow} />*/}
         <GrowBoxDataRow>
           <GrowBoxDataCell
-            label="Temperature"
+            label="Temperature °C"
             value={temp}
             onErrorIconClick={onErrorIconClick}
             minValue={activePlant?.temp_min}
             maxValue={activePlant?.temp_max}
           />
           <GrowBoxDataCell
-            label="Soil humidity"
+            label="Soil humidity %"
             value={soil_hum}
             onErrorIconClick={onErrorIconClick}
             minValue={activePlant?.soil_humidity_min}
@@ -56,14 +56,14 @@ export const GrowBoxDataTable = ({
         </GrowBoxDataRow>
         <GrowBoxDataRow>
           <GrowBoxDataCell
-            label="Air humidity"
+            label="Air humidity %"
             value={air_hum}
             onErrorIconClick={onErrorIconClick}
             minValue={activePlant?.air_humidity_min}
             maxValue={activePlant?.air_humidity_max}
           />
           <GrowBoxDataCell
-            label="Light"
+            label="Light %"
             value={light}
             onErrorIconClick={onErrorIconClick}
             minValue={activePlant?.light_min}
@@ -94,7 +94,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   dataContainer: {
-    marginTop: 20,
+    marginTop: 10,
   },
   dataRow: {
     marginBottom: 10,

@@ -29,5 +29,6 @@ export default {
   extra: {
     apiBaseUrl: process.env.EXPO_API_BASE_URL,
     myIpAddress: process.env.EXPO_MY_IP_ADDRESS,
+    microserviceUrl: process.env.EXPO_MICROSERVICE_URL,
   },
 };

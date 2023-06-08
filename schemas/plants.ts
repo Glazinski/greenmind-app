@@ -52,7 +52,7 @@ const backendPlant = z
     air_humidity_max: z.number(),
     soil_humidity_min: z.number(),
     soil_humidity_max: z.number(),
-    user_id: z.number(),
+    user_id: z.string(),
     device_id: z.number(),
     created_at: z.string(),
     updated_at: z.string(),
