@@ -3,9 +3,8 @@ import { Control, Controller } from 'react-hook-form';
 import { Checkbox } from 'react-native-paper';
 
 import { Step1FormData } from 'schemas/plants';
-
-import { TextField } from '../../TextField';
-import { ImageSelector } from '../../ImageSelector';
+import { TextField } from 'components/TextField';
+import { ImageSelector } from 'components/ImageSelector';
 
 interface PlantFormStep1Props {
   control: Control<Step1FormData>;
@@ -16,11 +15,9 @@ export const PlantFormStep1 = ({ control }: PlantFormStep1Props) => {
     <View>
       <View style={styles.imageSelector}>
         <Controller
-          render={({ field }) => {
-            return (
-              <ImageSelector onChange={field.onChange} value={field.value} />
-            );
-          }}
+          render={({ field }) => (
+            <ImageSelector onChange={field.onChange} value={field.value} />
+          )}
           name="image"
           control={control}
         />

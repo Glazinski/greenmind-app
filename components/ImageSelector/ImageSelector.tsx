@@ -17,6 +17,12 @@ export const ImageSelector = ({ value, onChange }: ImageSelectorProps) => {
   );
   const [isCameraOpen, setIsCameraOpen] = React.useState(false);
 
+  React.useEffect(() => {
+    if (value) {
+      setSelectedImage(value);
+    }
+  }, [value]);
+
   const handleChange = (image: string) => {
     onChange?.(image);
     setSelectedImage(image);

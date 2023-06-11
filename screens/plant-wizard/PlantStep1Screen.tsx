@@ -45,7 +45,7 @@ export const PlantStep1Screen = ({
         name: name ?? '',
         appearance: appearance ?? '',
         image: image_url ?? '',
-        public: backendPlant.public,
+        public: backendPlant.public ?? false,
       });
       setSteps('1', {
         light_min: light_min?.toString() || '',

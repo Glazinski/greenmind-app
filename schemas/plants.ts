@@ -4,7 +4,7 @@ export const step1Schema = z.object({
   image: z.string(),
   public: z.boolean(),
   name: z.string().nonempty(),
-  appearance: z.string().nonempty(),
+  appearance: z.string(),
 });
 
 const minMaxSchema = z
