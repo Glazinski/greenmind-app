@@ -5,7 +5,6 @@ import { Portal, Snackbar } from 'react-native-paper';
 import { BackendDeviceLog } from 'schemas/devices';
 import { BackendPlant } from 'schemas/plants';
 
-import { GrowBoxPlantSelector } from './GrowBoxPlantSelector';
 import { GrowBoxDataRow } from './GrowBoxDataRow';
 import { GrowBoxDataCell } from './GrowBoxDataCell';
 
@@ -37,7 +36,6 @@ export const GrowBoxDataTable = ({
   return (
     <>
       <View style={styles.dataContainer}>
-        {/*<GrowBoxPlantSelector style={styles.dataRow} />*/}
         <GrowBoxDataRow>
           <GrowBoxDataCell
             label="Temperature °C"

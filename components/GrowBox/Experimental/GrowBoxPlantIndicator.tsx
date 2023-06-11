@@ -29,7 +29,7 @@ export const GrowBoxPlantIndicator = ({
     >
       <Image
         style={styles.image}
-        source={require('../../assets/icon.png')}
+        source={require('../../../assets/icon.png')}
         resizeMode="cover"
       />
     </TouchableOpacity>
