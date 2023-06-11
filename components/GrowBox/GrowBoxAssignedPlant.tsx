@@ -60,10 +60,8 @@ export const GrowBoxAssignedPlant = () => {
         </View>
       )}
       <View>
-        <Text variant="bodyLarge">Active plant</Text>
-        <Text variant="bodyMedium" style={{ color: secondary }}>
-          {renderActivePlantName()}
-        </Text>
+        <Text style={{ color: secondary }}>Active plant</Text>
+        <Text variant="titleMedium">{renderActivePlantName()}</Text>
       </View>
     </Surface>
   );
