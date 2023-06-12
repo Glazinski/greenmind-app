@@ -1,10 +1,10 @@
 import React from 'react';
 import { IconButton, Menu } from 'react-native-paper';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, CompositeScreenProps } from '@react-navigation/native';
 
 import { useDeletePlant } from 'services/plants/mutations';
 import { useDevices } from 'services/device/queries';
-import { RootStackScreenProps } from 'navigation/types';
+import { RootStackScreenProps, HomeDrawerScreenProps } from 'navigation/types';
 import { useAuthStore } from 'store/useAuthStore';
 
 import { usePlantActions } from './PlantActionsContext';
@@ -23,7 +23,12 @@ export const PlantActionsMoreMenu = ({
   } = usePlantActions();
   const { plant } = usePlantActions();
   const navigation =
-    useNavigation<RootStackScreenProps<'Plant'>['navigation']>();
+    useNavigation<
+      CompositeScreenProps<
+        RootStackScreenProps<'Plant'>,
+        HomeDrawerScreenProps<'Plants'>
+      >['navigation']
+    >();
   const [visible, setVisible] = React.useState(false);
   const { mutate: deletePlant } = useDeletePlant();
   const { data: devices } = useDevices();

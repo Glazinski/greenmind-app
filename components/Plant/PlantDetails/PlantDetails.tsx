@@ -44,7 +44,7 @@ export const PlantDetails = ({ plant }: PlantDetailsProps) => {
     navigation.setOptions({
       headerRight: () => (
         <PlantActions plant={plant}>
-          <View style={{ flexDirection: 'row' }}>
+          <View style={styles.headerRight}>
             <PlantActions.FavoriteButton />
             <PlantActions.MoreMenu onDeletePress={() => navigation.goBack()} />
           </View>
@@ -107,6 +107,9 @@ export const PlantDetails = ({ plant }: PlantDetailsProps) => {
 };
 
 const styles = StyleSheet.create({
+  headerRight: {
+    flexDirection: 'row',
+  },
   imageContainer: {
     width: '100%',
     height: 250,
