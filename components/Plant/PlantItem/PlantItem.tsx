@@ -13,7 +13,7 @@ import { replaceLocalhostToIP } from 'api';
 import { BackendPlant } from 'schemas/plants';
 import { HomeDrawerScreenProps } from 'navigation/types';
 
-import { PlantItemActions } from './PlantItemActions';
+import { PlantActions } from '../PlantActions';
 
 interface PlantItemProps {
   plant: BackendPlant;
@@ -37,7 +37,6 @@ export const PlantItem = ({ plant }: PlantItemProps) => {
     soil_humidity_max,
     air_humidity_min,
     air_humidity_max,
-    user_id,
   } = plant;
 
   const renderMinMaxLabel = (
@@ -84,9 +83,12 @@ export const PlantItem = ({ plant }: PlantItemProps) => {
             air_humidity_max
           )}
         </View>
-        <View style={styles.itemActions}>
-          <PlantItemActions plant={plant} />
-        </View>
+        <PlantActions plant={plant}>
+          <View style={styles.itemActions}>
+            <PlantActions.MoreMenu />
+            <PlantActions.FavoriteButton />
+          </View>
+        </PlantActions>
       </Surface>
     </TouchableRipple>
   );

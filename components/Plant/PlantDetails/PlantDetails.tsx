@@ -1,19 +1,25 @@
+import React from 'react';
 import { View, Image, StyleSheet, ScrollView } from 'react-native';
 import { useTranslation } from 'react-i18next';
+import { useNavigation } from '@react-navigation/native';
 
 import { replaceLocalhostToIP } from 'api';
 import { BackendPlant } from 'schemas/plants';
 import { Layout } from 'components/Layout';
+import { RootStackScreenProps } from 'navigation/types';
 
 import { PlantDetailsInfoSection } from './PlantDetailsInfoSection';
 import { PlantDetailsInfoRow } from './PlantDetailsInfoRow';
 import { PlantDetailsInfoMaxMinRow } from './PlantDetailsInfoMaxMinRow';
+import { PlantActions } from '../PlantActions';
 
 interface PlantDetailsProps {
   plant: BackendPlant;
 }
 
 export const PlantDetails = ({ plant }: PlantDetailsProps) => {
+  const navigation =
+    useNavigation<RootStackScreenProps<'Plant'>['navigation']>();
   const { t } = useTranslation();
   const {
     image_url,
@@ -33,6 +39,19 @@ export const PlantDetails = ({ plant }: PlantDetailsProps) => {
     blooming_time,
     common_diseases,
   } = plant;
+
+  React.useEffect(() => {
+    navigation.setOptions({
+      headerRight: () => (
+        <PlantActions plant={plant}>
+          <View style={{ flexDirection: 'row' }}>
+            <PlantActions.FavoriteButton />
+            <PlantActions.MoreMenu onDeletePress={() => navigation.goBack()} />
+          </View>
+        </PlantActions>
+      ),
+    });
+  }, [navigation, plant]);
 
   return (
     <Layout as={ScrollView}>

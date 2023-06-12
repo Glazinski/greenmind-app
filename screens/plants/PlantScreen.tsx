@@ -5,8 +5,10 @@ import { Layout } from 'components/Layout';
 import { FullPageLoadingSpinner } from 'components/FullPageLoadingSpinner';
 import { usePlant } from 'services/plants/queries';
 import { RootStackScreenProps } from 'navigation/types';
+import { useTranslation } from 'react-i18next';
 
 export const PlantScreen = ({ route }: RootStackScreenProps<'Plant'>) => {
+  const { t } = useTranslation();
   const { plantId } = route.params;
   const { data: plant, isLoading, isError } = usePlant(plantId);
 
@@ -17,7 +19,7 @@ export const PlantScreen = ({ route }: RootStackScreenProps<'Plant'>) => {
   if (isError) {
     return (
       <Layout>
-        <Text>Something went wrong</Text>
+        <Text>{t('something went wrong')}</Text>
       </Layout>
     );
   }

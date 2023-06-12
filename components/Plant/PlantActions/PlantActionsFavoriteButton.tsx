@@ -1,19 +1,18 @@
 import React from 'react';
 import { IconButton } from 'react-native-paper';
 
+import { useFavoritePlants } from 'services/plants/queries';
 import {
   useAddPlantToFavorite,
   useDeletePlantFromFavorite,
 } from 'services/plants/mutations';
-import { useFavoritePlants } from 'services/plants/queries';
 
-interface PlantItemFavoriteActionProps {
-  plantId: number;
-}
+import { usePlantActions } from './PlantActionsContext';
 
-export const PlantItemFavoriteAction = ({
-  plantId,
-}: PlantItemFavoriteActionProps) => {
+export const PlantActionsFavoriteButton = () => {
+  const {
+    plant: { id: plantId },
+  } = usePlantActions();
   const { data: favoritePlants } = useFavoritePlants();
   const { mutate: addPlantToFavorite, isLoading: isAddPlantToFavoriteLoading } =
     useAddPlantToFavorite();
