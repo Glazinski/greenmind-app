@@ -1,9 +1,12 @@
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+import {
+  useMutation,
+  useQueryClient,
+  QueryClient,
+} from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 
 import { api } from 'api';
 import { BackendPlant, PlantFormData } from 'schemas/plants';
-import { useActiveDeviceStore } from 'store/useActiveDeviceStore';
 
 import { convertPlantToFormData } from './convertPlantToFormData';
 import { mapBackendPlantToPlantFormData } from './mapBackendPlantToPlantFormData';
@@ -11,6 +14,21 @@ import { mapBackendPlantToPlantFormData } from './mapBackendPlantToPlantFormData
 interface ErrorResponse {
   error: string[];
 }
+
+const invalidatePlantQueries = async (queryClient: QueryClient) => {
+  await queryClient.invalidateQueries({
+    queryKey: ['plants', { type: 'public' }],
+  });
+  await queryClient.invalidateQueries({
+    queryKey: ['plants', { type: 'private' }],
+  });
+  await queryClient.invalidateQueries({
+    queryKey: ['plants', { type: 'favorite' }],
+  });
+  await queryClient.invalidateQueries({
+    queryKey: ['plants', { type: 'assigned' }],
+  });
+};
 
 export const useAddPlant = (onSuccess?: () => void) => {
   const queryClient = useQueryClient();
@@ -25,7 +43,7 @@ export const useAddPlant = (onSuccess?: () => void) => {
     },
     onSuccess: async () => {
       onSuccess?.();
-      await queryClient.invalidateQueries({ queryKey: ['plants'] });
+      await invalidatePlantQueries(queryClient);
     },
   });
 };
@@ -49,7 +67,7 @@ export const useEditPlant = (onSuccess?: () => void) => {
       });
     },
     onSuccess: async () => {
-      await queryClient.invalidateQueries({ queryKey: ['plants'] });
+      await invalidatePlantQueries(queryClient);
       onSuccess?.();
     },
   });
@@ -61,8 +79,8 @@ export const useDeletePlant = (onSuccess?: () => void) => {
   return useMutation({
     mutationFn: (id: number) => api.delete(`/plants/${id}`),
     onSuccess: async () => {
-      await queryClient.invalidateQueries({ queryKey: ['plants'] });
       onSuccess?.();
+      await invalidatePlantQueries(queryClient);
     },
   });
 };
@@ -113,9 +131,7 @@ export const useAssignPlantToDevice = (onSuccess?: () => void) => {
       });
     },
     onSuccess: async (_, { deviceId }) => {
-      await queryClient.invalidateQueries({
-        queryKey: ['plants'],
-      });
+      await invalidatePlantQueries(queryClient);
       await queryClient.invalidateQueries({
         queryKey: ['devices', deviceId, 'plants'],
       });

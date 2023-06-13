@@ -2,7 +2,6 @@ import React from 'react';
 import { IconButton, Menu } from 'react-native-paper';
 import { useNavigation, CompositeScreenProps } from '@react-navigation/native';
 
-import { useDeletePlant } from 'services/plants/mutations';
 import { useDevices } from 'services/device/queries';
 import { RootStackScreenProps, HomeDrawerScreenProps } from 'navigation/types';
 import { useAuthStore } from 'store/useAuthStore';
@@ -10,6 +9,7 @@ import { useAuthStore } from 'store/useAuthStore';
 import { usePlantActions } from './PlantActionsContext';
 import { PlantActionsMoreMenuAssign } from './PlantActionsMoreMenuAssign';
 import { PlantActionsMoreMenuUnassign } from './PlantActionsMoreMenuUnassign';
+import { PlantActionsMoreMenuDelete } from './PlantActionsMoreMenuDelete';
 
 interface PlantActionsMoreMenuProps {
   onDeletePress?: () => void;
@@ -29,7 +29,6 @@ export const PlantActionsMoreMenu = ({
       >['navigation']
     >();
   const [visible, setVisible] = React.useState(false);
-  const { mutate: deletePlant } = useDeletePlant();
   const { data: devices } = useDevices();
   const isUserPlant = userId === plantUserId;
 
@@ -55,9 +54,6 @@ export const PlantActionsMoreMenu = ({
       anchorPosition="bottom"
     >
       {renderAssignmentItem()}
-      {/*{devices && devices?.length > 0 && (*/}
-      {/*  <PlantActionsMoreMenuAssign plant={plant} onPress={closeMenu} />*/}
-      {/*)}*/}
       {isUserPlant && (
         <>
           <Menu.Item
@@ -75,14 +71,13 @@ export const PlantActionsMoreMenu = ({
             leadingIcon="pencil"
           />
           {status !== 'assigned' && (
-            <Menu.Item
-              onPress={() => {
+            <PlantActionsMoreMenuDelete
+              plantId={plantId}
+              onDeletePress={() => {
                 closeMenu();
-                deletePlant(plantId);
                 onDeletePress?.();
               }}
-              title="Delete"
-              leadingIcon="delete"
+              onDismiss={closeMenu}
             />
           )}
         </>

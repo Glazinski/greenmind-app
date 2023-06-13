@@ -56,8 +56,8 @@ export const usePlantsAssignedToDevice = () => {
 export const usePlant = (
   plantId: number | null | undefined,
   onSuccess?: (plant: BackendPlant) => void
-) =>
-  useQuery({
+) => {
+  return useQuery({
     queryKey: ['plants', plantId],
     queryFn: () =>
       api.get(`/plants/${plantId}`).then<BackendPlant>((res) => res.data),
@@ -66,3 +66,4 @@ export const usePlant = (
       onSuccess?.(data);
     },
   });
+};

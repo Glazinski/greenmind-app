@@ -3,10 +3,10 @@ import { View, Image, StyleSheet, ScrollView } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { useNavigation } from '@react-navigation/native';
 
-import { replaceLocalhostToIP } from 'api';
 import { BackendPlant } from 'schemas/plants';
 import { Layout } from 'components/Layout';
 import { RootStackScreenProps } from 'navigation/types';
+import { getImageUrl } from 'services/getImageUrl';
 
 import { PlantDetailsInfoSection } from './PlantDetailsInfoSection';
 import { PlantDetailsInfoRow } from './PlantDetailsInfoRow';
@@ -57,11 +57,7 @@ export const PlantDetails = ({ plant }: PlantDetailsProps) => {
     <Layout as={ScrollView}>
       <Image
         style={styles.imageContainer}
-        source={
-          image_url
-            ? { uri: replaceLocalhostToIP(image_url) }
-            : require('../../../assets/icon.png')
-        }
+        source={getImageUrl(image_url)}
         resizeMode="cover"
       />
       <View style={styles.dataContainer}>
