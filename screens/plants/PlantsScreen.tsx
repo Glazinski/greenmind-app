@@ -2,6 +2,7 @@ import React from 'react';
 import { StyleSheet, useWindowDimensions } from 'react-native';
 import { FAB, Text, useTheme } from 'react-native-paper';
 import { TabView, TabBar, SceneMap } from 'react-native-tab-view';
+import { useTranslation } from 'react-i18next';
 
 import { Layout } from 'components/Layout';
 import { AssignedPlants } from 'screens/plants/tabs/AssignedPlants';
@@ -20,6 +21,7 @@ const renderScene = SceneMap({
 export const PlantsScreen = ({
   navigation,
 }: HomeDrawerScreenProps<'Plants'>) => {
+  const { t } = useTranslation();
   const {
     colors: { background, primary, onSurfaceVariant },
   } = useTheme();
@@ -27,10 +29,10 @@ export const PlantsScreen = ({
 
   const [index, setIndex] = React.useState(0);
   const [routes] = React.useState([
-    { key: 'assigned', title: 'Assigned' },
-    { key: 'myOwn', title: 'My own' },
-    { key: 'community', title: 'Community' },
-    { key: 'favorite', title: 'Favorite' },
+    { key: 'assigned', title: t('assigned') },
+    { key: 'myOwn', title: t('my_own') },
+    { key: 'community', title: t('community') },
+    { key: 'favorite', title: t('favorite') },
   ]);
 
   return (

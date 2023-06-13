@@ -1,6 +1,7 @@
 import React from 'react';
 import { StyleSheet, ScrollView } from 'react-native';
 import { useTheme, Text, Button } from 'react-native-paper';
+import { useTranslation } from 'react-i18next';
 
 import { GrowBox } from 'components/GrowBox/GrowBox';
 import { Layout } from 'components/Layout';
@@ -12,6 +13,7 @@ import { useActiveDeviceStore } from 'store/useActiveDeviceStore';
 export const HomeScreen = ({
   navigation,
 }: HomeDrawerScreenProps<'Home'>): JSX.Element => {
+  const { t } = useTranslation();
   const { deviceId } = useActiveDeviceStore();
   const {
     colors: { background },
@@ -23,17 +25,14 @@ export const HomeScreen = ({
   if (!devices || devices?.length === 0) {
     return (
       <Layout style={[styles.container, { backgroundColor: background }]}>
-        <Text variant="titleMedium">
-          No device found. You need to add and configure new device or assign
-          existing one to your account.{' '}
-        </Text>
+        <Text variant="titleMedium">{t('no_devices_found_details')}</Text>
         <Button
           onPress={() => {
             navigation.navigate('Devices');
           }}
           style={styles.configureButton}
         >
-          Configure device
+          {t('configure_device')}
         </Button>
       </Layout>
     );
@@ -42,17 +41,14 @@ export const HomeScreen = ({
   if (!deviceId) {
     return (
       <Layout style={[styles.container, { backgroundColor: background }]}>
-        <Text variant="titleMedium">
-          Your account is not linked to any device. Please assign a device to
-          proceed.
-        </Text>
+        <Text variant="titleMedium">{t('no_active_device')}</Text>
         <Button
           onPress={() => {
             navigation.navigate('Devices');
           }}
           style={styles.configureButton}
         >
-          Configure device
+          {t('configure_device')}
         </Button>
       </Layout>
     );
