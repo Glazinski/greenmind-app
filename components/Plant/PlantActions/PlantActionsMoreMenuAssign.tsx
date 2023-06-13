@@ -6,17 +6,17 @@ import {
   Dialog,
   Text,
   Button,
-  Checkbox,
   ActivityIndicator,
+  List,
+  Avatar,
 } from 'react-native-paper';
 import { useTranslation } from 'react-i18next';
 
 import { BackendPlant } from 'schemas/plants';
 import { useAssignPlantToDevice } from 'services/plants/mutations';
 import { useDevices } from 'services/device/queries';
-import { usePlantsAssignedToDevice } from 'services/plants/queries';
-
-import { usePlantActions } from './PlantActionsContext';
+import { useAssignedPlants } from 'services/plants/queries';
+import { getImageUrl } from 'services/getImageUrl';
 
 interface PlantActionsMoreMenuAssignProps {
   plant: BackendPlant;
@@ -34,34 +34,39 @@ export const PlantActionsMoreMenuAssign = ({
     isError: isDevicesError,
   } = useDevices();
   const {
+    data: assignedPlants,
+    isLoading: isAssignedPlantsLoading,
+    isError: isAssignedPlantsError,
+  } = useAssignedPlants();
+  const {
     mutate: assignPlantToDevice,
     isLoading: isAssignPlantToDeviceLoading,
-  } = useAssignPlantToDevice();
+  } = useAssignPlantToDevice(hideDialog);
   const [visible, setVisible] = React.useState(false);
-  const isLoading = isDevicesLoading;
-  const isError = isDevicesError;
+  const isLoading = isDevicesLoading || isAssignedPlantsLoading;
+  const isError = isDevicesError || isAssignedPlantsError;
 
   const showDialog = () => setVisible(true);
 
-  const hideDialog = () => {
+  function hideDialog() {
     setVisible(false);
     onPress?.();
-  };
+  }
 
   const handleOnPress = async () => {
     showDialog();
-    // if (plant) {
-    //   await assignPlantToDevice(plant);
-    // }
   };
 
-  const handleCheckboxPress = async (deviceId: number) => {
-    // Handle mutation for assigning plant to a device
+  const handleDeviceItemPress = async (deviceId: number) => {
     await assignPlantToDevice({ plant, deviceId });
   };
 
-  const isPlantAssignedToAllDevices = (): boolean =>
-    devices?.every?.(({ id }) => id === plant.device_id) ?? false;
+  const hasAllDevicesAssignedPlant = (): boolean =>
+    devices?.every((device) =>
+      assignedPlants?.some(
+        (assignedPlant) => device.id === assignedPlant.device_id
+      )
+    ) ?? false;
 
   const renderContent = () => {
     if (isError) {
@@ -78,18 +83,25 @@ export const PlantActionsMoreMenuAssign = ({
 
     return (
       <Dialog.Content>
-        <Text style={styles.textContent} variant="bodyMedium">
-          Device can only have one plant assigned to it
-        </Text>
-        {devices.map(({ id, name }) => (
-          <Checkbox.Item
-            key={id}
-            status={plant.device_id === id ? 'checked' : 'unchecked'}
-            label={name}
-            onPress={() => handleCheckboxPress(id)}
-            disabled={isAssignPlantToDeviceLoading}
-          />
-        ))}
+        {!hasAllDevicesAssignedPlant() ? (
+          <>
+            <Text style={styles.textContent} variant="bodyMedium">
+              Device can only have one plant assigned to it
+            </Text>
+            {devices.map(({ id, name, image_url }) => (
+              <List.Item
+                key={id}
+                title={name}
+                onPress={() => handleDeviceItemPress(id)}
+                left={() => (
+                  <Avatar.Image size={30} source={getImageUrl(image_url)} />
+                )}
+              />
+            ))}
+          </>
+        ) : (
+          <Text>All devices has assigned plant</Text>
+        )}
       </Dialog.Content>
     );
   };
@@ -98,11 +110,7 @@ export const PlantActionsMoreMenuAssign = ({
     <>
       <Menu.Item
         onPress={handleOnPress}
-        title={
-          isPlantAssignedToAllDevices()
-            ? 'Unassign from device'
-            : 'Assign to Device'
-        }
+        title="Assign to device"
         leadingIcon="plus"
       />
       <Portal>

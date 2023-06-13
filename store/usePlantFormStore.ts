@@ -2,22 +2,24 @@ import { create } from 'zustand';
 
 import { StepFormData } from 'schemas/plants';
 
+type Steps = Record<string, StepFormData>;
+
 interface PlantFormState {
   activeStep: number;
   nextStep: () => void;
   prevStep: () => void;
   resetSteps: () => void;
-  steps: Record<string, StepFormData>;
+  steps: Steps;
   setSteps: (step: string | number, formData: StepFormData) => void;
   resetStepsData: () => void;
 }
 
 const MAX_STEP = 2;
 const MIN_STEP = 0;
-const DEFAULT_STEPS = {
+const DEFAULT_STEPS: Steps = {
   '0': {
     image: '',
-    public: false,
+    status: 'private',
     name: '',
     appearance: '',
   },

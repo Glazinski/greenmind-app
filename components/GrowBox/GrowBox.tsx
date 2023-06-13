@@ -4,8 +4,7 @@ import { StyleSheet } from 'react-native';
 import { useTranslation } from 'react-i18next';
 
 import { useAssignedDevice, useDeviceLogs } from 'services/device/queries';
-import { usePlant } from 'services/plants/queries';
-import { useActivePlantStore } from 'store/useActivePlantStore';
+import { usePlantsAssignedToDevice } from 'services/plants/queries';
 
 import { GrowBoxAssignedPlant } from './GrowBoxAssignedPlant';
 import { GrowBoxImageSelector } from './GrowBoxImageSelector';
@@ -16,7 +15,6 @@ import { Layout } from '../Layout';
 
 export const GrowBox = (): JSX.Element => {
   const { t } = useTranslation();
-  const activePlantId = useActivePlantStore((state) => state.plantId);
   const {
     data: device,
     isLoading: isDeviceLoading,
@@ -27,9 +25,12 @@ export const GrowBox = (): JSX.Element => {
     isLoading: isDeviceLogsLoading,
     isError: isDeviceLogsError,
   } = useDeviceLogs();
-  const { data: activePlant } = usePlant(activePlantId);
+  const { data: assignedPlants, isLoading: isAssignedPlantLoading } =
+    usePlantsAssignedToDevice();
+  const assignedPlant = assignedPlants?.[0];
   const deviceLog = deviceLogs?.[deviceLogs.length - 1];
-  const isLoading = isDeviceLoading || isDeviceLogsLoading;
+  const isLoading =
+    isDeviceLoading || isDeviceLogsLoading || isAssignedPlantLoading;
   const isError = isDeviceError || isDeviceLogsError;
 
   if (isLoading) return <FullPageLoadingSpinner />;
@@ -58,7 +59,7 @@ export const GrowBox = (): JSX.Element => {
       <GrowBoxImageSelector device={device} />
       <GrowBoxAssignedPlant />
       {deviceLog && (
-        <GrowBoxDataTable deviceLog={deviceLog} activePlant={activePlant} />
+        <GrowBoxDataTable deviceLog={deviceLog} activePlant={assignedPlant} />
       )}
       <GrowBoxWaterPlant />
     </>

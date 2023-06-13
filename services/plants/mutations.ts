@@ -55,13 +55,14 @@ export const useEditPlant = (onSuccess?: () => void) => {
   });
 };
 
-export const useDeletePlant = () => {
+export const useDeletePlant = (onSuccess?: () => void) => {
   const queryClient = useQueryClient();
 
   return useMutation({
     mutationFn: (id: number) => api.delete(`/plants/${id}`),
     onSuccess: async () => {
       await queryClient.invalidateQueries({ queryKey: ['plants'] });
+      onSuccess?.();
     },
   });
 };
@@ -92,7 +93,7 @@ export const useDeletePlantFromFavorite = () => {
   });
 };
 
-export const useAssignPlantToDevice = () => {
+export const useAssignPlantToDevice = (onSuccess?: () => void) => {
   const queryClient = useQueryClient();
 
   return useMutation<
@@ -104,7 +105,7 @@ export const useAssignPlantToDevice = () => {
     }
   >({
     mutationFn: ({ plant, deviceId }) => {
-      const mappedPlant = mapBackendPlantToPlantFormData(plant);
+      const mappedPlant = mapBackendPlantToPlantFormData(plant, 'assigned');
       const newPlant = convertPlantToFormData(mappedPlant, deviceId);
 
       return api.post('/plants', newPlant, {
@@ -113,8 +114,12 @@ export const useAssignPlantToDevice = () => {
     },
     onSuccess: async (_, { deviceId }) => {
       await queryClient.invalidateQueries({
+        queryKey: ['plants'],
+      });
+      await queryClient.invalidateQueries({
         queryKey: ['devices', deviceId, 'plants'],
       });
+      onSuccess?.();
     },
   });
 };

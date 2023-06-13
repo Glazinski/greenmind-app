@@ -6,7 +6,7 @@ import { PlantFormStep1 } from 'components/Plant/PlantForm/PlantFormStep1';
 import { Layout } from 'components/Layout';
 import { BackendPlant, step1Schema } from 'schemas/plants';
 import { usePlantFormStore } from 'store/usePlantFormStore';
-import { usePrivatePlants } from 'services/plants/queries';
+import { usePlant } from 'services/plants/queries';
 import { PlantWizardStackScreenProps } from 'navigation/types';
 
 export const PlantStep1Screen = ({
@@ -14,13 +14,9 @@ export const PlantStep1Screen = ({
 }: PlantWizardStackScreenProps<'PlantStep1'>) => {
   const { plantId } = route.params;
   const setSteps = usePlantFormStore((state) => state.setSteps);
-  const { isError } = usePrivatePlants(onSuccess);
+  const { data: plant, isError } = usePlant(plantId, onSuccess);
 
-  function onSuccess(data: BackendPlant[]) {
-    const backendPlant = data?.find(
-      (privatePlant) => privatePlant.id === plantId
-    );
-
+  function onSuccess(backendPlant: BackendPlant) {
     if (backendPlant) {
       const {
         name,
@@ -45,7 +41,7 @@ export const PlantStep1Screen = ({
         name: name ?? '',
         appearance: appearance ?? '',
         image: image_url ?? '',
-        public: backendPlant.public ?? false,
+        status: backendPlant.status ?? 'private',
       });
       setSteps('1', {
         light_min: light_min?.toString() || '',
@@ -81,7 +77,12 @@ export const PlantStep1Screen = ({
         index={0}
         title={'Basic information'}
         schema={step1Schema}
-        renderFields={(control) => <PlantFormStep1 control={control} />}
+        renderFields={(control) => (
+          <PlantFormStep1
+            control={control}
+            isAssigned={plant?.status === 'assigned'}
+          />
+        )}
       />
     </Layout>
   );

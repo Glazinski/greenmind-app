@@ -9,6 +9,7 @@ import { useAuthStore } from 'store/useAuthStore';
 
 import { usePlantActions } from './PlantActionsContext';
 import { PlantActionsMoreMenuAssign } from './PlantActionsMoreMenuAssign';
+import { PlantActionsMoreMenuUnassign } from './PlantActionsMoreMenuUnassign';
 
 interface PlantActionsMoreMenuProps {
   onDeletePress?: () => void;
@@ -18,10 +19,8 @@ export const PlantActionsMoreMenu = ({
   onDeletePress,
 }: PlantActionsMoreMenuProps) => {
   const userId = useAuthStore((state) => state.userId);
-  const {
-    plant: { id: plantId, user_id: plantUserId },
-  } = usePlantActions();
   const { plant } = usePlantActions();
+  const { id: plantId, user_id: plantUserId, status } = plant;
   const navigation =
     useNavigation<
       CompositeScreenProps<
@@ -38,6 +37,16 @@ export const PlantActionsMoreMenu = ({
 
   const closeMenu = () => setVisible(false);
 
+  const renderAssignmentItem = () => {
+    if (!devices || devices.length === 0) return null;
+
+    if (status === 'assigned') {
+      return <PlantActionsMoreMenuUnassign plant={plant} onPress={closeMenu} />;
+    }
+
+    return <PlantActionsMoreMenuAssign plant={plant} onPress={closeMenu} />;
+  };
+
   return (
     <Menu
       visible={visible}
@@ -45,9 +54,10 @@ export const PlantActionsMoreMenu = ({
       anchor={<IconButton icon="dots-vertical" onPress={openMenu} />}
       anchorPosition="bottom"
     >
-      {devices && devices?.length > 0 && (
-        <PlantActionsMoreMenuAssign plant={plant} onPress={closeMenu} />
-      )}
+      {renderAssignmentItem()}
+      {/*{devices && devices?.length > 0 && (*/}
+      {/*  <PlantActionsMoreMenuAssign plant={plant} onPress={closeMenu} />*/}
+      {/*)}*/}
       {isUserPlant && (
         <>
           <Menu.Item
@@ -64,15 +74,17 @@ export const PlantActionsMoreMenu = ({
             title="Edit"
             leadingIcon="pencil"
           />
-          <Menu.Item
-            onPress={() => {
-              closeMenu();
-              deletePlant(plantId);
-              onDeletePress?.();
-            }}
-            title="Delete"
-            leadingIcon="delete"
-          />
+          {status !== 'assigned' && (
+            <Menu.Item
+              onPress={() => {
+                closeMenu();
+                deletePlant(plantId);
+                onDeletePress?.();
+              }}
+              title="Delete"
+              leadingIcon="delete"
+            />
+          )}
         </>
       )}
     </Menu>

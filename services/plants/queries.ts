@@ -34,6 +34,13 @@ export const useFavoritePlants = (onSuccess?: (data: BackendPlant[]) => void) =>
     },
   });
 
+export const useAssignedPlants = () =>
+  useQuery({
+    queryKey: ['plants', { type: 'assigned' }],
+    queryFn: () =>
+      api.get('/plants/assigned').then<BackendPlant[]>((res) => res.data),
+  });
+
 export const usePlantsAssignedToDevice = () => {
   const { deviceId } = useActiveDeviceStore();
 
@@ -46,10 +53,16 @@ export const usePlantsAssignedToDevice = () => {
   });
 };
 
-export const usePlant = (plantId: number | null) =>
+export const usePlant = (
+  plantId: number | null | undefined,
+  onSuccess?: (plant: BackendPlant) => void
+) =>
   useQuery({
     queryKey: ['plants', plantId],
     queryFn: () =>
       api.get(`/plants/${plantId}`).then<BackendPlant>((res) => res.data),
     enabled: typeof plantId === 'number',
+    onSuccess: (data) => {
+      onSuccess?.(data);
+    },
   });

@@ -1,8 +1,10 @@
 import { z } from 'zod';
 
+const plantStatus = z.enum(['public', 'private', 'assigned']);
+
 export const step1Schema = z.object({
   image: z.string(),
-  public: z.boolean(),
+  status: plantStatus,
   name: z.string().nonempty(),
   appearance: z.string(),
 });
@@ -40,7 +42,7 @@ export const plantSchema = step1Schema
 const backendPlant = z
   .object({
     id: z.number(),
-    public: z.boolean(),
+    status: plantStatus,
     image_url: z.string(),
     name: z.string(),
     appearance: z.string(),
@@ -65,3 +67,4 @@ export type Step3FormData = z.infer<typeof step3Schema>;
 export type StepFormData = Step1FormData | Step2FormData | Step3FormData;
 export type PlantFormData = z.infer<typeof plantSchema>;
 export type BackendPlant = z.infer<typeof backendPlant>;
+export type PlantStatus = z.infer<typeof plantStatus>;

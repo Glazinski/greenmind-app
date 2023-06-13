@@ -29,7 +29,6 @@ export const useEditDevice = (onSuccess?: () => void) => {
   >({
     mutationFn: ({ deviceId, formDevice }) => {
       const deviceFormData = convertDeviceToFormData(formDevice);
-      console.log('deviceFormData', deviceFormData);
 
       return api.patch(`/devices/${deviceId}`, deviceFormData, {
         headers: { 'Content-Type': 'multipart/form-data' },

@@ -33,18 +33,19 @@ export const DevicesScreen = ({
   return (
     <Layout style={styles.container}>
       {renderContent()}
-      <FAB
-        icon="plus"
-        style={styles.fab}
-        onPress={() =>
-          navigation.navigate('DeviceWizard', {
-            screen: 'DeviceStep1',
-            params: {
-              type: 'add',
-            },
-          })
-        }
-      />
+      {/*TODO: Implement*/}
+      {/*<FAB*/}
+      {/*  icon="plus"*/}
+      {/*  style={styles.fab}*/}
+      {/*  onPress={() =>*/}
+      {/*    navigation.navigate('DeviceWizard', {*/}
+      {/*      screen: 'DeviceStep1',*/}
+      {/*      params: {*/}
+      {/*        type: 'add',*/}
+      {/*      },*/}
+      {/*    })*/}
+      {/*  }*/}
+      {/*/>*/}
     </Layout>
   );
 };

@@ -10,7 +10,7 @@ import { GrowBoxDataCell } from './GrowBoxDataCell';
 
 interface GrowBoxDataTableProps {
   deviceLog: BackendDeviceLog;
-  activePlant?: BackendPlant;
+  activePlant?: BackendPlant | undefined;
 }
 
 export const GrowBoxDataTable = ({

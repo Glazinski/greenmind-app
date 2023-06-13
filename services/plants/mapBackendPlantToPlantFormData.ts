@@ -1,10 +1,11 @@
-import { BackendPlant, PlantFormData } from 'schemas/plants';
+import { BackendPlant, PlantFormData, PlantStatus } from 'schemas/plants';
 
 export const mapBackendPlantToPlantFormData = (
-  plant: BackendPlant
+  plant: BackendPlant,
+  newStatus?: PlantStatus
 ): PlantFormData => ({
   image: plant.image_url,
-  public: plant.public,
+  status: newStatus || plant.status,
   name: plant.name,
   appearance: plant.appearance,
   light_min: plant.light_min.toString(),

@@ -11,7 +11,7 @@ import { usePlantActions } from './PlantActionsContext';
 
 export const PlantActionsFavoriteButton = () => {
   const {
-    plant: { id: plantId },
+    plant: { id: plantId, status },
   } = usePlantActions();
   const { data: favoritePlants } = useFavoritePlants();
   const { mutate: addPlantToFavorite, isLoading: isAddPlantToFavoriteLoading } =
@@ -23,6 +23,8 @@ export const PlantActionsFavoriteButton = () => {
   const isFavorite = Boolean(
     favoritePlants?.find((plant) => plant.id === plantId)
   );
+
+  if (status === 'assigned') return null;
 
   return (
     <IconButton

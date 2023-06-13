@@ -8,9 +8,13 @@ import { ImageSelector } from 'components/ImageSelector';
 
 interface PlantFormStep1Props {
   control: Control<Step1FormData>;
+  isAssigned: boolean;
 }
 
-export const PlantFormStep1 = ({ control }: PlantFormStep1Props) => {
+export const PlantFormStep1 = ({
+  control,
+  isAssigned,
+}: PlantFormStep1Props) => {
   return (
     <View>
       <View style={styles.imageSelector}>
@@ -22,17 +26,21 @@ export const PlantFormStep1 = ({ control }: PlantFormStep1Props) => {
           control={control}
         />
       </View>
-      <Controller
-        control={control}
-        render={({ field: { onChange, value } }) => (
-          <Checkbox.Item
-            label="Toggle to share this item with the community"
-            status={value ? 'checked' : 'unchecked'}
-            onPress={() => onChange(!value)}
-          />
-        )}
-        name="public"
-      />
+      {!isAssigned && (
+        <Controller
+          control={control}
+          render={({ field: { onChange, value } }) => (
+            <Checkbox.Item
+              label="Toggle to share this item with the community"
+              status={value === 'public' ? 'checked' : 'unchecked'}
+              onPress={() =>
+                onChange(value === 'public' ? 'private' : 'public')
+              }
+            />
+          )}
+          name="status"
+        />
+      )}
       <TextField mode="outlined" label="Name" name="name" control={control} />
       <TextField
         mode="outlined"

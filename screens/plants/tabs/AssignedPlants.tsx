@@ -1,13 +1,9 @@
 import { PlantList } from 'components/Plant/PlantList';
 import { Layout } from 'components/Layout';
-import { usePlantsAssignedToDevice } from 'services/plants/queries';
+import { useAssignedPlants } from 'services/plants/queries';
 
 export const AssignedPlants = () => {
-  const {
-    data: assignedPlants,
-    isLoading,
-    isError,
-  } = usePlantsAssignedToDevice();
+  const { data: assignedPlants, isLoading, isError } = useAssignedPlants();
 
   return (
     <Layout>

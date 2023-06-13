@@ -39,6 +39,7 @@ export const PlantItem = ({ plant }: PlantItemProps) => {
     soil_humidity_max,
     air_humidity_min,
     air_humidity_max,
+    status,
   } = plant;
 
   const renderMinMaxLabel = (
@@ -93,7 +94,7 @@ export const PlantItem = ({ plant }: PlantItemProps) => {
             </View>
           </PlantActions>
         </View>
-        <PlantItemDeviceList />
+        {status === 'assigned' && <PlantItemDeviceList plant={plant} />}
       </Surface>
     </TouchableRipple>
   );

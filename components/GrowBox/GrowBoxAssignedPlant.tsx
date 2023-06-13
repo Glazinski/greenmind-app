@@ -8,26 +8,23 @@ import {
 } from 'react-native-paper';
 import { useTranslation } from 'react-i18next';
 
+import { getImageUrl } from 'services/getImageUrl';
 import { usePlantsAssignedToDevice } from 'services/plants/queries';
-import { useActivePlantStore } from 'store/useActivePlantStore';
 
 export const GrowBoxAssignedPlant = () => {
   const { t } = useTranslation();
   const {
     colors: { secondary, secondaryContainer, surfaceVariant },
   } = useTheme();
-  const plantId = useActivePlantStore((state) => state.plantId);
   const {
     data: assignedPlants,
     isLoading,
     isError,
   } = usePlantsAssignedToDevice();
   const assignedPlant = assignedPlants?.[0];
-  const hasAssignedPlant =
-    typeof plantId === 'number' && plantId >= 0 && assignedPlant?.name;
 
   const renderActivePlantName = (): string => {
-    return hasAssignedPlant ? assignedPlant.name : 'No plants assigned';
+    return assignedPlant?.name ?? 'No plants assigned';
   };
 
   if (isLoading) {
@@ -48,15 +45,16 @@ export const GrowBoxAssignedPlant = () => {
       style={[
         styles.container,
         {
-          backgroundColor: hasAssignedPlant
-            ? secondaryContainer
-            : surfaceVariant,
+          backgroundColor: assignedPlant ? secondaryContainer : surfaceVariant,
         },
       ]}
     >
-      {hasAssignedPlant && assignedPlant?.image_url && (
-        <View>
-          <Avatar.Image size={60} source={{ uri: assignedPlant?.image_url }} />
+      {assignedPlant && assignedPlant?.image_url && (
+        <View style={styles.imageContainer}>
+          <Avatar.Image
+            size={60}
+            source={getImageUrl(assignedPlant?.image_url)}
+          />
         </View>
       )}
       <View>
@@ -70,10 +68,12 @@ export const GrowBoxAssignedPlant = () => {
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
     alignItems: 'center',
     padding: 10,
     borderRadius: 12,
     marginTop: 10,
+  },
+  imageContainer: {
+    marginRight: 16,
   },
 });

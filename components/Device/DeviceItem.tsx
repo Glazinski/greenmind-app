@@ -13,6 +13,7 @@ import { useNavigation } from '@react-navigation/native';
 
 import { BackendDevice } from 'schemas/devices';
 import { HomeDrawerScreenProps } from 'navigation/types';
+import { getImageUrl } from 'services/getImageUrl';
 
 interface DeviceItemProps {
   device: BackendDevice;
@@ -23,7 +24,7 @@ interface DeviceItemProps {
 }
 
 export const DeviceItem = ({
-  device: { id, name },
+  device: { id, name, image_url },
   onDeleteClick,
   onUseThisDeviceClick,
   onStopUseThisDeviceClick,
@@ -48,7 +49,7 @@ export const DeviceItem = ({
           { backgroundColor: isActive ? primaryContainer : secondaryContainer },
         ]}
       >
-        <Avatar.Image source={require('../../assets/icon.png')} />
+        <Avatar.Image source={getImageUrl(image_url)} />
         <View style={styles.deviceName}>
           <Text variant="titleMedium">{name}</Text>
         </View>
@@ -92,14 +93,15 @@ export const DeviceItem = ({
               title="Edit"
               leadingIcon="pencil"
             />
-            <Menu.Item
-              onPress={() => {
-                onDeleteClick();
-                closeMenu();
-              }}
-              title="Delete"
-              leadingIcon="delete"
-            />
+            {/*TODO: Implement*/}
+            {/*<Menu.Item*/}
+            {/*  onPress={() => {*/}
+            {/*    onDeleteClick();*/}
+            {/*    closeMenu();*/}
+            {/*  }}*/}
+            {/*  title="Delete"*/}
+            {/*  leadingIcon="delete"*/}
+            {/*/>*/}
           </Menu>
         </View>
       </Surface>
