@@ -23,7 +23,6 @@
   "temperature": "Temperature",
   "soil_humidity": "Soil humidity",
   "air_humidity": "Air humidity",
-  "light": "Light",
   "fertilizing": "Fertilizing",
   "repotting": "Repotting",
   "pruning": "Pruning",
@@ -39,7 +38,7 @@
   "no_devices_found": "No devices found",
   "no_devices_found_details": "No device found. You need to add and configure new device or assign existing one to your account.",
   "no_device_data": "No device data",
-  "no_active_device": "Your account is not linked to any device. Please assign a device to\n          proceed.",
+  "no_active_device": "Your account is not linked to any device. Please assign a device to roceed.",
   "no_data":  "No data",
   "plant_assignment_message": "Device can only have one plant assigned to it",
   "cannot_assign_plant_message": "All devices has assigned plant",
@@ -49,5 +48,6 @@
   "configure_device": "Configure device",
   "use_system_settings": "Use system settings",
   "light": "Light",
-  "dark": "Dark"
+  "dark": "Dark",
+  "theme": "Theme",
 }
