@@ -36,7 +36,7 @@ export const PlantList = ({ plants, isError, isLoading }: PlantListProps) => {
 
   return (
     <FlatList
-      style={styles.listContainer}
+      contentContainerStyle={styles.listContainer}
       data={plants}
       renderItem={({ item }) => <PlantItem plant={item} />}
       keyExtractor={({ id }) => id.toString()}
@@ -50,6 +50,7 @@ const styles = StyleSheet.create({
     padding: 16,
   },
   listContainer: {
-    paddingHorizontal: 16,
+    paddingHorizontal: 8,
+    paddingBottom: 8,
   },
 });
