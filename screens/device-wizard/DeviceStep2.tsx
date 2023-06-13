@@ -13,6 +13,7 @@ import { formDeviceSchema, FormDevice, BackendDevice } from 'schemas/devices';
 import { DeviceWizardStackScreenProps } from 'navigation/types';
 import { useDevice } from 'services/device/queries';
 import { useEditDevice } from 'services/device/mutations';
+import { ConfirmationDialog } from '../../components/ConfirmationDialog';
 
 export const DeviceStep2 = ({
   navigation,
@@ -109,23 +110,14 @@ export const DeviceStep2 = ({
       <Button onPress={handleSubmit(onSubmit)} mode="contained">
         {type === 'add' ? 'Add' : 'Edit'}
       </Button>
-      <Portal>
-        <Dialog visible={visible} onDismiss={hideDialog}>
-          <Dialog.Content>
-            <Text variant="bodyLarge">
-              {isEditDeviceError
-                ? t('something_went_wrong')
-                : t('confirmation_message')}
-            </Text>
-          </Dialog.Content>
-          <Dialog.Actions>
-            <Button onPress={hideDialog}>Cancel</Button>
-            <Button onPress={onDialogSubmit} loading={isEditDeviceLoading}>
-              {renderSubmitButtonContent()}
-            </Button>
-          </Dialog.Actions>
-        </Dialog>
-      </Portal>
+      <ConfirmationDialog
+        visible={visible}
+        onDismiss={hideDialog}
+        isLoading={isEditDeviceLoading}
+        isError={isEditDeviceError}
+        onConfirmButtonPress={onDialogSubmit}
+        confirmButtonText={renderSubmitButtonContent()}
+      />
     </Layout>
   );
 };

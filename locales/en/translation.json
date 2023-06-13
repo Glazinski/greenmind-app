@@ -11,9 +11,10 @@
   "ideal_conditions": "Ideal conditions",
   "other_information": "Other information",
   "confirmation_message": "Are you sure that the information you have provided is correct and complete?",
+  "proceed_message": "Are you sure you want to proceed?",
   "something_went_wrong": "Something went wrong",
   "no_plants_found": "No plants found",
   "no_devices_found": "No devices found",
   "no_device_data": "No device data",
-  "no_data":  "No data",
+  "no_data":  "No data"
 }

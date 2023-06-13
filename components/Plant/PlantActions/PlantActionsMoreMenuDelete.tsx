@@ -4,6 +4,8 @@ import { Button, Dialog, Menu, Portal, Text } from 'react-native-paper';
 import { useDeletePlant } from 'services/plants/mutations';
 import { useTranslation } from 'react-i18next';
 
+import { ConfirmationDialog } from 'components/ConfirmationDialog';
+
 interface PlantActionsMoreMenuDeleteProps {
   plantId: number;
   onDismiss: () => void;
@@ -42,25 +44,14 @@ export const PlantActionsMoreMenuDelete = ({
   return (
     <>
       <Menu.Item onPress={showDialog} title="Delete" leadingIcon="delete" />
-      <Portal>
-        <Dialog visible={visible} onDismiss={hideDialog}>
-          <Dialog.Content>
-            <Text>
-              {isError
-                ? t('something_went_wrong')
-                : 'Are you sure you want to proceed?'}
-            </Text>
-          </Dialog.Content>
-          <Dialog.Actions>
-            <Button onPress={hideDialog} disabled={isLoading}>
-              Close
-            </Button>
-            <Button onPress={handleDeletePress} loading={isLoading}>
-              {isError ? 'Try again' : 'Delete'}
-            </Button>
-          </Dialog.Actions>
-        </Dialog>
-      </Portal>
+      <ConfirmationDialog
+        visible={visible}
+        onDismiss={hideDialog}
+        isLoading={isLoading}
+        isError={isError}
+        confirmButtonText="Delete"
+        onConfirmButtonPress={handleDeletePress}
+      />
     </>
   );
 };

@@ -4,6 +4,7 @@ import { Menu, Portal, Dialog, Button, Text } from 'react-native-paper';
 import { BackendPlant } from 'schemas/plants';
 import { useDeletePlant } from 'services/plants/mutations';
 import { useTranslation } from 'react-i18next';
+import { ConfirmationDialog } from '../../ConfirmationDialog';
 
 interface PlantActionsMoreMenuUnassignProps {
   plant: BackendPlant;
@@ -38,27 +39,16 @@ export const PlantActionsMoreMenuUnassign = ({
       <Menu.Item
         onPress={showDialog}
         title="Unassign from device"
-        leadingIcon="plus"
+        leadingIcon="minus"
       />
-      <Portal>
-        <Dialog visible={visible} onDismiss={hideDialog}>
-          <Dialog.Content>
-            <Text>
-              {isError
-                ? t('something_went_wrong')
-                : 'Are you sure you want to proceed? Assigned plant will be deleted entirely'}
-            </Text>
-          </Dialog.Content>
-          <Dialog.Actions>
-            <Button onPress={hideDialog} disabled={isLoading}>
-              Cancel
-            </Button>
-            <Button onPress={handleUnassignPress} loading={isLoading}>
-              {isError ? 'Try again' : 'Unassign'}
-            </Button>
-          </Dialog.Actions>
-        </Dialog>
-      </Portal>
+      <ConfirmationDialog
+        visible={visible}
+        onDismiss={hideDialog}
+        isLoading={isLoading}
+        isError={isError}
+        onConfirmButtonPress={handleUnassignPress}
+        confirmButtonText="Unassign"
+      />
     </>
   );
 };

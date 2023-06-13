@@ -1,5 +1,6 @@
 import { ScrollView } from 'react-native';
 import { Text } from 'react-native-paper';
+import { useTranslation } from 'react-i18next';
 
 import { PlantFormStep } from 'components/Plant/PlantForm/PlantFormStep';
 import { PlantFormStep1 } from 'components/Plant/PlantForm/PlantFormStep1';
@@ -12,6 +13,7 @@ import { PlantWizardStackScreenProps } from 'navigation/types';
 export const PlantStep1Screen = ({
   route,
 }: PlantWizardStackScreenProps<'PlantStep1'>) => {
+  const { t } = useTranslation();
   const { plantId } = route.params;
   const setSteps = usePlantFormStore((state) => state.setSteps);
   const { data: plant, isError } = usePlant(plantId, onSuccess);
@@ -75,7 +77,7 @@ export const PlantStep1Screen = ({
     <Layout as={ScrollView}>
       <PlantFormStep
         index={0}
-        title={'Basic information'}
+        title={t('basic_information')}
         schema={step1Schema}
         renderFields={(control) => (
           <PlantFormStep1

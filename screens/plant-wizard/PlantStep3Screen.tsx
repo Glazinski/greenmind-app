@@ -1,5 +1,4 @@
 import React from 'react';
-import { Button, Dialog, Portal, Text } from 'react-native-paper';
 import { useTranslation } from 'react-i18next';
 
 import { PlantFormStep } from 'components/Plant/PlantForm/PlantFormStep';
@@ -9,6 +8,7 @@ import { Layout } from 'components/Layout';
 import { PlantWizardStackScreenProps } from 'navigation/types';
 import { useAddPlant, useEditPlant } from 'services/plants/mutations';
 import { usePlantFormStore } from 'store/usePlantFormStore';
+import { ConfirmationDialog } from '../../components/ConfirmationDialog';
 
 export const PlantStep3Screen = ({
   navigation,
@@ -79,26 +79,19 @@ export const PlantStep3Screen = ({
     <Layout>
       <PlantFormStep
         index={2}
-        title={'Other information'}
+        title={t('other_information')}
         schema={step3Schema}
         renderFields={(control) => <PlantFormStep3 control={control} />}
         onSubmit={showDialog}
       />
-      <Portal>
-        <Dialog visible={visible} onDismiss={hideDialog}>
-          <Dialog.Content>
-            <Text variant="bodyLarge">
-              {isError ? t('something_went_wrong') : t('confirmation_message')}
-            </Text>
-          </Dialog.Content>
-          <Dialog.Actions>
-            <Button onPress={hideDialog}>Cancel</Button>
-            <Button onPress={handleSubmit} loading={isLoading}>
-              {renderSubmitButtonContent()}
-            </Button>
-          </Dialog.Actions>
-        </Dialog>
-      </Portal>
+      <ConfirmationDialog
+        visible={visible}
+        onDismiss={hideDialog}
+        isLoading={isLoading}
+        isError={isError}
+        onConfirmButtonPress={handleSubmit}
+        confirmButtonText={renderSubmitButtonContent()}
+      />
     </Layout>
   );
 };
