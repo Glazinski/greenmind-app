@@ -6,13 +6,13 @@ import {
   TouchableRipple,
   Avatar,
   useTheme,
-  Chip,
 } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native';
+import { useTranslation } from 'react-i18next';
 
-import { replaceLocalhostToIP } from 'api';
 import { BackendPlant } from 'schemas/plants';
 import { HomeDrawerScreenProps } from 'navigation/types';
+import { getImageUrl } from 'services/getImageUrl';
 
 import { PlantItemDeviceList } from './PlantItemDeviceList';
 import { PlantActions } from '../PlantActions';
@@ -22,6 +22,7 @@ interface PlantItemProps {
 }
 
 export const PlantItem = ({ plant }: PlantItemProps) => {
+  const { t } = useTranslation();
   const {
     colors: { secondaryContainer },
   } = useTheme();
@@ -64,25 +65,18 @@ export const PlantItem = ({ plant }: PlantItemProps) => {
     >
       <Surface style={[styles.item, { backgroundColor: secondaryContainer }]}>
         <View style={styles.itemContent}>
-          <Avatar.Image
-            size={83}
-            source={
-              image_url
-                ? { uri: replaceLocalhostToIP(image_url) }
-                : require('../../../assets/icon.png')
-            }
-          />
+          <Avatar.Image size={83} source={getImageUrl(image_url)} />
           <View style={styles.itemInformation}>
             <Text variant="titleMedium">{name}</Text>
-            {renderMinMaxLabel('Light', light_min, light_max)}
-            {renderMinMaxLabel('Temperature', temp_min, temp_max)}
+            {renderMinMaxLabel(t('light'), light_min, light_max)}
+            {renderMinMaxLabel(t('temperature'), temp_min, temp_max)}
             {renderMinMaxLabel(
-              'Soil humidity',
+              t('soil_humidity'),
               soil_humidity_min,
               soil_humidity_max
             )}
             {renderMinMaxLabel(
-              'Air humidity',
+              t('air_humidity'),
               air_humidity_min,
               air_humidity_max
             )}

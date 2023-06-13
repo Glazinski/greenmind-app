@@ -1,16 +1,18 @@
 import { View, StyleSheet } from 'react-native';
 import { Text } from 'react-native-paper';
 import { Control } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 
 import { Step2FormData } from 'schemas/plants';
-
-import { TextField } from '../../TextField';
+import { TextField } from 'components/TextField';
 
 interface PlantFormStep2Props {
   control: Control<Step2FormData>;
 }
 
 export const PlantFormStep2 = ({ control }: PlantFormStep2Props) => {
+  const { t } = useTranslation();
+
   const renderMinMaxRow = (label: string, fieldName: string) => (
     <View>
       <Text variant="titleMedium">{label}</Text>
@@ -39,10 +41,10 @@ export const PlantFormStep2 = ({ control }: PlantFormStep2Props) => {
 
   return (
     <View>
-      {renderMinMaxRow('Temperature', 'temp')}
-      {renderMinMaxRow('Air humidity', 'air_humidity')}
-      {renderMinMaxRow('Soil humidity', 'soil_humidity')}
-      {renderMinMaxRow('Light', 'light')}
+      {renderMinMaxRow(t('temperature'), 'temp')}
+      {renderMinMaxRow(t('air_humidity'), 'air_humidity')}
+      {renderMinMaxRow(t('soil_humidity'), 'soil_humidity')}
+      {renderMinMaxRow(t('light'), 'light')}
     </View>
   );
 };

@@ -1,6 +1,7 @@
 import { View, StyleSheet } from 'react-native';
 import { Control, Controller } from 'react-hook-form';
 import { Checkbox } from 'react-native-paper';
+import { useTranslation } from 'react-i18next';
 
 import { Step1FormData } from 'schemas/plants';
 import { TextField } from 'components/TextField';
@@ -15,6 +16,7 @@ export const PlantFormStep1 = ({
   control,
   isAssigned,
 }: PlantFormStep1Props) => {
+  const { t } = useTranslation();
   return (
     <View>
       <View style={styles.imageSelector}>
@@ -31,7 +33,7 @@ export const PlantFormStep1 = ({
           control={control}
           render={({ field: { onChange, value } }) => (
             <Checkbox.Item
-              label="Toggle to share this item with the community"
+              label={t('community_share_toggle')}
               status={value === 'public' ? 'checked' : 'unchecked'}
               onPress={() =>
                 onChange(value === 'public' ? 'private' : 'public')
@@ -41,10 +43,15 @@ export const PlantFormStep1 = ({
           name="status"
         />
       )}
-      <TextField mode="outlined" label="Name" name="name" control={control} />
       <TextField
         mode="outlined"
-        label="Appearance"
+        label={t('name') as string}
+        name="name"
+        control={control}
+      />
+      <TextField
+        mode="outlined"
+        label={t('appearance') as string}
         name="appearance"
         control={control}
       />

@@ -1,11 +1,11 @@
 import { Text } from 'react-native-paper';
+import { useTranslation } from 'react-i18next';
 
 import { PlantDetails } from 'components/Plant/PlantDetails';
 import { Layout } from 'components/Layout';
 import { FullPageLoadingSpinner } from 'components/FullPageLoadingSpinner';
 import { usePlant } from 'services/plants/queries';
 import { RootStackScreenProps } from 'navigation/types';
-import { useTranslation } from 'react-i18next';
 
 export const PlantScreen = ({ route }: RootStackScreenProps<'Plant'>) => {
   const { t } = useTranslation();

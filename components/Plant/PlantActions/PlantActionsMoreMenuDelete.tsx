@@ -1,9 +1,8 @@
 import React from 'react';
-import { Button, Dialog, Menu, Portal, Text } from 'react-native-paper';
-
-import { useDeletePlant } from 'services/plants/mutations';
+import { Menu } from 'react-native-paper';
 import { useTranslation } from 'react-i18next';
 
+import { useDeletePlant } from 'services/plants/mutations';
 import { ConfirmationDialog } from 'components/ConfirmationDialog';
 
 interface PlantActionsMoreMenuDeleteProps {
@@ -43,13 +42,17 @@ export const PlantActionsMoreMenuDelete = ({
 
   return (
     <>
-      <Menu.Item onPress={showDialog} title="Delete" leadingIcon="delete" />
+      <Menu.Item
+        onPress={showDialog}
+        title={t('delete')}
+        leadingIcon="delete"
+      />
       <ConfirmationDialog
         visible={visible}
         onDismiss={hideDialog}
         isLoading={isLoading}
         isError={isError}
-        confirmButtonText="Delete"
+        confirmButtonText={t('delete')}
         onConfirmButtonPress={handleDeletePress}
       />
     </>

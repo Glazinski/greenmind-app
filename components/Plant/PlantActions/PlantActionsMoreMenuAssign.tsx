@@ -86,7 +86,7 @@ export const PlantActionsMoreMenuAssign = ({
         {!hasAllDevicesAssignedPlant() ? (
           <>
             <Text style={styles.textContent} variant="bodyMedium">
-              Device can only have one plant assigned to it
+              {t('plant_assignment_message')}
             </Text>
             {devices.map(({ id, name, image_url }) => (
               <List.Item
@@ -100,7 +100,7 @@ export const PlantActionsMoreMenuAssign = ({
             ))}
           </>
         ) : (
-          <Text>All devices has assigned plant</Text>
+          <Text>{t('cannot_assign_plant_message')}</Text>
         )}
       </Dialog.Content>
     );
@@ -110,19 +110,19 @@ export const PlantActionsMoreMenuAssign = ({
     <>
       <Menu.Item
         onPress={handleOnPress}
-        title="Assign to device"
+        title={t('assign_to_device')}
         leadingIcon="plus"
       />
       <Portal>
         <Dialog visible={visible} onDismiss={hideDialog}>
-          <Dialog.Title>Device assignment</Dialog.Title>
+          <Dialog.Title>{t('device_assignment')}</Dialog.Title>
           {renderContent()}
           <Dialog.Actions>
             <Button
               onPress={hideDialog}
               disabled={isAssignPlantToDeviceLoading}
             >
-              Close
+              {t('close')}
             </Button>
           </Dialog.Actions>
         </Dialog>

@@ -6,6 +6,7 @@ import {
   Drawer as PaperDrawer,
   useTheme,
 } from 'react-native-paper';
+import { useTranslation } from 'react-i18next';
 
 import { useSignOut } from 'services/auth/mutations';
 
@@ -13,6 +14,7 @@ export const DrawerContent = ({
   navigation,
   state,
 }: DrawerContentComponentProps) => {
+  const { t } = useTranslation();
   const {
     colors: { background },
   } = useTheme();
@@ -34,9 +36,9 @@ export const DrawerContent = ({
       return <ActivityIndicator />;
     }
 
-    let label = 'Sign out';
+    let label = t('sign_out');
     if (isError) {
-      label = 'Try again';
+      label = t('try_again');
     }
 
     return (
@@ -57,10 +59,10 @@ export const DrawerContent = ({
       ]}
     >
       <PaperDrawer.Section>
-        {renderDrawerItem('Home', 'home')}
-        {renderDrawerItem('Devices', 'devices')}
-        {renderDrawerItem('Plants', 'leaf')}
-        {renderDrawerItem('Settings', 'cog')}
+        {renderDrawerItem(t('home'), 'home')}
+        {renderDrawerItem(t('devices'), 'devices')}
+        {renderDrawerItem(t('plants'), 'leaf')}
+        {renderDrawerItem(t('settings'), 'cog')}
       </PaperDrawer.Section>
       <View>{renderSignOutItem()}</View>
     </View>

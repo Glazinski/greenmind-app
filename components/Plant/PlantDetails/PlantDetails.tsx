@@ -62,38 +62,41 @@ export const PlantDetails = ({ plant }: PlantDetailsProps) => {
       />
       <View style={styles.dataContainer}>
         <PlantDetailsInfoSection title={t('basic_information')} showDivider>
-          <PlantDetailsInfoRow label="Name" value={name} />
-          <PlantDetailsInfoRow label="Appearance" value={appearance} />
+          <PlantDetailsInfoRow label={t('name')} value={name} />
+          <PlantDetailsInfoRow label={t('appearance')} value={appearance} />
         </PlantDetailsInfoSection>
         <PlantDetailsInfoSection title={t('ideal_conditions')} showDivider>
           <PlantDetailsInfoMaxMinRow
-            label="Temperature"
+            label={t('temperature')}
             min={temp_min}
             max={temp_max}
           />
           <PlantDetailsInfoMaxMinRow
-            label="Soil humidity"
+            label={t('soil_humidity')}
             min={soil_humidity_min}
             max={soil_humidity_max}
           />
           <PlantDetailsInfoMaxMinRow
-            label="Air humidity"
+            label={t('air_humidity')}
             min={air_humidity_min}
             max={air_humidity_max}
           />
           <PlantDetailsInfoMaxMinRow
-            label="Light"
+            label={t('light')}
             min={light_min}
             max={light_max}
           />
         </PlantDetailsInfoSection>
         <PlantDetailsInfoSection title={t('other_information')}>
-          <PlantDetailsInfoRow label="Fertilizing" value={fertilizing} />
-          <PlantDetailsInfoRow label="Repotting" value={repotting} />
-          <PlantDetailsInfoRow label="Pruning" value={pruning} />
-          <PlantDetailsInfoRow label="Blooming time" value={blooming_time} />
+          <PlantDetailsInfoRow label={t('fertilizing')} value={fertilizing} />
+          <PlantDetailsInfoRow label={t('repotting')} value={repotting} />
+          <PlantDetailsInfoRow label={t('pruning')} value={pruning} />
           <PlantDetailsInfoRow
-            label="Common diseases"
+            label={t('blooming_time')}
+            value={blooming_time}
+          />
+          <PlantDetailsInfoRow
+            label={t('common_diseases')}
             value={common_diseases}
           />
         </PlantDetailsInfoSection>
