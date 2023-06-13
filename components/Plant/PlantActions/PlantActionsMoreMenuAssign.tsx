@@ -1,4 +1,5 @@
 import React from 'react';
+import { StyleSheet } from 'react-native';
 import {
   Menu,
   Portal,
@@ -32,24 +33,31 @@ export const PlantActionsMoreMenuAssign = ({
     isLoading: isDevicesLoading,
     isError: isDevicesError,
   } = useDevices();
+  const {
+    mutate: assignPlantToDevice,
+    isLoading: isAssignPlantToDeviceLoading,
+  } = useAssignPlantToDevice();
   const [visible, setVisible] = React.useState(false);
   const isLoading = isDevicesLoading;
   const isError = isDevicesError;
 
   const showDialog = () => setVisible(true);
 
-  const hideDialog = () => setVisible(false);
+  const hideDialog = () => {
+    setVisible(false);
+    onPress?.();
+  };
 
   const handleOnPress = async () => {
     showDialog();
     // if (plant) {
     //   await assignPlantToDevice(plant);
     // }
-    // onPress();
   };
 
-  const handleCheckboxPress = () => {
+  const handleCheckboxPress = async (deviceId: number) => {
     // Handle mutation for assigning plant to a device
+    await assignPlantToDevice({ plant, deviceId });
   };
 
   const isPlantAssignedToAllDevices = (): boolean =>
@@ -70,12 +78,16 @@ export const PlantActionsMoreMenuAssign = ({
 
     return (
       <Dialog.Content>
+        <Text style={styles.textContent} variant="bodyMedium">
+          Device can only have one plant assigned to it
+        </Text>
         {devices.map(({ id, name }) => (
           <Checkbox.Item
             key={id}
             status={plant.device_id === id ? 'checked' : 'unchecked'}
             label={name}
-            onPress={handleCheckboxPress}
+            onPress={() => handleCheckboxPress(id)}
+            disabled={isAssignPlantToDeviceLoading}
           />
         ))}
       </Dialog.Content>
@@ -98,11 +110,21 @@ export const PlantActionsMoreMenuAssign = ({
           <Dialog.Title>Device assignment</Dialog.Title>
           {renderContent()}
           <Dialog.Actions>
-            <Button onPress={hideDialog}>Cancel</Button>
-            <Button onPress={hideDialog}>Done</Button>
+            <Button
+              onPress={hideDialog}
+              disabled={isAssignPlantToDeviceLoading}
+            >
+              Close
+            </Button>
           </Dialog.Actions>
         </Dialog>
       </Portal>
     </>
   );
 };
+
+const styles = StyleSheet.create({
+  textContent: {
+    marginBottom: 8,
+  },
+});

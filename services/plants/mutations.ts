@@ -94,20 +94,24 @@ export const useDeletePlantFromFavorite = () => {
 
 export const useAssignPlantToDevice = () => {
   const queryClient = useQueryClient();
-  const deviceId = useActiveDeviceStore((state) => state.deviceId);
 
-  return useMutation<unknown, AxiosError<ErrorResponse>, BackendPlant>({
-    mutationFn: (plant) => {
-      console.log('plant', plant);
+  return useMutation<
+    unknown,
+    AxiosError<ErrorResponse>,
+    {
+      plant: BackendPlant;
+      deviceId: number;
+    }
+  >({
+    mutationFn: ({ plant, deviceId }) => {
       const mappedPlant = mapBackendPlantToPlantFormData(plant);
       const newPlant = convertPlantToFormData(mappedPlant, deviceId);
 
-      console.log('newPlant', newPlant);
       return api.post('/plants', newPlant, {
         headers: { 'Content-Type': 'multipart/form-data' },
       });
     },
-    onSuccess: async () => {
+    onSuccess: async (_, { deviceId }) => {
       await queryClient.invalidateQueries({
         queryKey: ['devices', deviceId, 'plants'],
       });

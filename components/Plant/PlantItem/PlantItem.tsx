@@ -6,6 +6,7 @@ import {
   TouchableRipple,
   Avatar,
   useTheme,
+  Chip,
 } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native';
 
@@ -13,6 +14,7 @@ import { replaceLocalhostToIP } from 'api';
 import { BackendPlant } from 'schemas/plants';
 import { HomeDrawerScreenProps } from 'navigation/types';
 
+import { PlantItemDeviceList } from './PlantItemDeviceList';
 import { PlantActions } from '../PlantActions';
 
 interface PlantItemProps {
@@ -60,35 +62,38 @@ export const PlantItem = ({ plant }: PlantItemProps) => {
       borderless={true}
     >
       <Surface style={[styles.item, { backgroundColor: secondaryContainer }]}>
-        <Avatar.Image
-          size={83}
-          source={
-            image_url
-              ? { uri: replaceLocalhostToIP(image_url) }
-              : require('../../../assets/icon.png')
-          }
-        />
-        <View style={styles.itemInformation}>
-          <Text variant="titleMedium">{name}</Text>
-          {renderMinMaxLabel('Light', light_min, light_max)}
-          {renderMinMaxLabel('Temperature', temp_min, temp_max)}
-          {renderMinMaxLabel(
-            'Soil humidity',
-            soil_humidity_min,
-            soil_humidity_max
-          )}
-          {renderMinMaxLabel(
-            'Air humidity',
-            air_humidity_min,
-            air_humidity_max
-          )}
-        </View>
-        <PlantActions plant={plant}>
-          <View style={styles.itemActions}>
-            <PlantActions.MoreMenu />
-            <PlantActions.FavoriteButton />
+        <View style={styles.itemContent}>
+          <Avatar.Image
+            size={83}
+            source={
+              image_url
+                ? { uri: replaceLocalhostToIP(image_url) }
+                : require('../../../assets/icon.png')
+            }
+          />
+          <View style={styles.itemInformation}>
+            <Text variant="titleMedium">{name}</Text>
+            {renderMinMaxLabel('Light', light_min, light_max)}
+            {renderMinMaxLabel('Temperature', temp_min, temp_max)}
+            {renderMinMaxLabel(
+              'Soil humidity',
+              soil_humidity_min,
+              soil_humidity_max
+            )}
+            {renderMinMaxLabel(
+              'Air humidity',
+              air_humidity_min,
+              air_humidity_max
+            )}
           </View>
-        </PlantActions>
+          <PlantActions plant={plant}>
+            <View style={styles.itemActions}>
+              <PlantActions.MoreMenu />
+              <PlantActions.FavoriteButton />
+            </View>
+          </PlantActions>
+        </View>
+        <PlantItemDeviceList />
       </Surface>
     </TouchableRipple>
   );
@@ -102,8 +107,10 @@ const styles = StyleSheet.create({
   item: {
     paddingHorizontal: 16,
     paddingVertical: 16,
-    flexDirection: 'row',
+  },
+  itemContent: {
     alignItems: 'center',
+    flexDirection: 'row',
   },
   itemInformation: {
     marginLeft: 16,
@@ -112,5 +119,9 @@ const styles = StyleSheet.create({
     alignSelf: 'flex-start',
     marginLeft: 'auto',
     justifyContent: 'space-between',
+  },
+  itemDeviceList: {
+    flexDirection: 'row',
+    alignSelf: 'flex-start',
   },
 });
