@@ -30,6 +30,7 @@ export const PlantItem = ({ plant }: PlantItemProps) => {
     useNavigation<HomeDrawerScreenProps<'Plants'>['navigation']>();
   const {
     id,
+    attached_image_url,
     image_url,
     name,
     light_min,
@@ -65,7 +66,10 @@ export const PlantItem = ({ plant }: PlantItemProps) => {
     >
       <Surface style={[styles.item, { backgroundColor: secondaryContainer }]}>
         <View style={styles.itemContent}>
-          <Avatar.Image size={83} source={getImageUrl(image_url)} />
+          <Avatar.Image
+            size={83}
+            source={getImageUrl(attached_image_url ?? image_url)}
+          />
           <View style={styles.itemInformation}>
             <Text variant="titleMedium">{name}</Text>
             {renderMinMaxLabel(t('light'), light_min, light_max)}

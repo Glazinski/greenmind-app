@@ -4,7 +4,7 @@ export const mapBackendPlantToPlantFormData = (
   plant: BackendPlant,
   newStatus?: PlantStatus
 ): PlantFormData => ({
-  image: plant.image_url,
+  image: plant.attached_image_url,
   status: newStatus || plant.status,
   name: plant.name,
   appearance: plant.appearance,

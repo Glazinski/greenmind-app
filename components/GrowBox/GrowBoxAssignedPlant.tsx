@@ -22,6 +22,7 @@ export const GrowBoxAssignedPlant = () => {
     isError,
   } = usePlantsAssignedToDevice();
   const assignedPlant = assignedPlants?.[0];
+  const image = assignedPlant?.attached_image_url ?? assignedPlant?.image_url;
 
   const renderActivePlantName = (): string => {
     return assignedPlant?.name ?? 'No plants assigned';
@@ -49,12 +50,9 @@ export const GrowBoxAssignedPlant = () => {
         },
       ]}
     >
-      {assignedPlant && assignedPlant?.image_url && (
+      {assignedPlant && image && (
         <View style={styles.imageContainer}>
-          <Avatar.Image
-            size={60}
-            source={getImageUrl(assignedPlant?.image_url)}
-          />
+          <Avatar.Image size={60} source={getImageUrl(image)} />
         </View>
       )}
       <View>

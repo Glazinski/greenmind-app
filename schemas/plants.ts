@@ -43,6 +43,7 @@ const backendPlant = z
   .object({
     id: z.number(),
     status: plantStatus,
+    attached_image_url: z.string(),
     image_url: z.string(),
     name: z.string(),
     appearance: z.string(),

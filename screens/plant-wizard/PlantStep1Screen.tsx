@@ -22,7 +22,9 @@ export const PlantStep1Screen = ({
     if (backendPlant) {
       const {
         name,
+        attached_image_url,
         image_url,
+        status,
         appearance,
         light_min,
         light_max,
@@ -38,11 +40,12 @@ export const PlantStep1Screen = ({
         common_diseases,
         blooming_time,
       } = backendPlant;
+      const image = attached_image_url ?? image_url ?? '';
 
       setSteps('0', {
         name: name ?? '',
         appearance: appearance ?? '',
-        image: image_url ?? '',
+        image,
         status: backendPlant.status ?? 'private',
       });
       setSteps('1', {

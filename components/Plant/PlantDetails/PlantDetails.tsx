@@ -22,7 +22,9 @@ export const PlantDetails = ({ plant }: PlantDetailsProps) => {
     useNavigation<RootStackScreenProps<'Plant'>['navigation']>();
   const { t } = useTranslation();
   const {
+    attached_image_url,
     image_url,
+    status,
     name,
     appearance,
     temp_min,
@@ -57,7 +59,7 @@ export const PlantDetails = ({ plant }: PlantDetailsProps) => {
     <Layout as={ScrollView}>
       <Image
         style={styles.imageContainer}
-        source={getImageUrl(image_url)}
+        source={getImageUrl(attached_image_url ?? image_url)}
         resizeMode="cover"
       />
       <View style={styles.dataContainer}>
