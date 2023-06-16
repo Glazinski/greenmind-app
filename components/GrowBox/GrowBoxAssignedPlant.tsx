@@ -55,11 +55,12 @@ export const GrowBoxAssignedPlant = () => {
           tab: 'assigned',
         });
       }}
+      style={styles.container}
     >
       <Surface
         mode="flat"
         style={[
-          styles.container,
+          styles.assignedPlant,
           {
             backgroundColor: assignedPlant
               ? secondaryContainer
@@ -83,11 +84,13 @@ export const GrowBoxAssignedPlant = () => {
 
 const styles = StyleSheet.create({
   container: {
+    borderRadius: 12,
+    marginTop: 10,
+  },
+  assignedPlant: {
     flexDirection: 'row',
     alignItems: 'center',
     padding: 10,
-    borderRadius: 12,
-    marginTop: 10,
   },
   imageContainer: {
     marginRight: 16,
