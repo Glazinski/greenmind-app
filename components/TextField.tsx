@@ -5,11 +5,14 @@ import { useController, Control } from 'react-hook-form';
 interface TextFieldProps extends TextInputProps {
   name: string;
   control: Control<any>;
+  required?: boolean;
 }
 
 export const TextField = ({
   control,
   name: fieldName,
+  label,
+  required,
   ...rest
 }: TextFieldProps) => {
   const {
@@ -30,6 +33,7 @@ export const TextField = ({
         onBlur={onBlur}
         value={value}
         error={hasError}
+        label={required ? `${label}*` : label}
       />
       <HelperText type="error" visible={hasError}>
         {errorMessage}

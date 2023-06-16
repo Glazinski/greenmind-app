@@ -1,14 +1,15 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { ScrollView } from 'react-native';
 
 import { PlantFormStep } from 'components/Plant/PlantForm/PlantFormStep';
 import { PlantFormStep3 } from 'components/Plant/PlantForm/PlantFormStep3';
 import { PlantFormData, step3Schema } from 'schemas/plants';
 import { Layout } from 'components/Layout';
+import { ConfirmationDialog } from 'components/ConfirmationDialog';
 import { PlantWizardStackScreenProps } from 'navigation/types';
 import { useAddPlant, useEditPlant } from 'services/plants/mutations';
 import { usePlantFormStore } from 'store/usePlantFormStore';
-import { ConfirmationDialog } from '../../components/ConfirmationDialog';
 
 export const PlantStep3Screen = ({
   navigation,
@@ -76,7 +77,7 @@ export const PlantStep3Screen = ({
   };
 
   return (
-    <Layout>
+    <Layout as={ScrollView}>
       <PlantFormStep
         index={2}
         title={t('other_information')}

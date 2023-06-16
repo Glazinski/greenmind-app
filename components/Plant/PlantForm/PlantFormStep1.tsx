@@ -48,6 +48,7 @@ export const PlantFormStep1 = ({
         label={t('name') as string}
         name="name"
         control={control}
+        required
       />
       <TextField
         mode="outlined"

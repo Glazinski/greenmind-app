@@ -24,6 +24,7 @@ export const PlantFormStep2 = ({ control }: PlantFormStep2Props) => {
             name={`${fieldName}_min`}
             control={control}
             keyboardType="numeric"
+            required
           />
         </View>
         <View style={styles.minMaxField}>
@@ -32,6 +33,7 @@ export const PlantFormStep2 = ({ control }: PlantFormStep2Props) => {
             label="max"
             name={`${fieldName}_max`}
             control={control}
+            required
             keyboardType="numeric"
           />
         </View>
