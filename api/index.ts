@@ -30,5 +30,12 @@ export function setAuthToken(token: string | null) {
   }
 }
 
+// export const replaceLocalhostToIP = (str: string) =>
+//   str.replace('localhost', Constants.expoConfig?.extra?.myIpAddress);
+
+// For NGROK
 export const replaceLocalhostToIP = (str: string) =>
-  str.replace('localhost', Constants.expoConfig?.extra?.myIpAddress);
+  str.replace(
+    'http://localhost:3000',
+    Constants.expoConfig?.extra?.myIpAddress
+  );
