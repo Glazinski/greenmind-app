@@ -1,11 +1,11 @@
 import React from 'react';
-import { StyleSheet, ScrollView } from 'react-native';
+import { StyleSheet, ScrollView, RefreshControl } from 'react-native';
 import { useTheme, Text, Button } from 'react-native-paper';
 import { useTranslation } from 'react-i18next';
 
 import { GrowBox } from 'components/GrowBox/GrowBox';
 import { Layout } from 'components/Layout';
-import { useDevices } from 'services/device/queries';
+import { useDeviceLogs, useDevices } from 'services/device/queries';
 import { FullPageLoadingSpinner } from 'components/FullPageLoadingSpinner';
 import { HomeDrawerScreenProps } from 'navigation/types';
 import { useActiveDeviceStore } from 'store/useActiveDeviceStore';
@@ -15,12 +15,28 @@ export const HomeScreen = ({
 }: HomeDrawerScreenProps<'Home'>): JSX.Element => {
   const { t } = useTranslation();
   const { deviceId } = useActiveDeviceStore();
+  const [refreshing, setRefreshing] = React.useState(false);
   const {
     colors: { background },
   } = useTheme();
-  const { data: devices, isLoading } = useDevices();
+  const { data: devices, isLoading, isError } = useDevices();
+  const { refetch } = useDeviceLogs();
+
+  const handleDeviceLogsRefresh = async () => {
+    setRefreshing(true);
+    await refetch();
+    setRefreshing(false);
+  };
 
   if (isLoading) return <FullPageLoadingSpinner />;
+
+  if (isError) {
+    return (
+      <Layout>
+        <Text>{t('something_went_wrong')} with fetching devices data</Text>
+      </Layout>
+    );
+  }
 
   if (!devices || devices?.length === 0) {
     return (
@@ -58,6 +74,12 @@ export const HomeScreen = ({
     <ScrollView
       showsVerticalScrollIndicator={false}
       style={[styles.container, { backgroundColor: background }]}
+      refreshControl={
+        <RefreshControl
+          refreshing={refreshing}
+          onRefresh={handleDeviceLogsRefresh}
+        />
+      }
     >
       {deviceId && devices.length > 0 && <GrowBox />}
     </ScrollView>

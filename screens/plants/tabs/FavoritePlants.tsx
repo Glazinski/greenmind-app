@@ -3,7 +3,12 @@ import { Layout } from 'components/Layout';
 import { useFavoritePlants } from 'services/plants/queries';
 
 export const FavoritePlants = () => {
-  const { data: favoritePlants, isLoading, isError } = useFavoritePlants();
+  const {
+    data: favoritePlants,
+    isLoading,
+    isError,
+    refetch,
+  } = useFavoritePlants();
 
   return (
     <Layout>
@@ -11,6 +16,7 @@ export const FavoritePlants = () => {
         plants={favoritePlants}
         isLoading={isLoading}
         isError={isError}
+        refetch={refetch}
       />
     </Layout>
   );

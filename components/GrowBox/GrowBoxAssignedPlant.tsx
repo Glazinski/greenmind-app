@@ -5,9 +5,12 @@ import {
   Text,
   Avatar,
   useTheme,
+  TouchableRipple,
 } from 'react-native-paper';
 import { useTranslation } from 'react-i18next';
+import { useNavigation } from '@react-navigation/native';
 
+import { HomeDrawerScreenProps } from 'navigation/types';
 import { getImageUrl } from 'services/getImageUrl';
 import { usePlantsAssignedToDevice } from 'services/plants/queries';
 
@@ -16,6 +19,8 @@ export const GrowBoxAssignedPlant = () => {
   const {
     colors: { secondary, secondaryContainer, surfaceVariant },
   } = useTheme();
+  const navigation =
+    useNavigation<HomeDrawerScreenProps<'Home'>['navigation']>();
   const {
     data: assignedPlants,
     isLoading,
@@ -25,7 +30,7 @@ export const GrowBoxAssignedPlant = () => {
   const image = assignedPlant?.attached_image_url ?? assignedPlant?.image_url;
 
   const renderActivePlantName = (): string => {
-    return assignedPlant?.name ?? 'No plants assigned';
+    return assignedPlant?.name ?? t('no_plants_assigned');
   };
 
   if (isLoading) {
@@ -35,31 +40,44 @@ export const GrowBoxAssignedPlant = () => {
   if (isError) {
     return (
       <Surface>
-        <Text variant="bodyLarge">{t('something_went_wrong')}</Text>
+        <Text variant="bodyLarge">
+          {t('something_went_wrong')} with fetching assigned plant
+        </Text>
       </Surface>
     );
   }
 
   return (
-    <Surface
-      mode="flat"
-      style={[
-        styles.container,
-        {
-          backgroundColor: assignedPlant ? secondaryContainer : surfaceVariant,
-        },
-      ]}
+    <TouchableRipple
+      borderless={true}
+      onPress={() => {
+        navigation.navigate('Plants', {
+          tab: 'assigned',
+        });
+      }}
     >
-      {assignedPlant && image && (
-        <View style={styles.imageContainer}>
-          <Avatar.Image size={60} source={getImageUrl(image)} />
+      <Surface
+        mode="flat"
+        style={[
+          styles.container,
+          {
+            backgroundColor: assignedPlant
+              ? secondaryContainer
+              : surfaceVariant,
+          },
+        ]}
+      >
+        {assignedPlant && image && (
+          <View style={styles.imageContainer}>
+            <Avatar.Image size={60} source={getImageUrl(image)} />
+          </View>
+        )}
+        <View>
+          <Text style={{ color: secondary }}>Active plant</Text>
+          <Text variant="titleMedium">{renderActivePlantName()}</Text>
         </View>
-      )}
-      <View>
-        <Text style={{ color: secondary }}>Active plant</Text>
-        <Text variant="titleMedium">{renderActivePlantName()}</Text>
-      </View>
-    </Surface>
+      </Surface>
+    </TouchableRipple>
   );
 };
 

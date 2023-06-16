@@ -20,13 +20,14 @@ const renderScene = SceneMap({
 
 export const PlantsScreen = ({
   navigation,
+  route,
 }: HomeDrawerScreenProps<'Plants'>) => {
   const { t } = useTranslation();
+  const { params } = route;
   const {
     colors: { background, primary, onSurfaceVariant },
   } = useTheme();
   const layout = useWindowDimensions();
-
   const [index, setIndex] = React.useState(0);
   const [routes] = React.useState([
     { key: 'assigned', title: t('assigned') },
@@ -34,6 +35,12 @@ export const PlantsScreen = ({
     { key: 'community', title: t('community') },
     { key: 'favorite', title: t('favorite') },
   ]);
+
+  React.useEffect(() => {
+    if (typeof params?.tab === 'string') {
+      setIndex(routes.findIndex((r) => r.key === params?.tab));
+    }
+  }, [routes, params?.tab]);
 
   return (
     <Layout>

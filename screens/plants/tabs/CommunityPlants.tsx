@@ -4,7 +4,7 @@ import { PlantList } from 'components/Plant/PlantList';
 import { Layout } from 'components/Layout';
 
 export const CommunityPlants = () => {
-  const { data: publicPlants, isLoading, isError } = usePublicPlants();
+  const { data: publicPlants, isLoading, isError, refetch } = usePublicPlants();
 
   return (
     <Layout>
@@ -12,6 +12,7 @@ export const CommunityPlants = () => {
         plants={publicPlants}
         isError={isError}
         isLoading={isLoading}
+        refetch={refetch}
       />
     </Layout>
   );

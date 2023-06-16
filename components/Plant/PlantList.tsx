@@ -1,4 +1,5 @@
-import { FlatList, StyleSheet } from 'react-native';
+import React from 'react';
+import { FlatList, RefreshControl, StyleSheet } from 'react-native';
 import { ActivityIndicator, Text } from 'react-native-paper';
 import { useTranslation } from 'react-i18next';
 
@@ -11,10 +12,23 @@ interface PlantListProps {
   plants: BackendPlant[] | undefined;
   isLoading: boolean;
   isError: boolean;
+  refetch: () => Promise<unknown>;
 }
 
-export const PlantList = ({ plants, isError, isLoading }: PlantListProps) => {
+export const PlantList = ({
+  plants,
+  isError,
+  isLoading,
+  refetch,
+}: PlantListProps) => {
   const { t } = useTranslation();
+  const [refreshing, setRefreshing] = React.useState(false);
+
+  const handlePlantsRefresh = async () => {
+    setRefreshing(true);
+    await refetch();
+    setRefreshing(false);
+  };
 
   if (isLoading) return <ActivityIndicator />;
 
@@ -41,6 +55,12 @@ export const PlantList = ({ plants, isError, isLoading }: PlantListProps) => {
       renderItem={({ item }) => <PlantItem plant={item} />}
       keyExtractor={({ id }) => id.toString()}
       showsVerticalScrollIndicator={false}
+      refreshControl={
+        <RefreshControl
+          refreshing={refreshing}
+          onRefresh={handlePlantsRefresh}
+        />
+      }
     />
   );
 };

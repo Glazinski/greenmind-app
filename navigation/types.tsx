@@ -29,7 +29,9 @@ export type RootStackScreenProps<T extends keyof RootStackParamList> =
 export type HomeDrawerParamList = {
   Home: undefined;
   Devices: undefined;
-  Plants: undefined;
+  Plants: {
+    tab?: 'assigned' | 'myOwn' | 'community' | 'favorite';
+  };
   Settings: undefined;
 };
 

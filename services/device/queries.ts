@@ -33,7 +33,7 @@ export const useDeviceLogs = () =>
     queryFn: () =>
       api
         .get<BackendDeviceLog[]>(
-          `${Constants.expoConfig?.extra?.microserviceUrl}/data`
+          `${Constants.expoConfig?.extra?.microserviceUrl}/devices/0/data`
         )
         .then((res) => res.data),
     queryKey: ['devices', 1, 'data'],

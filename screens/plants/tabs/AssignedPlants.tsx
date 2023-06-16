@@ -3,7 +3,12 @@ import { Layout } from 'components/Layout';
 import { useAssignedPlants } from 'services/plants/queries';
 
 export const AssignedPlants = () => {
-  const { data: assignedPlants, isLoading, isError } = useAssignedPlants();
+  const {
+    data: assignedPlants,
+    isLoading,
+    isError,
+    refetch,
+  } = useAssignedPlants();
 
   return (
     <Layout>
@@ -11,6 +16,7 @@ export const AssignedPlants = () => {
         plants={assignedPlants}
         isError={isError}
         isLoading={isLoading}
+        refetch={refetch}
       />
     </Layout>
   );

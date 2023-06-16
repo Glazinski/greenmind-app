@@ -1,37 +1,58 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
-import { Portal, Snackbar } from 'react-native-paper';
+import { ActivityIndicator, Portal, Snackbar, Text } from 'react-native-paper';
+import { useTranslation } from 'react-i18next';
 
-import { BackendDeviceLog } from 'schemas/devices';
-import { BackendPlant } from 'schemas/plants';
+import { usePlantsAssignedToDevice } from 'services/plants/queries';
+import { useDeviceLogs } from 'services/device/queries';
 
 import { GrowBoxDataRow } from './GrowBoxDataRow';
 import { GrowBoxDataCell } from './GrowBoxDataCell';
 
-interface GrowBoxDataTableProps {
-  deviceLog: BackendDeviceLog;
-  activePlant?: BackendPlant | undefined;
-}
-
-export const GrowBoxDataTable = ({
-  deviceLog,
-  activePlant,
-}: GrowBoxDataTableProps) => {
+export const GrowBoxDataTable = () => {
+  const { t } = useTranslation();
   const [visible, setVisible] = React.useState(false);
   const [snackbarText, setSnackbarText] = React.useState('');
-  const { soil_hum, air_hum, temp, light } = deviceLog;
+  const {
+    data: deviceLogs,
+    isLoading: isDeviceLogsLoading,
+    isError: isDeviceLogsError,
+  } = useDeviceLogs();
+  const { data: assignedPlants, isLoading: isAssignedPlantLoading } =
+    usePlantsAssignedToDevice();
+  const isLoading = isDeviceLogsLoading || isAssignedPlantLoading;
+  const assignedPlant = assignedPlants?.[0];
+  const deviceLog = deviceLogs?.[deviceLogs.length - 1];
 
   const showSnackbar = () => setVisible(true);
 
   const hideSnackbar = () => setVisible(false);
 
-  const onErrorIconClick = (label: string, min?: number, max?: number) => {
+  const onSensorProblemPress = () => {
+    hideSnackbar();
+    setSnackbarText('Sensor might be broken or disconnected');
+    showSnackbar();
+  };
+
+  const onLevelProblemPress = (label: string, min?: number, max?: number) => {
     if (typeof min !== 'number' && typeof max !== 'number') return;
 
     hideSnackbar();
     setSnackbarText(`${label} level should be between ${min} and ${max}`);
     showSnackbar();
   };
+
+  if (isLoading) return <ActivityIndicator />;
+
+  if (isDeviceLogsError) {
+    return <Text>{t('something_went_wrong')} with fetching device logs</Text>;
+  }
+
+  if (!deviceLog) {
+    return <Text>{t('no_device_logs')}</Text>;
+  }
+
+  const { temp, soil_hum, air_hum, light } = deviceLog;
 
   return (
     <>
@@ -40,32 +61,36 @@ export const GrowBoxDataTable = ({
           <GrowBoxDataCell
             label="Temperature °C"
             value={temp}
-            onErrorIconClick={onErrorIconClick}
-            minValue={activePlant?.temp_min}
-            maxValue={activePlant?.temp_max}
+            onLevelProblemPress={onLevelProblemPress}
+            onSensorProblemPress={onSensorProblemPress}
+            minValue={assignedPlant?.temp_min}
+            maxValue={assignedPlant?.temp_max}
           />
           <GrowBoxDataCell
-            label="Soil humidity %"
+            label="Soil humidity"
             value={soil_hum}
-            onErrorIconClick={onErrorIconClick}
-            minValue={activePlant?.soil_humidity_min}
-            maxValue={activePlant?.soil_humidity_max}
+            onLevelProblemPress={onLevelProblemPress}
+            onSensorProblemPress={onSensorProblemPress}
+            minValue={assignedPlant?.soil_humidity_min}
+            maxValue={assignedPlant?.soil_humidity_max}
           />
         </GrowBoxDataRow>
         <GrowBoxDataRow>
           <GrowBoxDataCell
-            label="Air humidity %"
+            label="Air humidity"
             value={air_hum}
-            onErrorIconClick={onErrorIconClick}
-            minValue={activePlant?.air_humidity_min}
-            maxValue={activePlant?.air_humidity_max}
+            onLevelProblemPress={onLevelProblemPress}
+            onSensorProblemPress={onSensorProblemPress}
+            minValue={assignedPlant?.air_humidity_min}
+            maxValue={assignedPlant?.air_humidity_max}
           />
           <GrowBoxDataCell
-            label="Light %"
+            label="Light"
             value={light}
-            onErrorIconClick={onErrorIconClick}
-            minValue={activePlant?.light_min}
-            maxValue={activePlant?.light_max}
+            onSensorProblemPress={onSensorProblemPress}
+            onLevelProblemPress={onLevelProblemPress}
+            minValue={assignedPlant?.light_min}
+            maxValue={assignedPlant?.light_max}
           />
         </GrowBoxDataRow>
       </View>

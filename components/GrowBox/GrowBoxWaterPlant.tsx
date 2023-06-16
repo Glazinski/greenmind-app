@@ -15,20 +15,20 @@ export const GrowBoxWaterPlant = () => {
 
   const onDismissSnackBar = () => setIsSnackbarVisible(false);
 
-  const handleWaterPlantPress = () => {
-    if (!tasks) {
-      waterPlant.mutate();
-      return;
-    }
-
-    const hasTaskInQueue = tasks?.some(
-      ({ task_number, status }) =>
-        task_number === 0 && (status === 0 || status === 1)
-    );
-
-    if (hasTaskInQueue) {
-      setIsSnackbarVisible(true);
-    }
+  const handleWaterPlantPress = async () => {
+    await waterPlant.mutate();
+    // if (!tasks) {
+    //   return;
+    // }
+    //
+    // const hasTaskInQueue = tasks?.some(
+    //   ({ task_number, status }) =>
+    //     task_number === 0 && (status === 0 || status === 1)
+    // );
+    //
+    // if (hasTaskInQueue) {
+    //   setIsSnackbarVisible(true);
+    // }
   };
 
   return (

@@ -1,10 +1,11 @@
 import React from 'react';
-import { Menu, Portal, Dialog, Button, Text } from 'react-native-paper';
+import { Menu } from 'react-native-paper';
+import { useTranslation } from 'react-i18next';
+import { useQueryClient } from '@tanstack/react-query';
 
 import { BackendPlant } from 'schemas/plants';
 import { useDeletePlant } from 'services/plants/mutations';
-import { useTranslation } from 'react-i18next';
-import { ConfirmationDialog } from '../../ConfirmationDialog';
+import { ConfirmationDialog } from 'components/ConfirmationDialog';
 
 interface PlantActionsMoreMenuUnassignProps {
   plant: BackendPlant;
@@ -16,14 +17,18 @@ export const PlantActionsMoreMenuUnassign = ({
   onPress,
 }: PlantActionsMoreMenuUnassignProps) => {
   const { t } = useTranslation();
+  const queryClient = useQueryClient();
   const [visible, setVisible] = React.useState(false);
-  const {
-    mutate: deletePlant,
-    isLoading,
-    isError,
-  } = useDeletePlant(hideDialog);
+  const { mutate: deletePlant, isLoading, isError } = useDeletePlant(onSuccess);
 
   const showDialog = () => setVisible(true);
+
+  async function onSuccess() {
+    hideDialog();
+    await queryClient.invalidateQueries({
+      queryKey: ['devices', plant.device_id, 'plants'],
+    });
+  }
 
   function hideDialog() {
     setVisible(false);

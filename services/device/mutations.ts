@@ -1,5 +1,6 @@
 import axios, { AxiosError } from 'axios';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+import Constants from 'expo-constants';
 
 import { api } from 'api';
 import { FormDevice } from 'schemas/devices';
@@ -9,8 +10,8 @@ import { convertDeviceToFormData } from './convertDeviceToFormData';
 export const useDeviceWater = () =>
   useMutation({
     mutationFn: () =>
-      axios.post('http://growbox.atthost24.pl/tasks', {
-        device: 1,
+      axios.post(`${Constants.expoConfig?.extra?.microserviceUrl}/tasks`, {
+        device_id: 0,
         task_number: 0,
         status: 0,
       }),
