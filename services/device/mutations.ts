@@ -6,16 +6,24 @@ import { api } from 'api';
 import { FormDevice } from 'schemas/devices';
 
 import { convertDeviceToFormData } from './convertDeviceToFormData';
+import { useActiveDeviceStore } from '../../store/useActiveDeviceStore';
 
-export const useDeviceWater = () =>
-  useMutation({
+export const useDeviceWater = () => {
+  const { deviceId } = useActiveDeviceStore();
+
+  return useMutation({
     mutationFn: () =>
-      axios.post(`${Constants.expoConfig?.extra?.microserviceUrl}/tasks`, {
-        device_id: 0,
-        task_number: 0,
-        status: 0,
-      }),
+      axios.post(
+        `${Constants.expoConfig?.extra?.microserviceUrl}/devices/tasks`,
+        {
+          device_id: deviceId,
+          task_number: 0,
+          status: 0,
+          task_id: 0,
+        }
+      ),
   });
+};
 
 export const useEditDevice = (onSuccess?: () => void) => {
   const queryClient = useQueryClient();

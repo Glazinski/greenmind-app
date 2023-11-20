@@ -1,8 +1,8 @@
-import 'intl-pluralrules';
 import 'react-native-gesture-handler';
 import './lib/i18n';
 import React from 'react';
 import { StatusBar } from 'expo-status-bar';
+import { LogBox } from 'react-native';
 
 import { Providers } from 'components/Providers';
 import { FullPageLoadingSpinner } from 'components/FullPageLoadingSpinner';
@@ -10,6 +10,10 @@ import { useAuth } from 'services/auth/useAuth';
 
 import { AuthenticatedApp } from './AuthenticatedApp';
 import { UnauthenticatedApp } from './UnauthenticatedApp';
+
+// TODO: Remove
+LogBox.ignoreLogs(['Warning: ...']);
+LogBox.ignoreAllLogs();
 
 export default function App() {
   const { isSignedIn, isLoading } = useAuth();

@@ -28,25 +28,35 @@ export const useAssignedDevice = () => {
   return useDevice(deviceId);
 };
 
-export const useDeviceLogs = () =>
-  useQuery({
+export const useDeviceLogs = () => {
+  // TODO: Use when API changes
+  const { deviceId } = useActiveDeviceStore();
+
+  return useQuery({
     queryFn: () =>
       api
         .get<BackendDeviceLog[]>(
-          `${Constants.expoConfig?.extra?.microserviceUrl}/devices/0/data`
+          // TODO: Reload .env and add slash
+          `${Constants.expoConfig?.extra?.microserviceUrl}/devices/data/${deviceId}`
         )
         .then((res) => res.data),
     queryKey: ['devices', 1, 'data'],
     refetchInterval: 1000 * 30,
   });
+};
 
-export const useDeviceTasks = () =>
-  useQuery({
+export const useDeviceTasks = () => {
+  // TODO: Use when API changes
+  const { deviceId } = useActiveDeviceStore();
+
+  return useQuery({
     queryFn: () =>
       api
         .get<BackendTask[]>(
-          `${Constants.expoConfig?.extra?.microserviceUrl}/tasks`
+          // TODO: Reload .env and add slash
+          `${Constants.expoConfig?.extra?.microserviceUrl}/devices/tasks/${deviceId}`
         )
         .then((res) => res.data),
     queryKey: ['devices', 1, 'tasks'],
   });
+};

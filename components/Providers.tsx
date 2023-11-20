@@ -24,11 +24,9 @@ export const Providers = ({ children }: React.PropsWithChildren) => {
   return (
     <NavigationContainer>
       <QueryClientProvider client={queryClient}>
-        <PaperProvider theme={theme}>
-          <GestureHandlerRootView style={{ flex: 1 }}>
-            {children}
-          </GestureHandlerRootView>
-        </PaperProvider>
+        <GestureHandlerRootView style={{ flex: 1 }}>
+          <PaperProvider theme={theme}>{children}</PaperProvider>
+        </GestureHandlerRootView>
       </QueryClientProvider>
     </NavigationContainer>
   );
