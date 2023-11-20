@@ -1,6 +1,7 @@
 import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+
+import { zustandStorage } from './storage';
 
 interface ActiveDeviceState {
   deviceId: number | null;
@@ -15,7 +16,7 @@ export const useActiveDeviceStore = create<ActiveDeviceState>()(
     }),
     {
       name: 'active-device-storage',
-      storage: createJSONStorage(() => AsyncStorage),
+      storage: createJSONStorage(() => zustandStorage),
     }
   )
 );

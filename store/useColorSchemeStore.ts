@@ -1,6 +1,7 @@
 import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+
+import { zustandStorage } from './storage';
 
 export type ColorScheme = 'light' | 'dark' | 'system';
 
@@ -17,7 +18,7 @@ export const useColorSchemeStore = create<ColorSchemeState>()(
     }),
     {
       name: 'color-scheme-storage',
-      storage: createJSONStorage(() => AsyncStorage),
+      storage: createJSONStorage(() => zustandStorage),
     }
   )
 );

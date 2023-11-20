@@ -1,6 +1,7 @@
 import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+
+import { zustandStorage } from './storage';
 
 interface ActivePlantState {
   plantId: number | null;
@@ -15,7 +16,7 @@ export const useActivePlantStore = create<ActivePlantState>()(
     }),
     {
       name: 'active-plant-storage',
-      storage: createJSONStorage(() => AsyncStorage),
+      storage: createJSONStorage(() => zustandStorage),
     }
   )
 );
