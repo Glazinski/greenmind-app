@@ -3,7 +3,7 @@ import { StyleSheet, ScrollView, RefreshControl } from 'react-native';
 import { useTheme, Text, Button } from 'react-native-paper';
 import { useTranslation } from 'react-i18next';
 
-import { GrowBox } from 'components/GrowBox/grow-box';
+import { GrowBox } from 'components/grow-box/grow-box';
 import { Layout } from 'components/layout';
 import { useDeviceLogs, useDevices } from 'services/device/queries';
 import { FullPageLoadingSpinner } from 'components/full-page-loading-spinner';

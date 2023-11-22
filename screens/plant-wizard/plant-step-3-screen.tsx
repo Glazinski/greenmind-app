@@ -2,8 +2,8 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { ScrollView } from 'react-native';
 
-import { PlantFormStep } from 'components/Plant/plant-form/plant-form-step';
-import { PlantFormStep3 } from 'components/Plant/plant-form/plant-form-step-3';
+import { PlantFormStep } from 'components/plant/plant-form/plant-form-step';
+import { PlantFormStep3 } from 'components/plant/plant-form/plant-form-step-3';
 import { PlantFormData, step3Schema } from 'schemas/plants';
 import { Layout } from 'components/layout';
 import { ConfirmationDialog } from 'components/confirmation-dialog';

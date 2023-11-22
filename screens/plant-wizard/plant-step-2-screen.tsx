@@ -1,8 +1,8 @@
 import { ScrollView } from 'react-native';
 import { useTranslation } from 'react-i18next';
 
-import { PlantFormStep } from 'components/Plant/plant-form/plant-form-step';
-import { PlantFormStep2 } from 'components/Plant/plant-form/plant-form-step-2';
+import { PlantFormStep } from 'components/plant/plant-form/plant-form-step';
+import { PlantFormStep2 } from 'components/plant/plant-form/plant-form-step-2';
 import { Layout } from 'components/layout';
 import { step2Schema } from 'schemas/plants';
 

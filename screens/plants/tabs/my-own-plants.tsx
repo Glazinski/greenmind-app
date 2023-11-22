@@ -1,6 +1,6 @@
 import { usePrivatePlants } from 'services/plants/queries';
 
-import { PlantList } from 'components/Plant/plant-list';
+import { PlantList } from 'components/plant/plant-list';
 import { Layout } from 'components/layout';
 
 export const MyOwnPlants = () => {

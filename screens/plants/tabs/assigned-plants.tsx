@@ -1,4 +1,4 @@
-import { PlantList } from 'components/Plant/plant-list';
+import { PlantList } from 'components/plant/plant-list';
 import { Layout } from 'components/layout';
 import { useAssignedPlants } from 'services/plants/queries';
 

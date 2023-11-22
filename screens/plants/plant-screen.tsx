@@ -1,7 +1,7 @@
 import { Text } from 'react-native-paper';
 import { useTranslation } from 'react-i18next';
 
-import { PlantDetails } from 'components/Plant/plant-details';
+import { PlantDetails } from 'components/plant/plant-details';
 import { Layout } from 'components/layout';
 import { FullPageLoadingSpinner } from 'components/full-page-loading-spinner';
 import { usePlant } from 'services/plants/queries';
