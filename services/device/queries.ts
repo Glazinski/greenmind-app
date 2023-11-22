@@ -3,7 +3,7 @@ import Constants from 'expo-constants';
 
 import { api } from 'api';
 import { BackendDevice, BackendDeviceLog, BackendTask } from 'schemas/devices';
-import { useActiveDeviceStore } from 'store/useActiveDeviceStore';
+import { useActiveDeviceStore } from 'store/use-active-device-store';
 
 export const useDevices = () =>
   useQuery({

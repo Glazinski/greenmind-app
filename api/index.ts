@@ -1,7 +1,7 @@
 import axios, { AxiosError } from 'axios';
 import Constants from 'expo-constants';
 
-import { useAuthStore } from 'store/useAuthStore';
+import { useAuthStore } from 'store/use-auth-store';
 
 export const api = axios.create({
   baseURL: Constants.expoConfig?.extra?.apiBaseUrl,

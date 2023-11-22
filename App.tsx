@@ -3,9 +3,9 @@ import './lib/i18n';
 import React from 'react';
 import { StatusBar } from 'expo-status-bar';
 
-import { Providers } from 'components/Providers';
-import { FullPageLoadingSpinner } from 'components/FullPageLoadingSpinner';
-import { useAuth } from 'services/auth/useAuth';
+import { Providers } from 'components/providers';
+import { FullPageLoadingSpinner } from 'components/full-page-loading-spinner';
+import { useAuth } from 'services/auth/use-auth';
 
 import { AuthenticatedApp } from './AuthenticatedApp';
 import { UnauthenticatedApp } from './UnauthenticatedApp';

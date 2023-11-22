@@ -3,7 +3,7 @@ import { View, StyleSheet } from 'react-native';
 import { ActivityIndicator, Surface, Text, useTheme } from 'react-native-paper';
 
 import { GrowBoxPlantIndicator } from './GrowBoxPlantIndicator';
-import { useActivePlantStore } from '../../../store/useActivePlantStore';
+import { useActivePlantStore } from '../../../store/use-active-plant-store';
 import { usePlantsAssignedToDevice } from '../../../services/plants/queries';
 import { useTranslation } from 'react-i18next';
 

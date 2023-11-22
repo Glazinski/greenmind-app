@@ -1,3 +1,3 @@
-import { AuthNavigator } from 'navigation/AuthNavigator';
+import { AuthNavigator } from 'navigation/auth-navigator';
 
 export const UnauthenticatedApp = () => <AuthNavigator />;

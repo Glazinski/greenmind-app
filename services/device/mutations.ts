@@ -5,8 +5,8 @@ import Constants from 'expo-constants';
 import { api } from 'api';
 import { FormDevice } from 'schemas/devices';
 
-import { convertDeviceToFormData } from './convertDeviceToFormData';
-import { useActiveDeviceStore } from '../../store/useActiveDeviceStore';
+import { convertDeviceToFormData } from './convert-device-to-form-data';
+import { useActiveDeviceStore } from '../../store/use-active-device-store';
 
 export const useDeviceWater = () => {
   const { deviceId } = useActiveDeviceStore();

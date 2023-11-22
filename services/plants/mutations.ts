@@ -8,8 +8,8 @@ import { AxiosError } from 'axios';
 import { api } from 'api';
 import { BackendPlant, PlantFormData } from 'schemas/plants';
 
-import { convertPlantToFormData } from './convertPlantToFormData';
-import { mapBackendPlantToPlantFormData } from './mapBackendPlantToPlantFormData';
+import { convertPlantToFormData } from './convert-plant-to-form-data';
+import { mapBackendPlantToPlantFormData } from './map-backend-plant-to-plant-form-data';
 
 interface ErrorResponse {
   error: string[];
