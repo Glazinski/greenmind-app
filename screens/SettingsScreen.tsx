@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { Layout } from 'components/Layout';
 import { useColorSchemeStore, ColorScheme } from 'store/useColorSchemeStore';
 
-export const SettingsScreen = () => {
+export const SettingsScreen = (): React.JSX.Element => {
   const { t } = useTranslation();
   const { colorScheme, setColorScheme } = useColorSchemeStore();
   const [value, setValue] = React.useState(colorScheme);

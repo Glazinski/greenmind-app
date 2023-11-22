@@ -7,7 +7,7 @@ import { AuthForm } from 'components/AuthForm';
 import { useSignUp } from 'services/auth/mutations';
 import { signUpSchema, SignUpUser } from 'schemas/auth';
 
-export const SignUpScreen = (): JSX.Element => {
+export const SignUpScreen = (): React.JSX.Element => {
   const { mutate, error, isLoading } = useSignUp();
   const {
     control,

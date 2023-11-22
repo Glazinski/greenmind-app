@@ -7,7 +7,7 @@ import { useSignIn } from 'services/auth/mutations';
 import { AuthForm } from 'components/AuthForm';
 import { signInSchema, SignInUser } from 'schemas/auth';
 
-export const SignInScreen = (): JSX.Element => {
+export const SignInScreen = (): React.JSX.Element => {
   const { mutate, error, isLoading } = useSignIn();
   const {
     control,

@@ -12,7 +12,7 @@ import { useActiveDeviceStore } from 'store/useActiveDeviceStore';
 
 export const HomeScreen = ({
   navigation,
-}: HomeDrawerScreenProps<'Home'>): JSX.Element => {
+}: HomeDrawerScreenProps<'Home'>): React.JSX.Element => {
   const { t } = useTranslation();
   const { deviceId } = useActiveDeviceStore();
   const [refreshing, setRefreshing] = React.useState(false);
@@ -38,26 +38,20 @@ export const HomeScreen = ({
     );
   }
 
+  let errorMsg = '';
+
   if (!devices || devices?.length === 0) {
-    return (
-      <Layout style={[styles.container, { backgroundColor: background }]}>
-        <Text variant="titleMedium">{t('no_devices_found_details')}</Text>
-        <Button
-          onPress={() => {
-            navigation.navigate('Devices');
-          }}
-          style={styles.configureButton}
-        >
-          {t('configure_device')}
-        </Button>
-      </Layout>
-    );
+    errorMsg = t('no_devices_found_details');
   }
 
   if (!deviceId) {
+    errorMsg = t('no_active_device');
+  }
+
+  if (errorMsg.length) {
     return (
       <Layout style={[styles.container, { backgroundColor: background }]}>
-        <Text variant="titleMedium">{t('no_active_device')}</Text>
+        <Text variant="titleMedium">{errorMsg}</Text>
         <Button
           onPress={() => {
             navigation.navigate('Devices');

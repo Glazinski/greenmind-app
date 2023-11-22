@@ -1,10 +1,5 @@
 import React from 'react';
-import {
-  StyleSheet,
-  View,
-  BackHandler,
-  useWindowDimensions,
-} from 'react-native';
+import { StyleSheet, View, useWindowDimensions } from 'react-native';
 import { Camera, CameraType } from 'expo-camera';
 import { FlipType, manipulateAsync, SaveFormat } from 'expo-image-manipulator';
 import BottomSheet from '@gorhom/bottom-sheet';
@@ -12,6 +7,7 @@ import { useTheme, Portal } from 'react-native-paper';
 
 import { CircleCameraButton } from './CircleCameraButton';
 import { CameraReverseButton } from './CameraReverseButton';
+import { useBackPress } from '../../hooks/useBackPress';
 
 interface CameraPreviewProps {
   onDismiss: () => void;
@@ -28,27 +24,19 @@ export const CameraView = ({ onDismiss, onChange }: CameraPreviewProps) => {
   const [isTakingPicture, setIsTakingPicture] = React.useState(false);
   const [isBottomSheetOpen, setIsBottomSheetOpen] = React.useState(false);
   const bottomSheetRef = React.useRef<BottomSheet>(null);
-
   const snapPoints = React.useMemo(() => [height], [height]);
 
-  React.useEffect(() => {
-    const backAction = () => {
-      if (isBottomSheetOpen) {
-        bottomSheetRef.current?.close();
-        setIsBottomSheetOpen(false);
-        return true;
-      }
+  const backAction = React.useCallback(() => {
+    if (isBottomSheetOpen) {
+      bottomSheetRef.current?.close();
+      setIsBottomSheetOpen(false);
+      return true;
+    }
 
-      return false;
-    };
-
-    const backHandler = BackHandler.addEventListener(
-      'hardwareBackPress',
-      backAction
-    );
-
-    return () => backHandler.remove();
+    return false;
   }, [isBottomSheetOpen]);
+
+  useBackPress(backAction);
 
   const handleSheetChanges = React.useCallback(
     (index: number) => {

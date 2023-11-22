@@ -10,7 +10,7 @@ import { HomeDrawerScreenProps } from 'navigation/types';
 
 export const DevicesScreen = ({
   navigation,
-}: HomeDrawerScreenProps<'Devices'>) => {
+}: HomeDrawerScreenProps<'Devices'>): React.JSX.Element => {
   const { t } = useTranslation();
   const { data: devices, isLoading, isError } = useDevices();
 

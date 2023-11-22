@@ -6,7 +6,7 @@ import { GrowBoxWaterPlant } from './GrowBoxWaterPlant';
 
 import { GrowBoxDeviceInformation } from './GrowBoxDeviceInformation';
 
-export const GrowBox = (): JSX.Element => (
+export const GrowBox = (): React.JSX.Element => (
   <>
     <GrowBoxDeviceInformation />
     <GrowBoxAssignedPlant />

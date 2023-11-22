@@ -19,7 +19,7 @@ interface GrowBoxPlantSelectorProps {
 
 export const GrowBoxPlantSelector = ({
   style,
-}: GrowBoxPlantSelectorProps): JSX.Element => {
+}: GrowBoxPlantSelectorProps): React.JSX.Element => {
   const { t } = useTranslation();
   const {
     colors: { secondary, secondaryContainer },
