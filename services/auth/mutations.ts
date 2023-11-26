@@ -3,7 +3,7 @@ import jwtDecode from 'jwt-decode';
 
 import { api, setAuthToken } from 'api';
 import { useAuthStore } from 'store/use-auth-store';
-import { SignInUser, SignUpUser } from 'schemas/auth';
+import { UserSignInData, UserSignUpData } from 'schemas/auth';
 
 interface DecodedJwtPayload {
   exp: number;
@@ -29,7 +29,7 @@ export const useSignIn = () => {
   const { setAuthData } = useAuthStore();
 
   return useMutation({
-    mutationFn: (user: SignInUser) =>
+    mutationFn: (user: UserSignInData) =>
       api.post<AuthResponse>('/login', user).then((res) => res.data),
     ...defaultMutationConfig(setAuthData),
   });
@@ -39,7 +39,7 @@ export const useSignUp = () => {
   const { setAuthData } = useAuthStore();
 
   return useMutation({
-    mutationFn: (newUser: SignUpUser) =>
+    mutationFn: (newUser: UserSignUpData) =>
       api
         .post('/users', {
           user: { ...newUser },

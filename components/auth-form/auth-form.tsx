@@ -1,39 +1,51 @@
-import * as React from 'react';
+import React from 'react';
 import { View } from 'react-native';
-import {
-  Button,
-  Text,
-  TextInput,
-  useTheme,
-  Appbar,
-  HelperText,
-} from 'react-native-paper';
+import { Button, Text, useTheme, Appbar } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native';
-import { Controller } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
+import type {
+  UseFormReturn,
+  UseFormProps,
+  FieldValues,
+  SubmitHandler,
+} from 'react-hook-form';
 
 import { UnauthenticatedRootStackScreenProps } from 'navigation/types';
 
 import { styles } from './auth-form.styles';
 
-interface AuthFormProps {
+interface AuthFormProps<TFormValues extends FieldValues> {
   type: 'signIn' | 'signUp';
-  handleSubmit: () => void;
+  onSubmit: SubmitHandler<TFormValues>;
+  children: (methods: UseFormReturn<TFormValues>) => React.ReactNode;
   apiError: string;
-  // TODO: Add better typings
-  errors: any;
-  control: any;
   isLoading: boolean;
+  config?: UseFormProps<TFormValues>;
 }
 
-export const AuthForm = ({
+const formConfig = {
+  signIn: {
+    title: 'sign_in',
+    linkTo: 'SignUp',
+    linkText: 'sign_up',
+  },
+  signUp: {
+    title: 'sign_up',
+    linkTo: 'SignIn',
+    linkText: 'sign_in',
+  },
+} as const;
+
+export const AuthForm = <TFormValues extends FieldValues>({
   type,
-  handleSubmit,
-  control,
+  onSubmit,
+  children,
   apiError,
-  errors,
   isLoading,
-}: AuthFormProps) => {
+  config,
+}: AuthFormProps<TFormValues>) => {
+  const methods = useForm<TFormValues>(config);
   const { t } = useTranslation();
   const {
     colors: { primary, background, error },
@@ -42,9 +54,9 @@ export const AuthForm = ({
     useNavigation<
       UnauthenticatedRootStackScreenProps<'SignIn'>['navigation']
     >();
-  const [passwordSecureEntry, setPasswordSecureEntry] = React.useState(true);
-  const buttonAndTitleText = type === 'signIn' ? t('sign_in') : t('sign_up');
-  const linkText = type === 'signIn' ? t('sign_up') : t('sign_in');
+  const { title, linkTo, linkText } = formConfig[type];
+  const translatedTitle = t(title);
+  const translatedLinkText = t(linkText);
 
   return (
     <>
@@ -62,95 +74,7 @@ export const AuthForm = ({
           },
         ]}
       >
-        <Text style={styles.headline} variant="headlineMedium">
-          {buttonAndTitleText}
-        </Text>
-        <Controller
-          control={control}
-          name="email"
-          render={({ field: { onChange, onBlur, value } }) => (
-            <TextInput
-              onChangeText={onChange}
-              onBlur={onBlur}
-              value={value}
-              style={styles.textInput}
-              label={t<string>('email')}
-              mode="outlined"
-              autoComplete="email"
-              keyboardType="email-address"
-              error={!!errors?.email?.message}
-              disabled={isLoading}
-            />
-          )}
-        />
-        <HelperText type="error" visible={!!errors?.email?.message}>
-          {errors?.email?.message}
-        </HelperText>
-        <Controller
-          control={control}
-          name="password"
-          render={({ field: { onChange, onBlur, value } }) => (
-            <TextInput
-              onChangeText={onChange}
-              onBlur={onBlur}
-              value={value}
-              style={styles.textInput}
-              label={t<string>('password')}
-              mode="outlined"
-              secureTextEntry={passwordSecureEntry}
-              error={!!errors?.password?.message}
-              autoComplete="password"
-              disabled={isLoading}
-              right={
-                <TextInput.Icon
-                  icon={passwordSecureEntry ? 'eye-off' : 'eye'}
-                  onPress={() => setPasswordSecureEntry(!passwordSecureEntry)}
-                  forceTextInputFocus={false}
-                />
-              }
-            />
-          )}
-        />
-        <HelperText type="error" visible={!!errors?.password?.message}>
-          {errors?.password?.message}
-        </HelperText>
-        {type === 'signUp' && (
-          <>
-            <Controller
-              control={control}
-              name="passwordConfirmation"
-              render={({ field: { onChange, onBlur, value } }) => (
-                <TextInput
-                  onChangeText={onChange}
-                  onBlur={onBlur}
-                  value={value}
-                  style={styles.textInput}
-                  label={t<string>('password_confirmation')}
-                  mode="outlined"
-                  secureTextEntry={passwordSecureEntry}
-                  error={!!errors?.passwordConfirmation?.message}
-                  autoComplete="password"
-                  disabled={isLoading}
-                  right={
-                    <TextInput.Icon
-                      icon={passwordSecureEntry ? 'eye-off' : 'eye'}
-                      onPress={() =>
-                        setPasswordSecureEntry(!passwordSecureEntry)
-                      }
-                      forceTextInputFocus={false}
-                    />
-                  }
-                />
-              )}
-            />
-            <HelperText
-              type="error"
-              visible={!!errors?.passwordConfirmation?.message}
-            >
-              {errors?.passwordConfirmation?.message}
-            </HelperText>
-          </>
-        )}
+        {children(methods)}
         {apiError && (
           <View style={[styles.apiErrorContainer]}>
             <Text variant="titleSmall" style={{ color: error }}>
@@ -160,13 +84,13 @@ export const AuthForm = ({
         )}
         <View style={styles.footerContainer}>
           <Button
-            onPress={handleSubmit}
+            onPress={methods.handleSubmit(onSubmit)}
             contentStyle={styles.footerButton}
             mode="contained"
             loading={isLoading}
             disabled={isLoading}
           >
-            {buttonAndTitleText}
+            {translatedTitle}
           </Button>
           <View style={styles.footerLinkContainer}>
             <Button
@@ -175,7 +99,7 @@ export const AuthForm = ({
               }
             >
               <Text style={[styles.footerLinkButton, { color: primary }]}>
-                {linkText}
+                {translatedLinkText}
               </Text>
             </Button>
           </View>

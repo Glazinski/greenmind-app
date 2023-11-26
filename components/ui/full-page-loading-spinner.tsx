@@ -1,7 +1,7 @@
 import { StyleSheet } from 'react-native';
 import { ActivityIndicator } from 'react-native-paper';
 
-import { Layout } from './layout';
+import { Layout } from '../layout';
 
 export const FullPageLoadingSpinner = () => {
   return (

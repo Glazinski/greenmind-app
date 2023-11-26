@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { GrowBox } from 'components/grow-box/grow-box';
 import { Layout } from 'components/layout';
 import { useDeviceLogs, useDevices } from 'services/device/queries';
-import { FullPageLoadingSpinner } from 'components/full-page-loading-spinner';
+import { FullPageLoadingSpinner } from 'components/ui/full-page-loading-spinner';
 import { HomeDrawerScreenProps } from 'navigation/types';
 import { useActiveDeviceStore } from 'store/use-active-device-store';
 

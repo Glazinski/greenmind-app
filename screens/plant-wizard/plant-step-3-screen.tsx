@@ -6,7 +6,7 @@ import { PlantFormStep } from 'components/plant/plant-form/plant-form-step';
 import { PlantFormStep3 } from 'components/plant/plant-form/plant-form-step-3';
 import { PlantFormData, step3Schema } from 'schemas/plants';
 import { Layout } from 'components/layout';
-import { ConfirmationDialog } from 'components/confirmation-dialog';
+import { ConfirmationDialog } from 'components/ui/confirmation-dialog';
 import { PlantWizardStackScreenProps } from 'navigation/types';
 import { useAddPlant, useEditPlant } from 'services/plants/mutations';
 import { usePlantFormStore } from 'store/use-plant-form-store';

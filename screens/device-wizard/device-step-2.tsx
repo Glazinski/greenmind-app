@@ -8,12 +8,12 @@ import { useTranslation } from 'react-i18next';
 
 import { Layout } from 'components/layout';
 import { ImageSelector } from 'components/image-selector';
-import { TextField } from 'components/text-field';
-import { formDeviceSchema, FormDevice, BackendDevice } from 'schemas/devices';
+import { TextField } from 'components/ui/text-field';
+import { DeviceInputScheme, FormDevice, BackendDevice } from 'schemas/devices';
 import { DeviceWizardStackScreenProps } from 'navigation/types';
 import { useDevice } from 'services/device/queries';
 import { useEditDevice } from 'services/device/mutations';
-import { ConfirmationDialog } from '../../components/confirmation-dialog';
+import { ConfirmationDialog } from '../../components/ui/confirmation-dialog';
 
 export const DeviceStep2 = ({
   navigation,
@@ -37,7 +37,7 @@ export const DeviceStep2 = ({
   } = useEditDevice(onUseEditDeviceSuccess);
   const { handleSubmit, control, reset, getValues } = useForm<FormDevice>({
     defaultValues: formData,
-    resolver: zodResolver(formDeviceSchema),
+    resolver: zodResolver(DeviceInputScheme),
   });
 
   const showDialog = () => setVisible(true);

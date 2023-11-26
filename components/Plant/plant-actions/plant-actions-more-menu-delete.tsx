@@ -3,7 +3,7 @@ import { Menu } from 'react-native-paper';
 import { useTranslation } from 'react-i18next';
 
 import { useDeletePlant } from 'services/plants/mutations';
-import { ConfirmationDialog } from 'components/confirmation-dialog';
+import { ConfirmationDialog } from 'components/ui/confirmation-dialog';
 
 interface PlantActionsMoreMenuDeleteProps {
   plantId: number;

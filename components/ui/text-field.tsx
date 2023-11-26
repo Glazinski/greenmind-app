@@ -1,20 +1,22 @@
 import React from 'react';
 import { TextInput, TextInputProps, HelperText } from 'react-native-paper';
-import { useController, Control } from 'react-hook-form';
+import { useController, FieldValues } from 'react-hook-form';
+import type { Control, FieldPath } from 'react-hook-form';
 
-interface TextFieldProps extends TextInputProps {
-  name: string;
-  control: Control<any>;
+interface TextFieldProps<TFormValues extends FieldValues>
+  extends TextInputProps {
+  name: FieldPath<TFormValues>;
+  control: Control<TFormValues>;
   required?: boolean;
 }
 
-export const TextField = ({
+export const TextField = <TFormValues extends FieldValues>({
   control,
   name: fieldName,
   label,
   required,
   ...rest
-}: TextFieldProps) => {
+}: TextFieldProps<TFormValues>) => {
   const {
     field: { onChange, onBlur, value, name },
     formState: { errors },

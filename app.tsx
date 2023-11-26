@@ -4,11 +4,11 @@ import React from 'react';
 import { StatusBar } from 'expo-status-bar';
 
 import { Providers } from 'components/providers';
-import { FullPageLoadingSpinner } from 'components/full-page-loading-spinner';
+import { FullPageLoadingSpinner } from 'components/ui/full-page-loading-spinner';
 import { useAuth } from 'services/auth/use-auth';
 
-import { AuthenticatedApp } from './AuthenticatedApp';
-import { UnauthenticatedApp } from './UnauthenticatedApp';
+import { AuthenticatedApp } from './authenticated-app';
+import { UnauthenticatedApp } from './unauthenticated-app';
 
 export default function App() {
   const { isSignedIn, isLoading } = useAuth();

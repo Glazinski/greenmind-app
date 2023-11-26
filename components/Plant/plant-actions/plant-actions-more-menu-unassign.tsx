@@ -5,7 +5,7 @@ import { useQueryClient } from '@tanstack/react-query';
 
 import { BackendPlant } from 'schemas/plants';
 import { useDeletePlant } from 'services/plants/mutations';
-import { ConfirmationDialog } from 'components/confirmation-dialog';
+import { ConfirmationDialog } from 'components/ui/confirmation-dialog';
 
 interface PlantActionsMoreMenuUnassignProps {
   plant: BackendPlant;

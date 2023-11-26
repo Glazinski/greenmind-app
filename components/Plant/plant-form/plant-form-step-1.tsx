@@ -4,7 +4,7 @@ import { Checkbox } from 'react-native-paper';
 import { useTranslation } from 'react-i18next';
 
 import { Step1FormData } from 'schemas/plants';
-import { TextField } from 'components/text-field';
+import { TextField } from 'components/ui/text-field';
 import { ImageSelector } from 'components/image-selector';
 
 interface PlantFormStep1Props {

@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 
 import { PlantDetails } from 'components/plant/plant-details';
 import { Layout } from 'components/layout';
-import { FullPageLoadingSpinner } from 'components/full-page-loading-spinner';
+import { FullPageLoadingSpinner } from 'components/ui/full-page-loading-spinner';
 import { usePlant } from 'services/plants/queries';
 import { RootStackScreenProps } from 'navigation/types';
 
