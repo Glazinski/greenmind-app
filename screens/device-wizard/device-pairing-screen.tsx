@@ -8,7 +8,7 @@ import { Layout } from 'components/layout';
 import { useUserPairingCode } from 'services/user/queries';
 import { FullPageLoadingSpinner } from 'components/ui/full-page-loading-spinner';
 
-export const DevicePairing = ({
+export const DevicePairingScreen = ({
   navigation,
 }: DeviceWizardStackScreenProps<'DevicePairing'>) => {
   const {
