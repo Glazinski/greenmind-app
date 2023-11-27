@@ -4,6 +4,8 @@ import { Text, Button, useTheme } from 'react-native-paper';
 
 import { DeviceWizardStackScreenProps } from 'navigation/types';
 import { Layout } from 'components/layout';
+import { useUserPairingCode } from 'services/user/queries';
+import { FullPageLoadingSpinner } from 'components/ui/full-page-loading-spinner';
 
 export const DeviceStep1 = ({
   navigation,
@@ -12,6 +14,15 @@ export const DeviceStep1 = ({
   const {
     colors: { background },
   } = useTheme();
+  const { data: pairingCode, isLoading, isError } = useUserPairingCode();
+
+  if (isLoading) {
+    return (
+      <Layout>
+        <FullPageLoadingSpinner />
+      </Layout>
+    );
+  }
 
   return (
     <Layout>
@@ -20,34 +31,29 @@ export const DeviceStep1 = ({
           <Text style={styles.informationBlock} variant="headlineMedium">
             Device configuration
           </Text>
+          <Text style={styles.pairingCode} variant="headlineMedium">
+            {isError ? 'Could not generate code' : pairingCode}
+          </Text>
           <Text style={styles.informationBlock} variant="bodyMedium">
-            We're here to guide you through the process of adding your new
-            device. This process is straightforward and should only take a few
-            minutes
-          </Text>
-          <Text style={styles.informationListItem}>
-            1. Find QR code on your device
-          </Text>
-          <Text style={styles.informationListItem}>
-            2. Click below button. On the next screen, you'll be asked to scan
-            this QR code using your phone's camera.
-          </Text>
-          <Text style={styles.informationListItem}>
-            3. After successful scan on the next screen you can change name and
-            image of your device
+            Use this code on website to pair your device with app. When you
+            finish setup, click button below.
           </Text>
         </View>
-        <Button
-          onPress={() =>
-            navigation.navigate('DeviceStep2', {
-              ...route.params,
-            })
-          }
-          style={styles.scanButton}
-          mode="contained"
-        >
-          Scan QR
-        </Button>
+        <View style={styles.buttonsContainer}>
+          <Button onPress={() => {}} mode="outlined">
+            Cancel
+          </Button>
+          <Button
+            onPress={() =>
+              navigation.navigate('DeviceStep2', {
+                ...route.params,
+              })
+            }
+            mode="contained"
+          >
+            Done
+          </Button>
+        </View>
       </View>
     </Layout>
   );
@@ -58,13 +64,20 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingHorizontal: 16,
   },
+  pairingCode: {
+    alignSelf: 'center',
+    marginVertical: 12,
+    letterSpacing: 2,
+  },
   informationBlock: {
     marginVertical: 8,
   },
   informationListItem: {
     marginVertical: 2,
   },
-  scanButton: {
+  buttonsContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-evenly',
     marginTop: 32,
   },
 });
