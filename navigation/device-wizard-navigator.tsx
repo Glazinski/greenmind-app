@@ -2,7 +2,7 @@ import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import { IconButton, useTheme } from 'react-native-paper';
 
-import { DeviceStep1 } from 'screens/device-wizard/device-step-1';
+import { DevicePairing } from 'screens/device-wizard/device-pairing';
 import { DeviceStep2 } from 'screens/device-wizard/device-step-2';
 import { DeviceWizardStackParamList } from 'navigation/types';
 
@@ -25,7 +25,10 @@ export const DeviceWizardNavigator = () => {
         headerLeft: (props) => <IconButton icon="arrow-left" {...props} />,
       }}
     >
-      <DeviceWizardStack.Screen name="DeviceStep1" component={DeviceStep1} />
+      <DeviceWizardStack.Screen
+        name="DevicePairing"
+        component={DevicePairing}
+      />
       <DeviceWizardStack.Screen name="DeviceStep2" component={DeviceStep2} />
     </DeviceWizardStack.Navigator>
   );

@@ -8,7 +8,7 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { lightTheme, darkTheme } from 'lib/paper/theme';
 import { useColorSchemeStore } from '../store/use-color-scheme-store';
 
-const queryClient = new QueryClient();
+export const queryClient = new QueryClient();
 
 export const Providers = ({ children }: React.PropsWithChildren) => {
   const userColorScheme = useColorSchemeStore((state) => state.colorScheme);

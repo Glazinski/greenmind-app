@@ -4,6 +4,7 @@ import type {
 } from '@react-navigation/native';
 import type { StackScreenProps } from '@react-navigation/stack';
 import type { DrawerScreenProps } from '@react-navigation/drawer';
+import { DevicePairing } from '../screens/device-wizard/device-pairing';
 
 export type UnauthenticatedRootStackParamList = {
   SignIn: undefined;
@@ -65,7 +66,7 @@ type DeviceStepParams = {
 };
 
 export type DeviceWizardStackParamList = {
-  DeviceStep1: DeviceStepParams;
+  DevicePairing: DeviceStepParams;
   DeviceStep2: DeviceStepParams;
 };
 

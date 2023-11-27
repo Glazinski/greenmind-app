@@ -33,13 +33,12 @@ export const DevicesScreen = ({
   return (
     <Layout style={styles.container}>
       {renderContent()}
-      {/*TODO: Implement*/}
       <FAB
         icon="plus"
         style={styles.fab}
         onPress={() =>
           navigation.navigate('DeviceWizard', {
-            screen: 'DeviceStep1',
+            screen: 'DevicePairing',
             params: {
               type: 'add',
             },
