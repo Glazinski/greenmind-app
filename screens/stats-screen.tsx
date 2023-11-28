@@ -6,7 +6,6 @@ import {
   VictoryBar,
   VictoryChart,
   VictoryTheme,
-  VictoryLabel,
 } from 'victory-native';
 
 import { Layout } from 'components/layout';
@@ -70,13 +69,7 @@ export const StatsScreen = ({ route }: RootStackScreenProps<'Stats'>) => {
             dependentAxis
             tickFormat={(tick) => `${tick}${tickSuffix}`}
           />
-          <VictoryBar
-            data={data}
-            x="day"
-            y="avg"
-            style={{ labels: { angle: 90, fill: 'black', fontSize: 14 } }}
-            labelComponent={<VictoryLabel dy={-11} dx={35} />}
-          />
+          <VictoryBar data={data} x="day" y="avg" />
         </VictoryChart>
       </View>
     </Layout>
