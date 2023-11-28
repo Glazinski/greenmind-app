@@ -11,6 +11,23 @@ import {
 import { Layout } from 'components/layout';
 import { RootStackScreenProps } from 'navigation/types';
 
+const getWeekDays = () => {
+  const days = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
+  const today = new Date();
+  let weekDays = [];
+
+  for (let i = 6; i >= 0; i--) {
+    const day = new Date(
+      today.getFullYear(),
+      today.getMonth(),
+      today.getDate() - i
+    );
+    weekDays.push(days[day.getDay()]);
+  }
+
+  return weekDays;
+};
+
 export const StatsScreen = ({ route }: RootStackScreenProps<'Stats'>) => {
   const { height } = useWindowDimensions();
   const { typeOfSensor } = route.params;
@@ -20,7 +37,6 @@ export const StatsScreen = ({ route }: RootStackScreenProps<'Stats'>) => {
       dailyAvgs.map((dailyAvg, index) => ({
         day: index + 1,
         avg: dailyAvg[typeOfSensor],
-        label: dailyAvg.date,
       })),
     [typeOfSensor]
   );
@@ -63,7 +79,7 @@ export const StatsScreen = ({ route }: RootStackScreenProps<'Stats'>) => {
         >
           <VictoryAxis
             tickValues={[1, 2, 3, 4, 5, 6, 7]}
-            tickFormat={['M', 'T', 'W', 'T', 'F', 'S', 'S']}
+            tickFormat={getWeekDays()}
           />
           <VictoryAxis
             dependentAxis
