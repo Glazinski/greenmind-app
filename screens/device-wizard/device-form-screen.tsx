@@ -15,10 +15,10 @@ import { useDevice } from 'services/device/queries';
 import { useEditDevice } from 'services/device/mutations';
 import { ConfirmationDialog } from '../../components/ui/confirmation-dialog';
 
-export const DeviceStep2 = ({
+export const DeviceFormScreen = ({
   navigation,
   route,
-}: DeviceWizardStackScreenProps<'DeviceStep2'>) => {
+}: DeviceWizardStackScreenProps<'DeviceForm'>) => {
   const { type, deviceId } = route.params;
   const { t } = useTranslation();
   const [visible, setVisible] = React.useState(false);
@@ -106,6 +106,7 @@ export const DeviceStep2 = ({
         control={control}
         name="name"
         label="Name"
+        required
       />
       <Button onPress={handleSubmit(onSubmit)} mode="contained">
         {type === 'add' ? 'Add' : 'Edit'}

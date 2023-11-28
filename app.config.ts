@@ -10,7 +10,7 @@ export default {
   splash: {
     image: './assets/splash.png',
     resizeMode: 'contain',
-    backgroundColor: '#ffffff',
+    backgroundColor: '#126D34',
   },
   assetBundlePatterns: ['**/*'],
   ios: {
@@ -19,7 +19,7 @@ export default {
   android: {
     adaptiveIcon: {
       foregroundImage: './assets/adaptive-icon.png',
-      backgroundColor: '#ffffff',
+      backgroundColor: '#126D34',
     },
     softwareKeyboardLayoutMode: 'pan',
     package: 'com.glazinski.growboxappv2',

@@ -21,6 +21,9 @@ export type RootStackParamList = {
   Plant: {
     plantId: number;
   };
+  Stats: {
+    typeOfSensor: 'avg_light' | 'avg_air_hum' | 'avg_temp' | 'avg_soil_hum';
+  };
 };
 
 export type RootStackScreenProps<T extends keyof RootStackParamList> =
@@ -66,7 +69,7 @@ type DeviceStepParams = {
 
 export type DeviceWizardStackParamList = {
   DevicePairing: DeviceStepParams;
-  DeviceStep2: DeviceStepParams;
+  DeviceForm: DeviceStepParams;
 };
 
 export type DeviceWizardStackScreenProps<

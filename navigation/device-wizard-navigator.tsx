@@ -3,7 +3,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { IconButton, useTheme } from 'react-native-paper';
 
 import { DevicePairingScreen } from 'screens/device-wizard/device-pairing-screen';
-import { DeviceStep2 } from 'screens/device-wizard/device-step-2';
+import { DeviceFormScreen } from 'screens/device-wizard/device-form-screen';
 import { DeviceWizardStackParamList } from 'navigation/types';
 
 const DeviceWizardStack = createStackNavigator<DeviceWizardStackParamList>();
@@ -29,7 +29,10 @@ export const DeviceWizardNavigator = () => {
         name="DevicePairing"
         component={DevicePairingScreen}
       />
-      <DeviceWizardStack.Screen name="DeviceStep2" component={DeviceStep2} />
+      <DeviceWizardStack.Screen
+        name="DeviceForm"
+        component={DeviceFormScreen}
+      />
     </DeviceWizardStack.Navigator>
   );
 };

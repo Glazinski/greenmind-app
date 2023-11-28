@@ -23,6 +23,7 @@ const isValueInRange = (value?: number, min?: number, max?: number) => {
 interface GrowBoxDataCellProps {
   label: string;
   value: number;
+  onPress: () => void;
   onSensorProblemPress: () => void;
   onLevelProblemPress: (label: string, min?: number, max?: number) => void;
   minValue?: number;
@@ -32,6 +33,7 @@ interface GrowBoxDataCellProps {
 export const GrowBoxDataCell = ({
   label,
   value,
+  onPress,
   onLevelProblemPress,
   onSensorProblemPress,
   minValue,
@@ -88,7 +90,11 @@ export const GrowBoxDataCell = ({
   };
 
   return (
-    <TouchableRipple style={styles.touchableContainer} borderless={true}>
+    <TouchableRipple
+      style={styles.touchableContainer}
+      borderless={true}
+      onPress={onPress}
+    >
       <Surface
         style={[
           styles.container,

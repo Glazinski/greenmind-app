@@ -83,7 +83,7 @@ export const DeviceItem = ({
               onPress={() => {
                 closeMenu();
                 navigation.navigate('DeviceWizard', {
-                  screen: 'DeviceStep2',
+                  screen: 'DeviceForm',
                   params: {
                     type: 'edit',
                     deviceId: id,

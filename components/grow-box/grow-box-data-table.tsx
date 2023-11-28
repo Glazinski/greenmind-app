@@ -8,9 +8,13 @@ import { useDeviceLogs } from 'services/device/queries';
 
 import { GrowBoxDataRow } from './grow-box-data-row';
 import { GrowBoxDataCell } from './grow-box-data-cell';
+import { useNavigation } from '@react-navigation/native';
+import { HomeDrawerScreenProps } from '../../navigation/types';
 
 export const GrowBoxDataTable = () => {
   const { t } = useTranslation();
+  const navigation =
+    useNavigation<HomeDrawerScreenProps<'Home'>['navigation']>();
   const [visible, setVisible] = React.useState(false);
   const [snackbarText, setSnackbarText] = React.useState('');
   const {
@@ -42,17 +46,21 @@ export const GrowBoxDataTable = () => {
     showSnackbar();
   };
 
-  if (isLoading) return <ActivityIndicator />;
+  // if (isLoading) return <ActivityIndicator />;
+  //
+  // if (isDeviceLogsError) {
+  //   return <Text>{t('something_went_wrong')} with fetching device logs</Text>;
+  // }
+  //
+  // if (!deviceLog) {
+  //   return <Text>{t('no_device_logs')}</Text>;
+  // }
 
-  if (isDeviceLogsError) {
-    return <Text>{t('something_went_wrong')} with fetching device logs</Text>;
-  }
-
-  if (!deviceLog) {
-    return <Text>{t('no_device_logs')}</Text>;
-  }
-
-  const { temp, soil_hum, air_hum, light } = deviceLog;
+  // const { temp, soil_hum, air_hum, light } = deviceLog;
+  const temp = 25;
+  const soil_hum = 100;
+  const air_hum = 150;
+  const light = 200;
 
   return (
     <>
@@ -61,6 +69,11 @@ export const GrowBoxDataTable = () => {
           <GrowBoxDataCell
             label="Temperature °C"
             value={temp}
+            onPress={() =>
+              navigation.navigate('Stats', {
+                typeOfSensor: 'avg_temp',
+              })
+            }
             onLevelProblemPress={onLevelProblemPress}
             onSensorProblemPress={onSensorProblemPress}
             minValue={assignedPlant?.temp_min}
@@ -69,6 +82,11 @@ export const GrowBoxDataTable = () => {
           <GrowBoxDataCell
             label="Soil humidity"
             value={soil_hum}
+            onPress={() =>
+              navigation.navigate('Stats', {
+                typeOfSensor: 'avg_soil_hum',
+              })
+            }
             onLevelProblemPress={onLevelProblemPress}
             onSensorProblemPress={onSensorProblemPress}
             minValue={assignedPlant?.soil_humidity_min}
@@ -79,6 +97,11 @@ export const GrowBoxDataTable = () => {
           <GrowBoxDataCell
             label="Air humidity"
             value={air_hum}
+            onPress={() =>
+              navigation.navigate('Stats', {
+                typeOfSensor: 'avg_air_hum',
+              })
+            }
             onLevelProblemPress={onLevelProblemPress}
             onSensorProblemPress={onSensorProblemPress}
             minValue={assignedPlant?.air_humidity_min}
@@ -87,6 +110,11 @@ export const GrowBoxDataTable = () => {
           <GrowBoxDataCell
             label="Light"
             value={light}
+            onPress={() =>
+              navigation.navigate('Stats', {
+                typeOfSensor: 'avg_light',
+              })
+            }
             onSensorProblemPress={onSensorProblemPress}
             onLevelProblemPress={onLevelProblemPress}
             minValue={assignedPlant?.light_min}
