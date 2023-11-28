@@ -5,11 +5,11 @@ import { useTranslation } from 'react-i18next';
 import { PlantOtherInfoInputs } from 'schemas/plants';
 import { TextField } from 'components/ui/text-field';
 
-interface PlantFormStep3Props {
+interface PlantOtherInfoFormProps {
   control: Control<PlantOtherInfoInputs>;
 }
 
-export const PlantOtherInfoForm = ({ control }: PlantFormStep3Props) => {
+export const PlantOtherInfoForm = ({ control }: PlantOtherInfoFormProps) => {
   const { t } = useTranslation();
 
   return (

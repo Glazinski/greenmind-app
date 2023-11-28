@@ -7,7 +7,7 @@ import { PlantBasicInfoInputs } from 'schemas/plants';
 import { TextField } from 'components/ui/text-field';
 import { ImageSelector } from 'components/image-selector';
 
-interface PlantFormStep1Props {
+interface PlantBasicInfoFormProps {
   control: Control<PlantBasicInfoInputs>;
   isAssigned: boolean;
 }
@@ -15,7 +15,7 @@ interface PlantFormStep1Props {
 export const PlantBasicInfoForm = ({
   control,
   isAssigned,
-}: PlantFormStep1Props) => {
+}: PlantBasicInfoFormProps) => {
   const { t } = useTranslation();
   return (
     <View>

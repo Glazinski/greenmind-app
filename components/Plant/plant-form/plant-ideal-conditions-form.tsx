@@ -6,11 +6,13 @@ import { useTranslation } from 'react-i18next';
 import { PlantIdealConditionsInputs } from 'schemas/plants';
 import { TextField } from 'components/ui/text-field';
 
-interface PlantFormStep2Props {
+interface PlantIdealConditionsFormProps {
   control: Control<PlantIdealConditionsInputs>;
 }
 
-export const PlantIdealConditionsForm = ({ control }: PlantFormStep2Props) => {
+export const PlantIdealConditionsForm = ({
+  control,
+}: PlantIdealConditionsFormProps) => {
   const { t } = useTranslation();
 
   const renderMinMaxRow = (

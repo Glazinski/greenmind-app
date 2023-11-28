@@ -21,10 +21,10 @@ export const DevicePairingScreen = ({
   }
 
   async function onDoneClick(): Promise<void> {
-    await queryClient.invalidateQueries(['devices']);
     navigation.navigate('Index', {
       screen: 'Devices',
     });
+    await queryClient.invalidateQueries(['devices']);
   }
 
   return (
