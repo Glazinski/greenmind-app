@@ -1,6 +1,6 @@
 import React from 'react';
 import { useWindowDimensions, View } from 'react-native';
-import { Text } from 'react-native-paper';
+import { Text, useTheme } from 'react-native-paper';
 import {
   VictoryAxis,
   VictoryBar,
@@ -31,6 +31,9 @@ const getWeekDays = () => {
 export const StatsScreen = ({ route }: RootStackScreenProps<'Stats'>) => {
   const { height } = useWindowDimensions();
   const { typeOfSensor } = route.params;
+  const {
+    colors: { primary },
+  } = useTheme();
 
   const data = React.useMemo(
     () =>
@@ -85,7 +88,12 @@ export const StatsScreen = ({ route }: RootStackScreenProps<'Stats'>) => {
             dependentAxis
             tickFormat={(tick) => `${tick}${tickSuffix}`}
           />
-          <VictoryBar data={data} x="day" y="avg" />
+          <VictoryBar
+            style={{ data: { fill: primary } }}
+            data={data}
+            x="day"
+            y="avg"
+          />
         </VictoryChart>
       </View>
     </Layout>
