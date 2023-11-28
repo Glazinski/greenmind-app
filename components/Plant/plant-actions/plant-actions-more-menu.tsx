@@ -60,7 +60,7 @@ export const PlantActionsMoreMenu = ({
             onPress={() => {
               closeMenu();
               navigation.navigate('PlantWizard', {
-                screen: 'PlantStep1',
+                screen: 'PlantBasicInfo',
                 params: {
                   type: 'edit',
                   plantId: plantId,

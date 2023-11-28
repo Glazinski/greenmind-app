@@ -1,9 +1,9 @@
-import { PlantFormData } from 'schemas/plants';
+import { PlantCompleteInfoInputs } from 'schemas/plants';
 
 import { createImageToUpload } from '../create-image-to-upload';
 
 export const convertPlantToFormData = (
-  plant: PlantFormData,
+  plant: PlantCompleteInfoInputs,
   deviceId?: number | null
 ) => {
   const newPlant = new FormData();
@@ -11,7 +11,7 @@ export const convertPlantToFormData = (
     if (key !== 'image') {
       newPlant.append(
         `plant[${key}]`,
-        plant[key as keyof PlantFormData].toString()
+        plant[key as keyof PlantCompleteInfoInputs].toString()
       );
     }
   });

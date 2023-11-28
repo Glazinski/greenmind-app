@@ -3,17 +3,20 @@ import { Text } from 'react-native-paper';
 import { Control } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
-import { Step2FormData } from 'schemas/plants';
+import { PlantIdealConditionsInputs } from 'schemas/plants';
 import { TextField } from 'components/ui/text-field';
 
 interface PlantFormStep2Props {
-  control: Control<Step2FormData>;
+  control: Control<PlantIdealConditionsInputs>;
 }
 
-export const PlantFormStep2 = ({ control }: PlantFormStep2Props) => {
+export const PlantIdealConditionsForm = ({ control }: PlantFormStep2Props) => {
   const { t } = useTranslation();
 
-  const renderMinMaxRow = (label: string, fieldName: string) => (
+  const renderMinMaxRow = (
+    label: 'temp' | 'air_humidity' | 'soil_humidity',
+    fieldName: string
+  ) => (
     <View>
       <Text variant="titleMedium">{label}</Text>
       <View style={styles.minMaxFields}>
@@ -21,7 +24,7 @@ export const PlantFormStep2 = ({ control }: PlantFormStep2Props) => {
           <TextField
             mode="outlined"
             label="min"
-            name={`${fieldName}_min`}
+            name={`${fieldName}_min` as any}
             control={control}
             keyboardType="numeric"
             required
@@ -31,7 +34,7 @@ export const PlantFormStep2 = ({ control }: PlantFormStep2Props) => {
           <TextField
             mode="outlined"
             label="max"
-            name={`${fieldName}_max`}
+            name={`${fieldName}_max` as any}
             control={control}
             required
             keyboardType="numeric"
@@ -46,7 +49,6 @@ export const PlantFormStep2 = ({ control }: PlantFormStep2Props) => {
       {renderMinMaxRow(t('temperature'), 'temp')}
       {renderMinMaxRow(t('air_humidity'), 'air_humidity')}
       {renderMinMaxRow(t('soil_humidity'), 'soil_humidity')}
-      {renderMinMaxRow(t('light'), 'light')}
     </View>
   );
 };

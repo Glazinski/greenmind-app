@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet } from 'react-native';
+import { View, StyleSheet, ScrollView, RefreshControl } from 'react-native';
 import { ActivityIndicator, Text, FAB } from 'react-native-paper';
 import { useTranslation } from 'react-i18next';
 
@@ -11,8 +11,15 @@ import { HomeDrawerScreenProps } from 'navigation/types';
 export const DevicesScreen = ({
   navigation,
 }: HomeDrawerScreenProps<'Devices'>): React.JSX.Element => {
+  const [refreshing, setRefreshing] = React.useState(false);
   const { t } = useTranslation();
-  const { data: devices, isLoading, isError } = useDevices();
+  const { data: devices, isLoading, isError, refetch } = useDevices();
+
+  const handleDevicesRefresh = async () => {
+    setRefreshing(true);
+    await refetch();
+    setRefreshing(false);
+  };
 
   const renderContent = () => {
     if (isLoading) {
@@ -31,8 +38,19 @@ export const DevicesScreen = ({
   };
 
   return (
-    <Layout style={styles.container}>
-      {renderContent()}
+    <>
+      <Layout
+        style={styles.container}
+        as={ScrollView}
+        refreshControl={
+          <RefreshControl
+            refreshing={refreshing}
+            onRefresh={handleDevicesRefresh}
+          />
+        }
+      >
+        {renderContent()}
+      </Layout>
       <FAB
         icon="plus"
         style={styles.fab}
@@ -45,7 +63,7 @@ export const DevicesScreen = ({
           })
         }
       />
-    </Layout>
+    </>
   );
 };
 

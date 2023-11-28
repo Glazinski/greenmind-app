@@ -42,7 +42,7 @@ export const ImageSelector = ({ value, onChange }: ImageSelectorProps) => {
   const getSourceImage = React.useCallback(() => {
     if (selectedImage) return { uri: replaceLocalhostToIP(selectedImage) };
 
-    return require('../../assets/icon.png');
+    return require('../../assets/images/icon.png');
   }, [selectedImage]);
 
   return (

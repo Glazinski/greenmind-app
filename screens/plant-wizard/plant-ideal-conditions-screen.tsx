@@ -2,11 +2,11 @@ import { ScrollView } from 'react-native';
 import { useTranslation } from 'react-i18next';
 
 import { PlantFormStep } from 'components/plant/plant-form/plant-form-step';
-import { PlantFormStep2 } from 'components/plant/plant-form/plant-form-step-2';
+import { PlantIdealConditionsForm } from 'components/plant/plant-form/plant-ideal-conditions-form';
 import { Layout } from 'components/layout';
-import { step2Schema } from 'schemas/plants';
+import { PlantIdealConditionsInputsSchema } from 'schemas/plants';
 
-export const PlantStep2Screen = () => {
+export const PlantIdealConditionsScreen = () => {
   const { t } = useTranslation();
 
   return (
@@ -14,8 +14,10 @@ export const PlantStep2Screen = () => {
       <PlantFormStep
         index={1}
         title={t('ideal_conditions')}
-        schema={step2Schema}
-        renderFields={(control) => <PlantFormStep2 control={control} />}
+        schema={PlantIdealConditionsInputsSchema}
+        renderFields={(control) => (
+          <PlantIdealConditionsForm control={control} />
+        )}
       />
     </Layout>
   );

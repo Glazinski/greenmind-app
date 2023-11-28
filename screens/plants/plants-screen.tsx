@@ -71,7 +71,7 @@ export const PlantsScreen = ({
         style={styles.fab}
         onPress={() =>
           navigation.navigate('PlantWizard', {
-            screen: 'PlantStep1',
+            screen: 'PlantBasicInfo',
             params: {
               type: 'add',
             },

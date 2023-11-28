@@ -2,9 +2,9 @@ import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import { IconButton, useTheme } from 'react-native-paper';
 
-import { PlantStep1Screen } from 'screens/plant-wizard/plant-step-1-screen';
-import { PlantStep2Screen } from 'screens/plant-wizard/plant-step-2-screen';
-import { PlantStep3Screen } from 'screens/plant-wizard/plant-step-3-screen';
+import { PlantBasicInfoScreen } from 'screens/plant-wizard/plant-basic-info-screen';
+import { PlantIdealConditionsScreen } from 'screens/plant-wizard/plant-ideal-conditions-screen';
+import { PlantOtherInfoScreen } from 'screens/plant-wizard/plant-other-info-screen';
 import { usePlantFormStore } from 'store/use-plant-form-store';
 
 import { PlantWizardStackParamList } from './types';
@@ -47,9 +47,18 @@ export const PlantWizardNavigator = () => {
         ),
       }}
     >
-      <PlantWizardStack.Screen name="PlantStep1" component={PlantStep1Screen} />
-      <PlantWizardStack.Screen name="PlantStep2" component={PlantStep2Screen} />
-      <PlantWizardStack.Screen name="PlantStep3" component={PlantStep3Screen} />
+      <PlantWizardStack.Screen
+        name="PlantBasicInfo"
+        component={PlantBasicInfoScreen}
+      />
+      <PlantWizardStack.Screen
+        name="PlantIdealConditions"
+        component={PlantIdealConditionsScreen}
+      />
+      <PlantWizardStack.Screen
+        name="PlantOtherInfo"
+        component={PlantOtherInfoScreen}
+      />
     </PlantWizardStack.Navigator>
   );
 };

@@ -1,9 +1,13 @@
-import { BackendPlant, PlantFormData, PlantStatus } from 'schemas/plants';
+import {
+  BackendPlant,
+  PlantCompleteInfoInputs,
+  PlantStatus,
+} from 'schemas/plants';
 
 export const mapBackendPlantToPlantFormData = (
   plant: BackendPlant,
   newStatus?: PlantStatus
-): PlantFormData => ({
+): PlantCompleteInfoInputs => ({
   image: plant.attached_image_url,
   status: newStatus || plant.status,
   name: plant.name,

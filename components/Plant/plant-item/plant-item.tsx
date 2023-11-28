@@ -72,7 +72,6 @@ export const PlantItem = ({ plant }: PlantItemProps) => {
           />
           <View style={styles.itemInformation}>
             <Text variant="titleMedium">{name}</Text>
-            {renderMinMaxLabel(t('light'), light_min, light_max)}
             {renderMinMaxLabel(t('temperature'), temp_min, temp_max)}
             {renderMinMaxLabel(
               t('soil_humidity'),

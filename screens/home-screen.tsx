@@ -42,9 +42,7 @@ export const HomeScreen = ({
 
   if (!devices || devices?.length === 0) {
     errorMsg = t('no_devices_found_details');
-  }
-
-  if (!deviceId) {
+  } else if (!deviceId) {
     errorMsg = t('no_active_device');
   }
 

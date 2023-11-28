@@ -3,16 +3,16 @@ import { Control, Controller } from 'react-hook-form';
 import { Checkbox } from 'react-native-paper';
 import { useTranslation } from 'react-i18next';
 
-import { Step1FormData } from 'schemas/plants';
+import { PlantBasicInfoInputs } from 'schemas/plants';
 import { TextField } from 'components/ui/text-field';
 import { ImageSelector } from 'components/image-selector';
 
 interface PlantFormStep1Props {
-  control: Control<Step1FormData>;
+  control: Control<PlantBasicInfoInputs>;
   isAssigned: boolean;
 }
 
-export const PlantFormStep1 = ({
+export const PlantBasicInfoForm = ({
   control,
   isAssigned,
 }: PlantFormStep1Props) => {

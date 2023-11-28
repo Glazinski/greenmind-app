@@ -16,7 +16,6 @@ export const PlantActionsMoreMenuUnassign = ({
   plant,
   onPress,
 }: PlantActionsMoreMenuUnassignProps) => {
-  const { t } = useTranslation();
   const queryClient = useQueryClient();
   const [visible, setVisible] = React.useState(false);
   const { mutate: deletePlant, isLoading, isError } = useDeletePlant(onSuccess);

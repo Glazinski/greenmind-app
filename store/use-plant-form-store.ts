@@ -1,8 +1,8 @@
 import { create } from 'zustand';
 
-import { StepFormData } from 'schemas/plants';
+import { PlantFormStepData } from 'schemas/plants';
 
-type Steps = Record<string, StepFormData>;
+type Steps = Record<string, PlantFormStepData>;
 
 interface PlantFormState {
   activeStep: number;
@@ -10,7 +10,7 @@ interface PlantFormState {
   prevStep: () => void;
   resetSteps: () => void;
   steps: Steps;
-  setSteps: (step: string | number, formData: StepFormData) => void;
+  setSteps: (step: string | number, formData: PlantFormStepData) => void;
   resetStepsData: () => void;
 }
 

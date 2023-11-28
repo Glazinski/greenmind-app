@@ -22,7 +22,7 @@ export type RootStackParamList = {
     plantId: number;
   };
   Stats: {
-    typeOfSensor: 'avg_light' | 'avg_air_hum' | 'avg_temp' | 'avg_soil_hum';
+    typeOfSensor: 'avg_air_hum' | 'avg_temp' | 'avg_soil_hum';
   };
 };
 
@@ -50,9 +50,9 @@ type PlantStepParams = {
 };
 
 export type PlantWizardStackParamList = {
-  PlantStep1: PlantStepParams;
-  PlantStep2: PlantStepParams;
-  PlantStep3: PlantStepParams;
+  PlantBasicInfo: PlantStepParams;
+  PlantIdealConditions: PlantStepParams;
+  PlantOtherInfo: PlantStepParams;
 };
 
 export type PlantWizardStackScreenProps<

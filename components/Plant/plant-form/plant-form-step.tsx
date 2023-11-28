@@ -11,10 +11,10 @@ import {
 } from '@react-navigation/native';
 
 import { usePlantFormStore } from 'store/use-plant-form-store';
-import { StepFormData } from 'schemas/plants';
+import { PlantFormStepData } from 'schemas/plants';
 import { PlantWizardStackScreenProps } from 'navigation/types';
 
-interface PlantFormStepProps<TFormData extends StepFormData> {
+interface PlantFormStepProps<TFormData extends PlantFormStepData> {
   index: number;
   title: string;
   schema: z.ZodSchema<TFormData>;
@@ -22,7 +22,7 @@ interface PlantFormStepProps<TFormData extends StepFormData> {
   onSubmit?: () => void;
 }
 
-export const PlantFormStep = <TFormData extends StepFormData>({
+export const PlantFormStep = <TFormData extends PlantFormStepData>({
   index,
   title,
   schema,
@@ -30,9 +30,11 @@ export const PlantFormStep = <TFormData extends StepFormData>({
   onSubmit,
 }: PlantFormStepProps<TFormData>) => {
   const navigation =
-    useNavigation<PlantWizardStackScreenProps<'PlantStep1'>['navigation']>();
+    useNavigation<
+      PlantWizardStackScreenProps<'PlantBasicInfo'>['navigation']
+    >();
   const { type, plantId } =
-    useRoute<PlantWizardStackScreenProps<'PlantStep1'>['route']>().params;
+    useRoute<PlantWizardStackScreenProps<'PlantBasicInfo'>['route']>().params;
   const { activeStep, steps, setSteps, nextStep, prevStep } =
     usePlantFormStore();
   const formData = steps[index];
@@ -40,6 +42,14 @@ export const PlantFormStep = <TFormData extends StepFormData>({
     defaultValues: formData as unknown as DeepPartial<TFormData>,
     resolver: zodResolver(schema),
   });
+  const screenMap = React.useMemo(
+    () =>
+      ({
+        '0': 'PlantIdealConditions',
+        '1': 'PlantOtherInfo',
+      } as const),
+    []
+  );
 
   React.useEffect(() => {
     reset(formData as unknown as DeepPartial<TFormData>);
@@ -64,15 +74,20 @@ export const PlantFormStep = <TFormData extends StepFormData>({
     }, [getValues, index, setSteps, prevStep])
   );
 
-  const handleSubmitAndPersist = (data: TFormData) => {
+  const navigateToNextPage = (): void => {
+    const nextScreenKey = index.toString() as keyof typeof screenMap;
+    const nextScreen = screenMap[nextScreenKey];
+    navigation.navigate(nextScreen, {
+      type,
+      plantId,
+    });
+  };
+
+  const handleSubmitAndPersist = (data: TFormData): void => {
     setSteps(index, data);
     if (index !== Object.keys(steps).length - 1) {
       nextStep();
-      // @ts-ignore
-      navigation.navigate(`PlantStep${index + 2}`, {
-        type,
-        plantId,
-      });
+      navigateToNextPage();
     }
     onSubmit?.();
   };

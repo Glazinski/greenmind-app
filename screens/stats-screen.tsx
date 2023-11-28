@@ -51,11 +51,6 @@ export const StatsScreen = ({ route }: RootStackScreenProps<'Stats'>) => {
           label: 'air humidity',
           tickSuffix: '%',
         };
-      case 'avg_light':
-        return {
-          label: 'light',
-          tickSuffix: '%',
-        };
       case 'avg_soil_hum':
         return {
           label: 'soil humidity',

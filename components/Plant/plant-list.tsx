@@ -1,12 +1,11 @@
 import React from 'react';
-import { FlatList, RefreshControl, StyleSheet } from 'react-native';
+import { FlatList, RefreshControl, ScrollView, StyleSheet } from 'react-native';
 import { ActivityIndicator, Text } from 'react-native-paper';
 import { useTranslation } from 'react-i18next';
 
 import { BackendPlant } from 'schemas/plants';
 
 import { PlantItem } from './plant-item';
-import { Layout } from '../layout';
 
 interface PlantListProps {
   plants: BackendPlant[] | undefined;
@@ -32,19 +31,27 @@ export const PlantList = ({
 
   if (isLoading) return <ActivityIndicator />;
 
+  let message = '';
+
   if (isError) {
-    return (
-      <Layout style={styles.container}>
-        <Text>{t('something_went_wrong')}</Text>
-      </Layout>
-    );
+    message = t('something_went_wrong');
+  } else if (!plants?.length) {
+    message = t('no_plants_found');
   }
 
-  if (!plants?.length) {
+  if (message.length) {
     return (
-      <Layout style={styles.container}>
-        <Text>{t('no_plants_found')}</Text>
-      </Layout>
+      <ScrollView
+        style={styles.container}
+        refreshControl={
+          <RefreshControl
+            refreshing={refreshing}
+            onRefresh={handlePlantsRefresh}
+          />
+        }
+      >
+        <Text>{message}</Text>
+      </ScrollView>
     );
   }
 

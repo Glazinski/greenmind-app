@@ -3,16 +3,16 @@ import { Text } from 'react-native-paper';
 import { useTranslation } from 'react-i18next';
 
 import { PlantFormStep } from 'components/plant/plant-form/plant-form-step';
-import { PlantFormStep1 } from 'components/plant/plant-form/plant-form-step-1';
+import { PlantBasicInfoForm } from 'components/plant/plant-form/plant-basic-info-form';
 import { Layout } from 'components/layout';
-import { BackendPlant, step1Schema } from 'schemas/plants';
+import { BackendPlant, PlantBasicInfoInputsSchema } from 'schemas/plants';
 import { usePlantFormStore } from 'store/use-plant-form-store';
 import { usePlant } from 'services/plants/queries';
 import { PlantWizardStackScreenProps } from 'navigation/types';
 
-export const PlantStep1Screen = ({
+export const PlantBasicInfoScreen = ({
   route,
-}: PlantWizardStackScreenProps<'PlantStep1'>) => {
+}: PlantWizardStackScreenProps<'PlantBasicInfo'>) => {
   const { t } = useTranslation();
   const { plantId } = route.params;
   const setSteps = usePlantFormStore((state) => state.setSteps);
@@ -81,9 +81,9 @@ export const PlantStep1Screen = ({
       <PlantFormStep
         index={0}
         title={t('basic_information')}
-        schema={step1Schema}
+        schema={PlantBasicInfoInputsSchema}
         renderFields={(control) => (
-          <PlantFormStep1
+          <PlantBasicInfoForm
             control={control}
             isAssigned={plant?.status === 'assigned'}
           />

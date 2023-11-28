@@ -2,12 +2,18 @@ import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import { useTheme } from 'react-native-paper';
 
+import { PolymorphicComponentProp } from 'lib/ts/polymorphic-component-props';
+
 interface LayoutProps extends React.PropsWithChildren {
-  as?: React.ElementType;
   style?: object;
 }
 
-export const Layout = ({ style, children, as }: LayoutProps) => {
+export const Layout = <C extends React.ElementType>({
+  style,
+  children,
+  as,
+  ...rest
+}: PolymorphicComponentProp<C, LayoutProps>) => {
   const {
     colors: { background },
   } = useTheme();
@@ -17,6 +23,7 @@ export const Layout = ({ style, children, as }: LayoutProps) => {
   return (
     <Component
       style={[styles.container, { backgroundColor: background }, style]}
+      {...rest}
     >
       {children}
     </Component>

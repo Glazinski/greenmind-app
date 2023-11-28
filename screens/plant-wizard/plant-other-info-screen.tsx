@@ -3,18 +3,21 @@ import { useTranslation } from 'react-i18next';
 import { ScrollView } from 'react-native';
 
 import { PlantFormStep } from 'components/plant/plant-form/plant-form-step';
-import { PlantFormStep3 } from 'components/plant/plant-form/plant-form-step-3';
-import { PlantFormData, step3Schema } from 'schemas/plants';
+import { PlantOtherInfoForm } from 'components/plant/plant-form/plant-other-info-form';
+import {
+  PlantCompleteInfoInputs,
+  PlantOtherInfoInputsSchema,
+} from 'schemas/plants';
 import { Layout } from 'components/layout';
 import { ConfirmationDialog } from 'components/ui/confirmation-dialog';
 import { PlantWizardStackScreenProps } from 'navigation/types';
 import { useAddPlant, useEditPlant } from 'services/plants/mutations';
 import { usePlantFormStore } from 'store/use-plant-form-store';
 
-export const PlantStep3Screen = ({
+export const PlantOtherInfoScreen = ({
   navigation,
   route,
-}: PlantWizardStackScreenProps<'PlantStep3'>) => {
+}: PlantWizardStackScreenProps<'PlantOtherInfo'>) => {
   const [visible, setVisible] = React.useState(false);
   const { t } = useTranslation();
   const { type, plantId } = route.params;
@@ -60,7 +63,7 @@ export const PlantStep3Screen = ({
   };
 
   const handleSubmit = async () => {
-    let data = {} as PlantFormData;
+    let data = {} as PlantCompleteInfoInputs;
     Object.keys(steps).forEach((key) => {
       data = { ...data, ...steps[key] };
     });
@@ -81,8 +84,8 @@ export const PlantStep3Screen = ({
       <PlantFormStep
         index={2}
         title={t('other_information')}
-        schema={step3Schema}
-        renderFields={(control) => <PlantFormStep3 control={control} />}
+        schema={PlantOtherInfoInputsSchema}
+        renderFields={(control) => <PlantOtherInfoForm control={control} />}
         onSubmit={showDialog}
       />
       <ConfirmationDialog

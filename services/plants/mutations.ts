@@ -6,7 +6,7 @@ import {
 import { AxiosError } from 'axios';
 
 import { api } from 'api';
-import { BackendPlant, PlantFormData } from 'schemas/plants';
+import { BackendPlant, PlantCompleteInfoInputs } from 'schemas/plants';
 
 import { convertPlantToFormData } from './convert-plant-to-form-data';
 import { mapBackendPlantToPlantFormData } from './map-backend-plant-to-plant-form-data';
@@ -33,7 +33,11 @@ const invalidatePlantQueries = async (queryClient: QueryClient) => {
 export const useAddPlant = (onSuccess?: () => void) => {
   const queryClient = useQueryClient();
 
-  return useMutation<unknown, AxiosError<ErrorResponse>, PlantFormData>({
+  return useMutation<
+    unknown,
+    AxiosError<ErrorResponse>,
+    PlantCompleteInfoInputs
+  >({
     mutationFn: (plant) => {
       const newPlant = convertPlantToFormData(plant);
 
@@ -55,7 +59,7 @@ export const useEditPlant = (onSuccess?: () => void) => {
     unknown,
     AxiosError<ErrorResponse>,
     {
-      plant: PlantFormData;
+      plant: PlantCompleteInfoInputs;
       plantId: number;
     }
   >({
