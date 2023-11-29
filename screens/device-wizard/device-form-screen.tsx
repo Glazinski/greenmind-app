@@ -40,6 +40,12 @@ export const DeviceFormScreen = ({
     resolver: zodResolver(DeviceInputScheme),
   });
 
+  React.useEffect(() => {
+    return () => {
+      reset();
+    };
+  }, []);
+
   const showDialog = () => setVisible(true);
 
   function hideDialog() {
@@ -68,7 +74,7 @@ export const DeviceFormScreen = ({
 
   const onDialogSubmit = async () => {
     if (type === 'edit') {
-      await editDevice({
+      editDevice({
         deviceId,
         formDevice: getValues(),
       });

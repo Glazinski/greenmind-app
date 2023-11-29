@@ -56,7 +56,7 @@ export const GrowBoxDataTable = () => {
     return <Text>{t('no_device_logs')}</Text>;
   }
 
-  const { temp, soil_hum, air_hum } = deviceLog;
+  const { temp, soil_hum, air_hum, light } = deviceLog;
 
   return (
     <>
@@ -102,6 +102,19 @@ export const GrowBoxDataTable = () => {
             onSensorProblemPress={onSensorProblemPress}
             minValue={assignedPlant?.air_humidity_min}
             maxValue={assignedPlant?.air_humidity_max}
+          />
+          <GrowBoxDataCell
+            label="Light"
+            value={light}
+            onPress={() =>
+              navigation.navigate('Stats', {
+                typeOfSensor: 'avg_light',
+              })
+            }
+            onSensorProblemPress={onSensorProblemPress}
+            onLevelProblemPress={onLevelProblemPress}
+            minValue={assignedPlant?.light_min}
+            maxValue={assignedPlant?.light_max}
           />
         </GrowBoxDataRow>
       </View>

@@ -93,15 +93,14 @@ export const DeviceItem = ({
               title="Edit"
               leadingIcon="pencil"
             />
-            {/*TODO: Implement*/}
-            {/*<Menu.Item*/}
-            {/*  onPress={() => {*/}
-            {/*    onDeleteClick();*/}
-            {/*    closeMenu();*/}
-            {/*  }}*/}
-            {/*  title="Delete"*/}
-            {/*  leadingIcon="delete"*/}
-            {/*/>*/}
+            <Menu.Item
+              onPress={() => {
+                onDeleteClick();
+                closeMenu();
+              }}
+              title="Delete"
+              leadingIcon="delete"
+            />
           </Menu>
         </View>
       </Surface>

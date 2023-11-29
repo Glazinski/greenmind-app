@@ -54,12 +54,17 @@ export const StatsScreen = ({ route }: RootStackScreenProps<'Stats'>) => {
       case 'avg_soil_hum':
         return {
           label: 'soil humidity',
-          tickSuffix: '%',
+          tickSuffix: '',
         };
       case 'avg_temp':
         return {
           label: 'temperature',
           tickSuffix: '°C',
+        };
+      case 'avg_light':
+        return {
+          label: 'light',
+          tickSuffix: '',
         };
     }
   }, [typeOfSensor]);

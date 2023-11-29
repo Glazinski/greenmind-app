@@ -22,7 +22,7 @@ export type RootStackParamList = {
     plantId: number;
   };
   Stats: {
-    typeOfSensor: 'avg_air_hum' | 'avg_temp' | 'avg_soil_hum';
+    typeOfSensor: 'avg_air_hum' | 'avg_temp' | 'avg_soil_hum' | 'avg_light';
   };
 };
 

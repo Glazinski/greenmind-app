@@ -16,8 +16,8 @@ export const PlantIdealConditionsForm = ({
   const { t } = useTranslation();
 
   const renderMinMaxRow = (
-    label: 'temp' | 'air_humidity' | 'soil_humidity',
-    fieldName: string
+    label: string,
+    fieldName: 'temp' | 'air_humidity' | 'soil_humidity' | 'light'
   ) => (
     <View>
       <Text variant="titleMedium">{label}</Text>
@@ -26,7 +26,7 @@ export const PlantIdealConditionsForm = ({
           <TextField
             mode="outlined"
             label="min"
-            name={`${fieldName}_min` as any}
+            name={`${fieldName}_min`}
             control={control}
             keyboardType="numeric"
             required
@@ -36,7 +36,7 @@ export const PlantIdealConditionsForm = ({
           <TextField
             mode="outlined"
             label="max"
-            name={`${fieldName}_max` as any}
+            name={`${fieldName}_max`}
             control={control}
             required
             keyboardType="numeric"
@@ -51,6 +51,7 @@ export const PlantIdealConditionsForm = ({
       {renderMinMaxRow(t('temperature'), 'temp')}
       {renderMinMaxRow(t('air_humidity'), 'air_humidity')}
       {renderMinMaxRow(t('soil_humidity'), 'soil_humidity')}
+      {renderMinMaxRow(t('light'), 'light')}
     </View>
   );
 };

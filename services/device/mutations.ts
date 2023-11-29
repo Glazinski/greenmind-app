@@ -1,6 +1,5 @@
 import axios, { AxiosError } from 'axios';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import Constants from 'expo-constants';
 
 import { api } from 'api';
 import { FormDevice } from 'schemas/devices';
@@ -13,15 +12,10 @@ export const useDeviceWater = () => {
 
   return useMutation({
     mutationFn: () =>
-      axios.post(
-        `${Constants.expoConfig?.extra?.microserviceUrl}/devices/tasks`,
-        {
-          device_id: deviceId,
-          task_number: 0,
-          status: 0,
-          task_id: 0,
-        }
-      ),
+      axios.post(`/python_microservice/add_devic_task/${deviceId}`, {
+        task_number: 0,
+        status: 0,
+      }),
   });
 };
 
@@ -56,8 +50,8 @@ export const useDeleteDevice = (onSuccess?: () => void) => {
   return useMutation({
     mutationFn: (deviceId: number) => api.delete(`/devices/${deviceId}`),
     onSuccess: async () => {
-      await queryClient.invalidateQueries({ queryKey: ['devices'] });
       onSuccess?.();
+      await queryClient.invalidateQueries({ queryKey: ['devices'] });
     },
   });
 };

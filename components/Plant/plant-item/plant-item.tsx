@@ -83,6 +83,7 @@ export const PlantItem = ({ plant }: PlantItemProps) => {
               air_humidity_min,
               air_humidity_max
             )}
+            {renderMinMaxLabel(t('light'), light_min, light_max)}
           </View>
           <PlantActions plant={plant}>
             <View style={styles.itemActions}>

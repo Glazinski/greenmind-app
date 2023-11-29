@@ -26,6 +26,8 @@ export const PlantDetails = ({ plant }: PlantDetailsProps) => {
     image_url,
     name,
     appearance,
+    light_max,
+    light_min,
     temp_min,
     temp_max,
     soil_humidity_min,
@@ -79,6 +81,11 @@ export const PlantDetails = ({ plant }: PlantDetailsProps) => {
             label={t('air_humidity')}
             min={air_humidity_min}
             max={air_humidity_max}
+          />
+          <PlantDetailsInfoMaxMinRow
+            label={t('light')}
+            min={light_min}
+            max={light_max}
           />
         </PlantDetailsInfoSection>
         <PlantDetailsInfoSection title={t('other_information')}>
