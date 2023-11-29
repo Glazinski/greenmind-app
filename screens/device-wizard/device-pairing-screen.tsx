@@ -38,8 +38,6 @@ export const DevicePairingScreen = ({
   const onDismissSnackBar = () => setIsSnackbarVisible(false);
 
   async function onDevicesSuccess(newDevices: BackendDevice[]) {
-    console.log('devices', devices);
-    console.log('newDevices', newDevices);
     let newId: number | null = null;
 
     if (
@@ -116,7 +114,6 @@ export const DevicePairingScreen = ({
           action={{
             label: 'Ok',
           }}
-          // style={styles.snackbar}
         >
           Could not add new device
         </Snackbar>
