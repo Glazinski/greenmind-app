@@ -38,6 +38,7 @@ export const useDeviceLogs = () => {
         .then((res) => res.data),
     queryKey: ['devices', deviceId, 'data'],
     refetchInterval: 1000 * 30,
+    enabled: typeof deviceId === 'number',
   });
 };
 
@@ -52,5 +53,6 @@ export const useDeviceTasks = () => {
         )
         .then((res) => res.data),
     queryKey: ['devices', deviceId, 'tasks'],
+    enabled: typeof deviceId === 'number',
   });
 };
