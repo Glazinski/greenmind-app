@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, StyleSheet, ScrollView, RefreshControl } from 'react-native';
+import { StyleSheet } from 'react-native';
 import { ActivityIndicator, Text, FAB } from 'react-native-paper';
 import { useTranslation } from 'react-i18next';
 
@@ -26,31 +26,25 @@ export const DevicesScreen = ({
       return <ActivityIndicator size="large" />;
     }
 
+    let headerComponent: React.ReactElement | null = null;
+
     if (isError) {
-      return <Text>{t('something_went_wrong')}</Text>;
+      headerComponent = <Text>{t('something_went_wrong')}</Text>;
+    } else if (!devices?.length) {
+      headerComponent = <Text>{t('no_devices_found')}</Text>;
     }
 
-    if (!devices?.length) {
-      return <Text>{t('no_devices_found')}</Text>;
-    }
-
-    return <DeviceList devices={devices} />;
+    return (
+      <DeviceList
+        devices={headerComponent ? [] : devices ?? []}
+        headerComponent={headerComponent}
+      />
+    );
   };
 
   return (
     <>
-      <Layout
-        style={styles.container}
-        as={ScrollView}
-        refreshControl={
-          <RefreshControl
-            refreshing={refreshing}
-            onRefresh={handleDevicesRefresh}
-          />
-        }
-      >
-        {renderContent()}
-      </Layout>
+      <Layout style={styles.container}>{renderContent()}</Layout>
       <FAB
         icon="plus"
         style={styles.fab}

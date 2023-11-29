@@ -7,6 +7,8 @@ import { DeviceWizardStackScreenProps } from 'navigation/types';
 import { Layout } from 'components/layout';
 import { useUserPairingCode } from 'services/user/queries';
 import { FullPageLoadingSpinner } from 'components/ui/full-page-loading-spinner';
+import { useAuthStore } from 'store/use-auth-store';
+import { useDevices } from '../../services/device/queries';
 
 export const DevicePairingScreen = ({
   navigation,
@@ -15,16 +17,19 @@ export const DevicePairingScreen = ({
     colors: { background },
   } = useTheme();
   const { data: pairingCode, isLoading, isError } = useUserPairingCode();
+  const { refetch } = useDevices();
+  const userId = useAuthStore((state) => state.userId);
 
   function onCancelClick(): void {
     navigation.goBack();
   }
 
   async function onDoneClick(): Promise<void> {
-    navigation.navigate('Index', {
-      screen: 'Devices',
+    await queryClient.invalidateQueries(['users', userId, 'code']);
+    await refetch();
+    navigation.navigate('DeviceForm', {
+      type: 'edit',
     });
-    await queryClient.invalidateQueries(['devices']);
   }
 
   return (

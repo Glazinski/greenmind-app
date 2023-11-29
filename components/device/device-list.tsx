@@ -1,18 +1,21 @@
 import React from 'react';
-import { FlatList } from 'react-native';
+import { FlatList, RefreshControl } from 'react-native';
 import { Button, Dialog, Portal, Text } from 'react-native-paper';
 
 import { BackendDevice } from 'schemas/devices';
 import { useDeleteDevice } from 'services/device/mutations';
 import { useActiveDeviceStore } from 'store/use-active-device-store';
+import { useDevices } from 'services/device/queries';
 
 import { DeviceItem } from './device-item';
 
 interface DeviceListProps {
   devices: BackendDevice[];
+  headerComponent?: React.ReactElement | null;
 }
 
-export const DeviceList = ({ devices }: DeviceListProps) => {
+export const DeviceList = ({ devices, headerComponent }: DeviceListProps) => {
+  const [refreshing, setRefreshing] = React.useState(false);
   const deviceId = useActiveDeviceStore((state) => state.deviceId);
   const setDeviceId = useActiveDeviceStore((state) => state.setDeviceId);
   const [visible, setVisible] = React.useState(false);
@@ -20,6 +23,13 @@ export const DeviceList = ({ devices }: DeviceListProps) => {
   const { mutate: deleteDevice, isLoading } = useDeleteDevice(
     onDeleteDeviceSuccess
   );
+  const { refetch } = useDevices();
+
+  const handleDevicesRefresh = async () => {
+    setRefreshing(true);
+    await refetch();
+    setRefreshing(false);
+  };
 
   const showDialog = () => setVisible(true);
 
@@ -60,6 +70,13 @@ export const DeviceList = ({ devices }: DeviceListProps) => {
           />
         )}
         keyExtractor={({ id }) => id.toString()}
+        ListHeaderComponent={headerComponent}
+        refreshControl={
+          <RefreshControl
+            refreshing={refreshing}
+            onRefresh={handleDevicesRefresh}
+          />
+        }
       />
       <Portal>
         <Dialog visible={visible} onDismiss={hideDialog}>

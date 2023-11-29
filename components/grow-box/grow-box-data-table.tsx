@@ -46,20 +46,17 @@ export const GrowBoxDataTable = () => {
     showSnackbar();
   };
 
-  // if (isLoading) return <ActivityIndicator />;
-  //
-  // if (isDeviceLogsError) {
-  //   return <Text>{t('something_went_wrong')} with fetching device logs</Text>;
-  // }
-  //
-  // if (!deviceLog) {
-  //   return <Text>{t('no_device_logs')}</Text>;
-  // }
+  if (isLoading) return <ActivityIndicator />;
 
-  // const { temp, soil_hum, air_hum, light } = deviceLog;
-  const temp = 25;
-  const soil_hum = 100;
-  const air_hum = 150;
+  if (isDeviceLogsError) {
+    return <Text>{t('something_went_wrong')} with fetching device logs</Text>;
+  }
+
+  if (!deviceLog) {
+    return <Text>{t('no_device_logs')}</Text>;
+  }
+
+  const { temp, soil_hum, air_hum } = deviceLog;
 
   return (
     <>
