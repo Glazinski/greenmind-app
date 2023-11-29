@@ -12,7 +12,7 @@ export const useDeviceWater = () => {
 
   return useMutation({
     mutationFn: () =>
-      axios.post(`/python_microservice/add_devic_task/${deviceId}`, {
+      axios.post(`/python_microservice/data/add_device_task/${deviceId}`, {
         task_number: 0,
         status: 0,
       }),

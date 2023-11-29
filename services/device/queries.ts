@@ -48,7 +48,7 @@ export const useDeviceTasks = () => {
     queryFn: () =>
       api
         .get<BackendTask[]>(
-          `/python_microservice/get_device_tasks/tasks/${deviceId}`
+          `/python_microservice/data/get_device_tasks/${deviceId}`
         )
         .then((res) => res.data),
     queryKey: ['devices', deviceId, 'tasks'],
