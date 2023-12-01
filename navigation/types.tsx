@@ -51,8 +51,8 @@ type PlantStepParams = {
 
 export type PlantWizardStackParamList = {
   PlantBasicInfo: PlantStepParams;
-  PlantIdealConditions: PlantStepParams;
-  PlantOtherInfo: PlantStepParams;
+  PlantIdealConditions: undefined;
+  PlantOtherInfo: undefined;
 };
 
 export type PlantWizardStackScreenProps<

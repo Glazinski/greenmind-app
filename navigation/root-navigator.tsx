@@ -28,6 +28,7 @@ export const RootNavigator = () => {
       }}
     >
       <Stack.Screen name="Index" component={DrawerNavigator} />
+      {/*<Stack.Screen name="PlantWizard" component={PlantWizardNavigator} />*/}
       <Stack.Screen name="PlantWizard" component={PlantWizardNavigator} />
       <Stack.Screen name="DeviceWizard" component={DeviceWizardNavigator} />
       <Stack.Screen

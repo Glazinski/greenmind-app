@@ -2,6 +2,13 @@ import { z } from 'zod';
 
 const PlantStatus = z.enum(['public', 'private', 'assigned']);
 
+export const PlantBasicInfoSchema = z.object({
+  image: z.string(),
+  status: PlantStatus,
+  name: z.string().nonempty(),
+  appearance: z.string(),
+});
+
 const MinMaxSchema = z
   .string()
   .nonempty({ message: 'Must not be empty' })

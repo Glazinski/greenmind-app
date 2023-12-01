@@ -1,30 +1,33 @@
 import React from 'react';
-import { createStackNavigator } from '@react-navigation/stack';
+import {
+  createStackNavigator,
+  StackScreenProps,
+} from '@react-navigation/stack';
 import { IconButton, useTheme } from 'react-native-paper';
 
 import { PlantBasicInfoScreen } from 'screens/plant-wizard/plant-basic-info-screen';
 import { PlantIdealConditionsScreen } from 'screens/plant-wizard/plant-ideal-conditions-screen';
-import { PlantOtherInfoScreen } from 'screens/plant-wizard/plant-other-info-screen';
-import { usePlantFormStore } from 'store/use-plant-form-store';
 
 import { PlantWizardStackParamList } from './types';
+import { WizardContainer } from 'components/wizard-form/wizard-container';
+import { usePlantFormStore } from 'store/use-plant-form-store';
+import { PlantOtherInfoScreen } from 'screens/plant-wizard/plant-other-info-screen';
+import { useWizard } from 'components/wizard-form/use-wizard';
 
 const PlantWizardStack = createStackNavigator<PlantWizardStackParamList>();
 
-export const PlantWizardNavigator = () => {
+const PlantWizard = () => {
   const {
     colors: { background },
   } = useTheme();
-  const resetSteps = usePlantFormStore((state) => state.resetSteps);
+  const { prevStep } = useWizard();
   const resetStepsData = usePlantFormStore((state) => state.resetStepsData);
-  const prevStep = usePlantFormStore((state) => state.prevStep);
 
   React.useEffect(() => {
     return () => {
-      resetSteps();
       resetStepsData();
     };
-  }, [resetSteps, resetStepsData]);
+  }, [resetStepsData]);
 
   return (
     <PlantWizardStack.Navigator
@@ -37,8 +40,8 @@ export const PlantWizardNavigator = () => {
         },
         headerLeft: (props) => (
           <IconButton
-            icon="arrow-left"
             {...props}
+            icon="arrow-left"
             onPress={() => {
               prevStep();
               props?.onPress?.();
@@ -60,5 +63,13 @@ export const PlantWizardNavigator = () => {
         component={PlantOtherInfoScreen}
       />
     </PlantWizardStack.Navigator>
+  );
+};
+
+export const PlantWizardNavigator = () => {
+  return (
+    <WizardContainer stepCount={3}>
+      <PlantWizard />
+    </WizardContainer>
   );
 };
