@@ -11,7 +11,7 @@ export const GrowBoxDeviceInformation = () => {
   const { data: device, isLoading, isError } = useAssignedDevice();
 
   if (isLoading) {
-    return <ActivityIndicator />;
+    return <ActivityIndicator testID="loading-spinner" />;
   }
 
   if (isError) {

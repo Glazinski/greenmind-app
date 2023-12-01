@@ -1,5 +1,6 @@
 import '@testing-library/react-native/extend-expect';
 import 'react-native-gesture-handler/jestSetup';
+import axios from 'axios';
 
 // include this section and the NativeAnimatedHelper section for mocking react-native-reanimated
 jest.mock('react-native-reanimated', () => {
@@ -31,3 +32,5 @@ jest.mock('react-i18next', () => ({
 }));
 
 jest.useFakeTimers();
+
+axios.defaults.baseURL = 'http://localhost:3000';
