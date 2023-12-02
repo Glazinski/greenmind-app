@@ -1,0 +1,15 @@
+{
+  "name": "GreenMind",
+  "entryPoints": [
+    "./api",
+    "./components",
+    "./hooks",
+    "./lib",
+    "./navigation",
+    "./schemas",
+    "./screens",
+    "./services",
+    "./store"
+  ],
+  "out": "./docs"
+}

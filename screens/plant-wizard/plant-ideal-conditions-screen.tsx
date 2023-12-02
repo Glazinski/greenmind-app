@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { Layout } from 'components/layout';
 import { TextField } from 'components/ui/text-field';
 import { PlantStepContainer } from 'components/plant/plant-form/plant-step-container';
-import { PlantBasicInfo, PlantIdealConditions } from 'schemas/plants';
+import { PlantIdealConditionsInputs } from 'schemas/plants';
 import { usePlantForm } from 'hooks/use-plant-form';
 import { PlantStepNavigation } from '../../components/plant/plant-form/plant-step-navigation';
 import React from 'react';
@@ -18,13 +18,13 @@ export const PlantIdealConditionsScreen = () => {
   const { t } = useTranslation();
   const { setStepData } = usePlantFormStore();
   const { nextStep } = useWizard();
-  const { control, handleSubmit } = usePlantForm<PlantIdealConditions>();
+  const { control, handleSubmit } = usePlantForm<PlantIdealConditionsInputs>();
   const navigation =
     useNavigation<
       PlantWizardStackScreenProps<'PlantBasicInfo'>['navigation']
     >();
 
-  const onSubmit = (data: PlantIdealConditions) => {
+  const onSubmit = (data: PlantIdealConditionsInputs) => {
     setStepData(1, data);
     nextStep();
     navigation.navigate('PlantOtherInfo');

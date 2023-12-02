@@ -3,6 +3,9 @@ import Constants from 'expo-constants';
 
 import { useAuthStore } from 'store/use-auth-store';
 
+/**
+ * An Axios instance configured with a predefined base URL.
+ */
 export const api = axios.create({
   baseURL: Constants.expoConfig?.extra?.apiBaseUrl,
 });
@@ -22,6 +25,10 @@ api.interceptors.response.use(
   }
 );
 
+/**
+ * Sets token in axios headers
+ * @param token - JWT authorization token
+ */
 export function setAuthToken(token: string | null) {
   if (token) {
     api.defaults.headers.common['Authorization'] = `Bearer ${token}`;

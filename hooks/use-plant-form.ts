@@ -5,8 +5,7 @@ import { ZodType } from 'zod';
 
 import {
   PlantBasicInfoSchema,
-  PlantIdealConditionsSchema,
-  StepFormData,
+  PlantIdealConditionsInputsSchema,
 } from 'schemas/plants';
 import { usePlantFormStore } from 'store/use-plant-form-store';
 import { useWizard } from 'components/wizard-form/use-wizard';
@@ -18,7 +17,7 @@ const getPlantSchema = (activeStep: number) => {
     case 0:
       return PlantBasicInfoSchema;
     case 1:
-      return PlantIdealConditionsSchema;
+      return PlantIdealConditionsInputsSchema;
   }
 };
 
