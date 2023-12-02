@@ -10,6 +10,12 @@ import { FullPageLoadingSpinner } from 'components/ui/full-page-loading-spinner'
 import { HomeDrawerScreenProps } from 'navigation/types';
 import { useActiveDeviceStore } from 'store/use-active-device-store';
 
+/**
+ * HomeScreen component for displaying most important information
+ * about device
+ * @param navigation
+ * @constructor
+ */
 export const HomeScreen = ({
   navigation,
 }: HomeDrawerScreenProps<'Home'>): React.JSX.Element => {

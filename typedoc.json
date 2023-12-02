@@ -11,5 +11,6 @@
     "./services",
     "./store"
   ],
+  "entryPointStrategy": "expand",
   "out": "./docs"
 }
