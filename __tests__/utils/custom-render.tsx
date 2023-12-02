@@ -7,7 +7,7 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 import { lightTheme } from '../../lib/paper/theme';
 
-const queryClient = new QueryClient({
+export const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
       retry: false,
@@ -18,6 +18,7 @@ const queryClient = new QueryClient({
     warn: console.warn,
     error: process.env.NODE_ENV === 'test' ? () => {} : console.error,
   },
+  queryCache: undefined,
 });
 
 const AllTheProviders = ({ children }: { children: React.ReactNode }) => {

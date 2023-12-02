@@ -19,6 +19,7 @@ export const useDevice = (
     queryKey: ['devices', deviceId],
     queryFn: () =>
       api.get<BackendDevice>(`/devices/${deviceId}`).then((res) => res.data),
+    enabled: typeof deviceId === 'number',
     ...config,
   });
 
