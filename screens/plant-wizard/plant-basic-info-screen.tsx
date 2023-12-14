@@ -8,9 +8,8 @@ import { Checkbox, Text } from 'react-native-paper';
 import { Layout } from 'components/layout';
 import { ImageSelector } from 'components/image-selector';
 import { TextField } from 'components/ui/text-field';
-import { PlantStepContainer } from 'components/plant/plant-form/plant-step-container';
-import { PlantStepNavigation } from 'components/plant/plant-form/plant-step-navigation';
 import { useWizard } from 'components/wizard-form/use-wizard';
+import { PlantStep } from 'components/plant/plant-form/plant-step';
 import { PlantWizardStackScreenProps } from 'navigation/types';
 import { BackendPlant, PlantBasicInfoInputs } from 'schemas/plants';
 import { usePlantFormStore } from 'store/use-plant-form-store';
@@ -111,11 +110,9 @@ export const PlantBasicInfoScreen = ({
   }
 
   return (
-    <PlantStepContainer>
-      <Text style={styles.title} variant="headlineMedium">
-        test
-      </Text>
-      <View>
+    <PlantStep>
+      <PlantStep.Title>Basic information</PlantStep.Title>
+      <PlantStep.Body>
         <View style={styles.imageSelector}>
           <Controller
             render={({ field }) => (
@@ -153,9 +150,9 @@ export const PlantBasicInfoScreen = ({
           name="appearance"
           control={control}
         />
-      </View>
-      <PlantStepNavigation onPress={handleSubmit(onSubmit)} />
-    </PlantStepContainer>
+      </PlantStep.Body>
+      <PlantStep.Navigation onPress={handleSubmit(onSubmit)} />
+    </PlantStep>
   );
 };
 
@@ -165,8 +162,5 @@ const styles = StyleSheet.create({
   },
   checkbox: {
     borderRadius: 12,
-  },
-  title: {
-    marginBottom: 16,
   },
 });

@@ -1,8 +1,9 @@
+import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { Button } from 'react-native-paper';
-import React from 'react';
-import { usePlantFormStore } from '../../../store/use-plant-form-store';
-import { useWizard } from '../../wizard-form/use-wizard';
+
+import { usePlantFormStore } from 'store/use-plant-form-store';
+import { useWizard } from 'components/wizard-form/use-wizard';
 
 interface PlantStepNavigationProps {
   onPress: () => void;

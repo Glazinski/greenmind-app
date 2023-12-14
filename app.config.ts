@@ -2,7 +2,7 @@ import 'dotenv/config';
 
 export default {
   name: 'GreenMind',
-  slug: 'green-mind',
+  slug: 'growbox-app-v2',
   version: '1.0.0',
   orientation: 'portrait',
   icon: './assets/icon.png',

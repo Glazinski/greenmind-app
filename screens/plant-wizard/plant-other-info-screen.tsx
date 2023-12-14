@@ -1,13 +1,11 @@
 import React from 'react';
-import { View } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { useNavigation } from '@react-navigation/native';
 
 import { PlantWizardStackScreenProps } from 'navigation/types';
-import { PlantStepContainer } from 'components/plant/plant-form/plant-step-container';
-import { PlantStepNavigation } from 'components/plant/plant-form/plant-step-navigation';
 import { ConfirmationDialog } from 'components/ui/confirmation-dialog';
 import { TextField } from 'components/ui/text-field';
+import { PlantStep } from 'components/plant/plant-form/plant-step';
 import { usePlantForm } from 'hooks/use-plant-form';
 import { PlantOtherInfoInputs } from 'schemas/plants';
 import { useAddPlant, useEditPlant } from 'services/plants/mutations';
@@ -20,7 +18,7 @@ export const PlantOtherInfoScreen = () => {
     useNavigation<
       PlantWizardStackScreenProps<'PlantOtherInfo'>['navigation']
     >();
-  const { control, handleSubmit } = usePlantForm<PlantOtherInfoInputs>();
+  const { control } = usePlantForm<PlantOtherInfoInputs>();
   const { type, plantId } = usePlantFormStore((state) => state.stepParams);
   const stepsData = usePlantFormStore((state) => state.stepsData);
   const {
@@ -55,7 +53,7 @@ export const PlantOtherInfoScreen = () => {
     setVisible(false);
   }
 
-  const onSubmit = async () => {
+  const onSubmit = (): void => {
     let data = {} as any;
     stepsData.forEach((step) => {
       data = { ...data, ...step };
@@ -81,8 +79,9 @@ export const PlantOtherInfoScreen = () => {
   };
 
   return (
-    <PlantStepContainer>
-      <View>
+    <PlantStep>
+      <PlantStep.Title>Other information</PlantStep.Title>
+      <PlantStep.Body>
         <TextField
           mode="outlined"
           label={t('fertilizing') as string}
@@ -113,16 +112,16 @@ export const PlantOtherInfoScreen = () => {
           name="blooming_time"
           control={control}
         />
-      </View>
-      <PlantStepNavigation onPress={showDialog} />
+      </PlantStep.Body>
+      <PlantStep.Navigation onPress={showDialog} />
       <ConfirmationDialog
         visible={visible}
         onDismiss={hideDialog}
         isLoading={isLoading}
         isError={isError}
-        onConfirmButtonPress={handleSubmit(onSubmit)}
+        onConfirmButtonPress={onSubmit}
         confirmButtonText={renderSubmitButtonContent()}
       />
-    </PlantStepContainer>
+    </PlantStep>
   );
 };

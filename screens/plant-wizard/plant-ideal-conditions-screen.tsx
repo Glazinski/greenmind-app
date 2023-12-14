@@ -1,18 +1,16 @@
-import { ScrollView, StyleSheet, View } from 'react-native';
+import React from 'react';
+import { StyleSheet, View } from 'react-native';
 import { Text } from 'react-native-paper';
 import { useTranslation } from 'react-i18next';
+import { useNavigation } from '@react-navigation/native';
 
-import { Layout } from 'components/layout';
 import { TextField } from 'components/ui/text-field';
-import { PlantStepContainer } from 'components/plant/plant-form/plant-step-container';
 import { PlantIdealConditionsInputs } from 'schemas/plants';
 import { usePlantForm } from 'hooks/use-plant-form';
-import { PlantStepNavigation } from '../../components/plant/plant-form/plant-step-navigation';
-import React from 'react';
-import { usePlantFormStore } from '../../store/use-plant-form-store';
-import { useWizard } from '../../components/wizard-form/use-wizard';
-import { useNavigation } from '@react-navigation/native';
-import { PlantWizardStackScreenProps } from '../../navigation/types';
+import { PlantStep } from 'components/plant/plant-form/plant-step';
+import { usePlantFormStore } from 'store/use-plant-form-store';
+import { useWizard } from 'components/wizard-form/use-wizard';
+import { PlantWizardStackScreenProps } from 'navigation/types';
 
 export const PlantIdealConditionsScreen = () => {
   const { t } = useTranslation();
@@ -34,7 +32,7 @@ export const PlantIdealConditionsScreen = () => {
     label: string,
     fieldName: 'light' | 'temp' | 'soil_humidity' | 'air_humidity'
   ) => (
-    <PlantStepContainer>
+    <>
       <Text variant="titleMedium">{label}</Text>
       <View style={styles.minMaxFields}>
         <View style={styles.minMaxField}>
@@ -58,19 +56,20 @@ export const PlantIdealConditionsScreen = () => {
           />
         </View>
       </View>
-    </PlantStepContainer>
+    </>
   );
 
   return (
-    <Layout as={ScrollView}>
-      <View>
+    <PlantStep>
+      <PlantStep.Title>Ideal conditions</PlantStep.Title>
+      <PlantStep.Body>
         {renderMinMaxRow(t('temperature'), 'temp')}
         {renderMinMaxRow(t('air_humidity'), 'air_humidity')}
         {renderMinMaxRow(t('soil_humidity'), 'soil_humidity')}
         {renderMinMaxRow(t('light'), 'light')}
-      </View>
-      <PlantStepNavigation onPress={handleSubmit(onSubmit)} />
-    </Layout>
+      </PlantStep.Body>
+      <PlantStep.Navigation onPress={handleSubmit(onSubmit)} />
+    </PlantStep>
   );
 };
 

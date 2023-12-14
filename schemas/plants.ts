@@ -24,8 +24,8 @@ export const PlantBasicInfoInputsSchema = z.object({
 });
 
 export const PlantIdealConditionsInputsSchema = z.object({
-  light_min: z.string(),
-  light_max: z.string(),
+  light_min: MinMaxSchema,
+  light_max: MinMaxSchema,
   temp_min: MinMaxSchema,
   temp_max: MinMaxSchema,
   air_humidity_min: MinMaxSchema,

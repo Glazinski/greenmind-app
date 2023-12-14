@@ -1,4 +1,6 @@
 import React from 'react';
+import { BackHandler } from 'react-native';
+import { useFocusEffect } from '@react-navigation/native';
 import { DeepPartial, FieldValues, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { ZodType } from 'zod';
@@ -9,8 +11,6 @@ import {
 } from 'schemas/plants';
 import { usePlantFormStore } from 'store/use-plant-form-store';
 import { useWizard } from 'components/wizard-form/use-wizard';
-import { useFocusEffect } from '@react-navigation/native';
-import { BackHandler } from 'react-native';
 
 const getPlantSchema = (activeStep: number) => {
   switch (activeStep) {
@@ -39,7 +39,6 @@ export const usePlantForm = <TFormValues extends FieldValues>() => {
   useFocusEffect(
     React.useCallback(() => {
       const onBackPress = () => {
-        console.log('onBackPress', activeStep, getValues());
         if (activeStep !== 0) {
           setStepData(activeStep, getValues() as any);
         }

@@ -8,6 +8,7 @@
     "web": "expo start --web",
     "build:dev": "npx eas build --profile development --platform android",
     "build:prod": "npx eas build --platform android",
+    "build:preview2": "npx eas build --profile preview2 --platform android",
     "test": "jest --watch --coverage=false --changedSince=origin/main",
     "testDebug": "jest -o --watch --coverage=false",
     "testFinal": "jest",
