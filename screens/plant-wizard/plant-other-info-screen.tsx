@@ -53,7 +53,7 @@ export const PlantOtherInfoScreen = () => {
     setVisible(false);
   }
 
-  const onSubmit = async () => {
+  const onSubmit = (): void => {
     let data = {} as any;
     stepsData.forEach((step) => {
       data = { ...data, ...step };
