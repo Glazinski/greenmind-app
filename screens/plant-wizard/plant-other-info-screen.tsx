@@ -18,7 +18,7 @@ export const PlantOtherInfoScreen = () => {
     useNavigation<
       PlantWizardStackScreenProps<'PlantOtherInfo'>['navigation']
     >();
-  const { control } = usePlantForm<PlantOtherInfoInputs>();
+  const { control, handleSubmit } = usePlantForm<PlantOtherInfoInputs>();
   const { type, plantId } = usePlantFormStore((state) => state.stepParams);
   const stepsData = usePlantFormStore((state) => state.stepsData);
   const {
@@ -53,7 +53,7 @@ export const PlantOtherInfoScreen = () => {
     setVisible(false);
   }
 
-  const onSubmit = (): void => {
+  const onSubmit = async () => {
     let data = {} as any;
     stepsData.forEach((step) => {
       data = { ...data, ...step };
@@ -119,7 +119,7 @@ export const PlantOtherInfoScreen = () => {
         onDismiss={hideDialog}
         isLoading={isLoading}
         isError={isError}
-        onConfirmButtonPress={onSubmit}
+        onConfirmButtonPress={handleSubmit(onSubmit)}
         confirmButtonText={renderSubmitButtonContent()}
       />
     </PlantStep>
