@@ -1,6 +1,7 @@
 import React from 'react';
 import { FlatList, RefreshControl } from 'react-native';
 import { Button, Dialog, Portal, Text } from 'react-native-paper';
+import { useTranslation } from 'react-i18next';
 
 import { BackendDevice } from 'schemas/devices';
 import { useDeleteDevice } from 'services/device/mutations';
@@ -15,6 +16,7 @@ interface DeviceListProps {
 }
 
 export const DeviceList = ({ devices, headerComponent }: DeviceListProps) => {
+  const { t } = useTranslation();
   const [refreshing, setRefreshing] = React.useState(false);
   const deviceId = useActiveDeviceStore((state) => state.deviceId);
   const setDeviceId = useActiveDeviceStore((state) => state.setDeviceId);
@@ -81,7 +83,7 @@ export const DeviceList = ({ devices, headerComponent }: DeviceListProps) => {
       <Portal>
         <Dialog visible={visible} onDismiss={hideDialog}>
           <Dialog.Content>
-            <Text variant="bodyLarge">Are you sure you want to proceed?</Text>
+            <Text variant="bodyLarge">{t('proceed_message')}</Text>
           </Dialog.Content>
           <Dialog.Actions>
             <Button onPress={hideDialog}>Cancel</Button>

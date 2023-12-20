@@ -1,11 +1,13 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import { Button, Snackbar, Portal, useTheme } from 'react-native-paper';
+import { useTranslation } from 'react-i18next';
 
 import { useDeviceTasks } from 'services/device/queries';
 import { useDeviceWater } from 'services/device/mutations';
 
 export const GrowBoxWaterPlant = () => {
+  const { t } = useTranslation();
   const [isSnackbarVisible, setIsSnackbarVisible] = React.useState(false);
   const {
     colors: { tertiary },
@@ -15,8 +17,8 @@ export const GrowBoxWaterPlant = () => {
 
   const onDismissSnackBar = () => setIsSnackbarVisible(false);
 
-  const handleWaterPlantPress = async () => {
-    await waterPlant.mutate();
+  const handleWaterPlantPress = () => {
+    waterPlant.mutate();
     // if (!tasks) {
     //   return;
     // }
@@ -42,7 +44,7 @@ export const GrowBoxWaterPlant = () => {
           loading={waterPlant.isLoading}
           disabled={waterPlant.isLoading}
         >
-          Water plant
+          {t('water_plant')}
         </Button>
       </View>
       <Portal>
@@ -54,7 +56,7 @@ export const GrowBoxWaterPlant = () => {
           }}
           style={styles.snackbar}
         >
-          Plant watering is either underway or in the queue
+          {t('plant_watering_busy')}
         </Snackbar>
       </Portal>
     </>

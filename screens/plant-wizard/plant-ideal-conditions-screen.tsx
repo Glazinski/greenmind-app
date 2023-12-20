@@ -61,7 +61,7 @@ export const PlantIdealConditionsScreen = () => {
 
   return (
     <PlantStep>
-      <PlantStep.Title>Ideal conditions</PlantStep.Title>
+      <PlantStep.Title>{t('ideal_conditions')}</PlantStep.Title>
       <PlantStep.Body>
         {renderMinMaxRow(t('temperature'), 'temp')}
         {renderMinMaxRow(t('air_humidity'), 'air_humidity')}

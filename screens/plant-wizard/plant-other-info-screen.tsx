@@ -80,7 +80,7 @@ export const PlantOtherInfoScreen = () => {
 
   return (
     <PlantStep>
-      <PlantStep.Title>Other information</PlantStep.Title>
+      <PlantStep.Title>{t('other_information')}</PlantStep.Title>
       <PlantStep.Body>
         <TextField
           mode="outlined"

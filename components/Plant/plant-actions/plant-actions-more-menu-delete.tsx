@@ -36,8 +36,8 @@ export const PlantActionsMoreMenuDelete = ({
     onDeletePress?.();
   }
 
-  const handleDeletePress = async () => {
-    await deletePlant(plantId);
+  const handleDeletePress = () => {
+    deletePlant(plantId);
   };
 
   return (

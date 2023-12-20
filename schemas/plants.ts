@@ -1,25 +1,29 @@
 import { z } from 'zod';
 
+import i18n from 'lib/i18n';
+
+import { RequiredStringSchema } from './utils/required';
+
 const PlantStatus = z.enum(['public', 'private', 'assigned']);
 
 export const PlantBasicInfoSchema = z.object({
   image: z.string(),
   status: PlantStatus,
-  name: z.string().nonempty(),
+  name: RequiredStringSchema,
   appearance: z.string(),
 });
 
-const MinMaxSchema = z
-  .string()
-  .nonempty({ message: 'Must not be empty' })
-  .refine((value) => !isNaN(parseFloat(value)), {
-    message: 'Must be a number',
-  });
+const MinMaxSchema = RequiredStringSchema.refine(
+  (value) => !isNaN(parseFloat(value)),
+  {
+    message: i18n.t('not_number_error') as string,
+  }
+);
 
 export const PlantBasicInfoInputsSchema = z.object({
   image: z.string(),
   status: PlantStatus,
-  name: z.string().nonempty(),
+  name: RequiredStringSchema,
   appearance: z.string(),
 });
 

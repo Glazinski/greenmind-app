@@ -7,12 +7,16 @@ import {
   VictoryChart,
   VictoryTheme,
 } from 'victory-native';
+import { useTranslation } from 'react-i18next';
 
 import { Layout } from 'components/layout';
 import { RootStackScreenProps } from 'navigation/types';
 
-const getWeekDays = () => {
-  const days = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
+const getWeekDays = (lang: string) => {
+  const days =
+    lang === 'en'
+      ? ['S', 'M', 'T', 'W', 'T', 'F', 'S']
+      : ['N', 'P', 'W', 'Ś', 'C', 'P', 'S'];
   const today = new Date();
   let weekDays = [];
 
@@ -29,6 +33,7 @@ const getWeekDays = () => {
 };
 
 export const StatsScreen = ({ route }: RootStackScreenProps<'Stats'>) => {
+  const { t, i18n } = useTranslation();
   const { height } = useWindowDimensions();
   const { typeOfSensor } = route.params;
   const {
@@ -48,22 +53,22 @@ export const StatsScreen = ({ route }: RootStackScreenProps<'Stats'>) => {
     switch (typeOfSensor) {
       case 'avg_air_hum':
         return {
-          label: 'air humidity',
+          label: t('air_humidity').toLowerCase(),
           tickSuffix: '%',
         };
       case 'avg_soil_hum':
         return {
-          label: 'soil humidity',
+          label: t('soil_humidity').toLowerCase(),
           tickSuffix: '',
         };
       case 'avg_temp':
         return {
-          label: 'temperature',
+          label: t('temperature').toLowerCase().slice(0, -3),
           tickSuffix: '°C',
         };
       case 'avg_light':
         return {
-          label: 'light',
+          label: t('light_intensity').toLowerCase(),
           tickSuffix: '',
         };
     }
@@ -74,7 +79,11 @@ export const StatsScreen = ({ route }: RootStackScreenProps<'Stats'>) => {
   return (
     <Layout>
       <View style={{ marginLeft: 15 }}>
-        <Text variant="titleLarge">Average {label} over the last 7 days</Text>
+        <Text variant="titleLarge">
+          {t('average_message', {
+            label,
+          })}
+        </Text>
         <VictoryChart
           theme={VictoryTheme.material}
           domainPadding={20}
@@ -82,7 +91,7 @@ export const StatsScreen = ({ route }: RootStackScreenProps<'Stats'>) => {
         >
           <VictoryAxis
             tickValues={[1, 2, 3, 4, 5, 6, 7]}
-            tickFormat={getWeekDays()}
+            tickFormat={getWeekDays(i18n.language)}
           />
           <VictoryAxis
             dependentAxis

@@ -104,14 +104,14 @@ export const PlantBasicInfoScreen = ({
   if (isError) {
     return (
       <Layout>
-        <Text variant="bodyMedium">Something went wrong</Text>
+        <Text variant="bodyMedium">{t('something_went_wrong')}</Text>
       </Layout>
     );
   }
 
   return (
     <PlantStep>
-      <PlantStep.Title>Basic information</PlantStep.Title>
+      <PlantStep.Title>{t('basic_information')}</PlantStep.Title>
       <PlantStep.Body>
         <View style={styles.imageSelector}>
           <Controller

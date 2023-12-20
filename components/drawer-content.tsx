@@ -22,11 +22,11 @@ export const DrawerContent = ({
   const insets = useSafeAreaInsets();
   const { mutate: signOut, isLoading, isError } = useSignOut();
 
-  const renderDrawerItem = (name: string, icon: string) => (
+  const renderDrawerItem = (name: string, screen: string, icon: string) => (
     <PaperDrawer.Item
       label={name}
-      onPress={() => navigation.navigate(name)}
-      active={currentRouteName.includes(name)}
+      onPress={() => navigation.navigate(screen)}
+      active={currentRouteName.includes(screen)}
       icon={icon}
     />
   );
@@ -59,10 +59,10 @@ export const DrawerContent = ({
       ]}
     >
       <PaperDrawer.Section>
-        {renderDrawerItem(t('home'), 'home')}
-        {renderDrawerItem(t('devices'), 'devices')}
-        {renderDrawerItem(t('plants'), 'leaf')}
-        {renderDrawerItem(t('settings'), 'cog')}
+        {renderDrawerItem(t('home'), 'Home', 'home')}
+        {renderDrawerItem(t('devices'), 'Devices', 'devices')}
+        {renderDrawerItem(t('plants'), 'Plants', 'leaf')}
+        {renderDrawerItem(t('settings'), 'Settings', 'cog')}
       </PaperDrawer.Section>
       <View>{renderSignOutItem()}</View>
     </View>

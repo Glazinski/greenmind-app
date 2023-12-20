@@ -5,9 +5,10 @@ import { FlipType, manipulateAsync, SaveFormat } from 'expo-image-manipulator';
 import BottomSheet from '@gorhom/bottom-sheet';
 import { useTheme, Portal } from 'react-native-paper';
 
+import { useBackPress } from 'hooks/use-back-press';
+
 import { CircleCameraButton } from './circle-camera-button';
 import { CameraReverseButton } from './camera-reverse-button';
-import { useBackPress } from '../../hooks/use-back-press';
 
 interface CameraPreviewProps {
   onDismiss: () => void;
@@ -48,7 +49,6 @@ export const CameraView = ({ onDismiss, onChange }: CameraPreviewProps) => {
   const handleSheetClose = React.useCallback(() => {
     setIsBottomSheetOpen(false);
     onDismiss();
-    // setIsCameraOpen(false);
   }, [setIsBottomSheetOpen, onDismiss]);
 
   const toggleCameraType = () => {
@@ -71,10 +71,8 @@ export const CameraView = ({ onDismiss, onChange }: CameraPreviewProps) => {
       );
     }
 
-    // setIsCameraOpen(false);
     onDismiss();
     onChange(photo.uri);
-    // setCapturedImage(photo.uri);
     setIsTakingPicture(false);
     setIsBottomSheetOpen(false);
   };

@@ -40,9 +40,7 @@ export const GrowBoxAssignedPlant = () => {
   if (isError) {
     return (
       <Surface>
-        <Text variant="bodyLarge">
-          {t('something_went_wrong')} with fetching assigned plant
-        </Text>
+        <Text variant="bodyLarge">{t('fetching_assigned_plants_error')}</Text>
       </Surface>
     );
   }
@@ -74,7 +72,7 @@ export const GrowBoxAssignedPlant = () => {
           </View>
         )}
         <View>
-          <Text style={{ color: secondary }}>Active plant</Text>
+          <Text style={{ color: secondary }}>{t('active_plant')}</Text>
           <Text variant="titleMedium">{renderActivePlantName()}</Text>
         </View>
       </Surface>

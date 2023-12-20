@@ -10,6 +10,7 @@ import {
   useTheme,
 } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native';
+import { useTranslation } from 'react-i18next';
 
 import { BackendDevice } from 'schemas/devices';
 import { HomeDrawerScreenProps } from 'navigation/types';
@@ -30,6 +31,7 @@ export const DeviceItem = ({
   onStopUseThisDeviceClick,
   isActive,
 }: DeviceItemProps) => {
+  const { t } = useTranslation();
   const navigation =
     useNavigation<HomeDrawerScreenProps<'Devices'>['navigation']>();
   const {
@@ -66,7 +68,7 @@ export const DeviceItem = ({
                   onStopUseThisDeviceClick();
                   closeMenu();
                 }}
-                title="Stop using this device"
+                title={t('stop_using_this_device')}
                 leadingIcon="close-circle"
               />
             ) : (
@@ -75,7 +77,7 @@ export const DeviceItem = ({
                   onUseThisDeviceClick();
                   closeMenu();
                 }}
-                title="Use this device"
+                title={t('use_this_device')}
                 leadingIcon="check-circle"
               />
             )}
@@ -90,7 +92,7 @@ export const DeviceItem = ({
                   },
                 });
               }}
-              title="Edit"
+              title={t('edit')}
               leadingIcon="pencil"
             />
             <Menu.Item
@@ -98,7 +100,7 @@ export const DeviceItem = ({
                 onDeleteClick();
                 closeMenu();
               }}
-              title="Delete"
+              title={t('delete')}
               leadingIcon="delete"
             />
           </Menu>

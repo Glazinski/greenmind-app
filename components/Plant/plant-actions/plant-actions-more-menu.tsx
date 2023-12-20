@@ -1,6 +1,7 @@
 import React from 'react';
 import { IconButton, Menu } from 'react-native-paper';
 import { useNavigation, CompositeScreenProps } from '@react-navigation/native';
+import { useTranslation } from 'react-i18next';
 
 import { useDevices } from 'services/device/queries';
 import { RootStackScreenProps, HomeDrawerScreenProps } from 'navigation/types';
@@ -18,6 +19,7 @@ interface PlantActionsMoreMenuProps {
 export const PlantActionsMoreMenu = ({
   onDeletePress,
 }: PlantActionsMoreMenuProps) => {
+  const { t } = useTranslation();
   const userId = useAuthStore((state) => state.userId);
   const { plant } = usePlantActions();
   const { id: plantId, user_id: plantUserId, status } = plant;
@@ -67,7 +69,7 @@ export const PlantActionsMoreMenu = ({
                 },
               });
             }}
-            title="Edit"
+            title={t('edit')}
             leadingIcon="pencil"
           />
           {status !== 'assigned' && (

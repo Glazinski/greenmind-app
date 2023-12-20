@@ -34,7 +34,7 @@ export const GrowBoxDataTable = () => {
 
   const onSensorProblemPress = () => {
     hideSnackbar();
-    setSnackbarText('Sensor might be broken or disconnected');
+    setSnackbarText(t('sensor_error') as string);
     showSnackbar();
   };
 
@@ -42,14 +42,20 @@ export const GrowBoxDataTable = () => {
     if (typeof min !== 'number' && typeof max !== 'number') return;
 
     hideSnackbar();
-    setSnackbarText(`${label} level should be between ${min} and ${max}`);
+    setSnackbarText(
+      t('sensor_level_range_validation', {
+        label,
+        min,
+        max,
+      }) as string
+    );
     showSnackbar();
   };
 
   if (isLoading) return <ActivityIndicator />;
 
   if (isDeviceLogsError) {
-    return <Text>{t('something_went_wrong')} with fetching device logs</Text>;
+    return <Text>{t('fetching_device_logs_error')}</Text>;
   }
 
   if (!deviceLog) {
@@ -63,7 +69,7 @@ export const GrowBoxDataTable = () => {
       <View style={styles.dataContainer}>
         <GrowBoxDataRow>
           <GrowBoxDataCell
-            label="Temperature °C"
+            label={t('temperature')}
             value={temp}
             onPress={() =>
               navigation.navigate('Stats', {
@@ -76,7 +82,7 @@ export const GrowBoxDataTable = () => {
             maxValue={assignedPlant?.temp_max}
           />
           <GrowBoxDataCell
-            label="Soil humidity"
+            label={t('soil_humidity')}
             value={soil_hum}
             onPress={() =>
               navigation.navigate('Stats', {
@@ -91,7 +97,7 @@ export const GrowBoxDataTable = () => {
         </GrowBoxDataRow>
         <GrowBoxDataRow>
           <GrowBoxDataCell
-            label="Air humidity"
+            label={t('air_humidity')}
             value={air_hum}
             onPress={() =>
               navigation.navigate('Stats', {
@@ -104,7 +110,7 @@ export const GrowBoxDataTable = () => {
             maxValue={assignedPlant?.air_humidity_max}
           />
           <GrowBoxDataCell
-            label="Light"
+            label={t('light')}
             value={light}
             onPress={() =>
               navigation.navigate('Stats', {
@@ -123,7 +129,7 @@ export const GrowBoxDataTable = () => {
           visible={visible && snackbarText.length > 0}
           onDismiss={hideSnackbar}
           action={{
-            label: `Close`,
+            label: t('close'),
             onPress: () => {
               hideSnackbar();
             },

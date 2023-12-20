@@ -1,7 +1,9 @@
 import { z } from 'zod';
 
+import { RequiredStringSchema } from './utils/required';
+
 export const DeviceInputScheme = z.object({
-  name: z.string().nonempty(),
+  name: RequiredStringSchema,
   image: z.string(),
 });
 

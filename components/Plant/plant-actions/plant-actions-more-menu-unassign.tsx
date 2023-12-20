@@ -16,6 +16,7 @@ export const PlantActionsMoreMenuUnassign = ({
   plant,
   onPress,
 }: PlantActionsMoreMenuUnassignProps) => {
+  const { t } = useTranslation();
   const queryClient = useQueryClient();
   const [visible, setVisible] = React.useState(false);
   const { mutate: deletePlant, isLoading, isError } = useDeletePlant(onSuccess);
@@ -42,7 +43,7 @@ export const PlantActionsMoreMenuUnassign = ({
     <>
       <Menu.Item
         onPress={showDialog}
-        title="Unassign from device"
+        title={t('plant_unassignment_from_device')}
         leadingIcon="minus"
       />
       <ConfirmationDialog
@@ -51,7 +52,7 @@ export const PlantActionsMoreMenuUnassign = ({
         isLoading={isLoading}
         isError={isError}
         onConfirmButtonPress={handleUnassignPress}
-        confirmButtonText="Unassign"
+        confirmButtonText={t('unassign')}
       />
     </>
   );
