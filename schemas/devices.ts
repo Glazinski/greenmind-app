@@ -21,11 +21,19 @@ const DeviceBackendLogSchema = z.object({
   light: z.number(),
 });
 
+enum Task {
+  WATER_PLANT = 0,
+}
+
+enum TaskStatus {
+  TODO = 0,
+}
+
 const DeviceBackendTaskSchema = z.object({
   id: z.number(),
   device: z.number(),
-  task_number: z.number(),
-  status: z.number(),
+  task_number: z.nativeEnum(Task),
+  status: z.nativeEnum(TaskStatus),
 });
 
 export type FormDevice = z.infer<typeof DeviceInputScheme>;

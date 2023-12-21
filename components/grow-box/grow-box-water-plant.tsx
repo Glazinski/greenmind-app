@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
-import { Button, Snackbar, Portal, useTheme } from 'react-native-paper';
+import { Button, useTheme } from 'react-native-paper';
 import { useTranslation } from 'react-i18next';
 
 import { useDeviceTasks } from 'services/device/queries';
@@ -8,29 +8,14 @@ import { useDeviceWater } from 'services/device/mutations';
 
 export const GrowBoxWaterPlant = () => {
   const { t } = useTranslation();
-  const [isSnackbarVisible, setIsSnackbarVisible] = React.useState(false);
   const {
     colors: { tertiary },
   } = useTheme();
-  const { data: tasks } = useDeviceTasks();
+  const { data: tasks, isLoading } = useDeviceTasks();
   const waterPlant = useDeviceWater();
-
-  const onDismissSnackBar = () => setIsSnackbarVisible(false);
 
   const handleWaterPlantPress = () => {
     waterPlant.mutate();
-    // if (!tasks) {
-    //   return;
-    // }
-    //
-    // const hasTaskInQueue = tasks?.some(
-    //   ({ task_number, status }) =>
-    //     task_number === 0 && (status === 0 || status === 1)
-    // );
-    //
-    // if (hasTaskInQueue) {
-    //   setIsSnackbarVisible(true);
-    // }
   };
 
   return (
@@ -41,24 +26,12 @@ export const GrowBoxWaterPlant = () => {
           style={[styles.button, { backgroundColor: tertiary }]}
           mode="contained"
           onPress={() => handleWaterPlantPress()}
-          loading={waterPlant.isLoading}
-          disabled={waterPlant.isLoading}
+          loading={waterPlant.isLoading || isLoading}
+          disabled={waterPlant.isLoading || isLoading}
         >
           {t('water_plant')}
         </Button>
       </View>
-      <Portal>
-        <Snackbar
-          visible={isSnackbarVisible}
-          onDismiss={onDismissSnackBar}
-          action={{
-            label: 'Ok',
-          }}
-          style={styles.snackbar}
-        >
-          {t('plant_watering_busy')}
-        </Snackbar>
-      </Portal>
     </>
   );
 };

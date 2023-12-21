@@ -31,7 +31,7 @@ export const ConfirmationDialog = ({
         </Dialog.Content>
         <Dialog.Actions>
           <Button onPress={onDismiss} disabled={isLoading}>
-            Close
+            {t('cancel')}
           </Button>
           <Button onPress={onConfirmButtonPress} loading={isLoading}>
             {isError ? t('try_again') : confirmButtonText}

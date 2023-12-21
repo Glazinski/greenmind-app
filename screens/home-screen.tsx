@@ -5,17 +5,15 @@ import { useTranslation } from 'react-i18next';
 
 import { GrowBox } from 'components/grow-box/grow-box';
 import { Layout } from 'components/layout';
-import { useDeviceLogs, useDevices } from 'services/device/queries';
+import {
+  useDeviceLogs,
+  useDevices,
+  useDeviceTasks,
+} from 'services/device/queries';
 import { FullPageLoadingSpinner } from 'components/ui/full-page-loading-spinner';
 import { HomeDrawerScreenProps } from 'navigation/types';
 import { useActiveDeviceStore } from 'store/use-active-device-store';
 
-/**
- * HomeScreen component for displaying most important information
- * about device
- * @param navigation
- * @constructor
- */
 export const HomeScreen = ({
   navigation,
 }: HomeDrawerScreenProps<'Home'>): React.JSX.Element => {
@@ -26,11 +24,13 @@ export const HomeScreen = ({
     colors: { background },
   } = useTheme();
   const { data: devices, isLoading, isError } = useDevices();
-  const { refetch } = useDeviceLogs();
+  const { refetch: refetchDeviceLogs } = useDeviceLogs();
+  const { refetch: refetchDeviceTasks } = useDeviceTasks();
 
   const handleDeviceLogsRefresh = async () => {
     setRefreshing(true);
-    await refetch();
+    await refetchDeviceLogs();
+    await refetchDeviceTasks();
     setRefreshing(false);
   };
 

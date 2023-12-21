@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet } from 'react-native';
-import { Dialog, Portal, Text } from 'react-native-paper';
+import { Text } from 'react-native-paper';
 import { useForm, Controller } from 'react-hook-form';
 import { Button } from 'react-native-paper';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -13,7 +13,7 @@ import { DeviceInputScheme, FormDevice, BackendDevice } from 'schemas/devices';
 import { DeviceWizardStackScreenProps } from 'navigation/types';
 import { useDevice } from 'services/device/queries';
 import { useEditDevice } from 'services/device/mutations';
-import { ConfirmationDialog } from '../../components/ui/confirmation-dialog';
+import { ConfirmationDialog } from 'components/ui/confirmation-dialog';
 
 export const DeviceFormScreen = ({
   navigation,
@@ -73,12 +73,10 @@ export const DeviceFormScreen = ({
   };
 
   const onDialogSubmit = async () => {
-    if (type === 'edit') {
-      editDevice({
-        deviceId,
-        formDevice: getValues(),
-      });
-    }
+    editDevice({
+      deviceId,
+      formDevice: getValues(),
+    });
   };
 
   const renderSubmitButtonContent = () => {

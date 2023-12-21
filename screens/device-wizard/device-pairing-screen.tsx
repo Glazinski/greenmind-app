@@ -1,19 +1,20 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import { Text, Button, useTheme, Portal, Snackbar } from 'react-native-paper';
+import { useQueryClient } from '@tanstack/react-query';
+import { useTranslation } from 'react-i18next';
 
 import { DeviceWizardStackScreenProps } from 'navigation/types';
 import { Layout } from 'components/layout';
 import { useUserPairingCode } from 'services/user/queries';
 import { FullPageLoadingSpinner } from 'components/ui/full-page-loading-spinner';
 import { useAuthStore } from 'store/use-auth-store';
-import { useDevices } from '../../services/device/queries';
-import { useQueryClient } from '@tanstack/react-query';
-import { BackendDevice } from '../../schemas/devices';
+import { useDevices } from 'services/device/queries';
 
 export const DevicePairingScreen = ({
   navigation,
 }: DeviceWizardStackScreenProps<'DevicePairing'>) => {
+  const { t } = useTranslation();
   const {
     colors: { background },
   } = useTheme();
@@ -23,7 +24,7 @@ export const DevicePairingScreen = ({
     isLoading: isDevicesLoading,
     isRefetching: isDevicesRefetching,
     refetch,
-  } = useDevices(onDevicesSuccess);
+  } = useDevices();
   const userId = useAuthStore((state) => state.userId);
   const queryClient = useQueryClient();
   const [newDeviceId, setNewDeviceId] = React.useState<number | null>(null);
@@ -37,7 +38,12 @@ export const DevicePairingScreen = ({
 
   const onDismissSnackBar = () => setIsSnackbarVisible(false);
 
-  async function onDevicesSuccess(newDevices: BackendDevice[]) {
+  function onCancelClick(): void {
+    navigation.goBack();
+  }
+
+  async function onDoneClick(): Promise<void> {
+    const { data: newDevices } = await refetch();
     let newId: number | null = null;
 
     if (
@@ -50,25 +56,14 @@ export const DevicePairingScreen = ({
 
     if (typeof newId === 'number') {
       navigation.navigate('DeviceForm', {
-        type: 'edit',
+        type: 'add',
         deviceId: newId,
       });
       await queryClient.invalidateQueries(['users', userId, 'code']);
+      return;
     }
 
-    setNewDeviceId(newId);
-  }
-
-  function onCancelClick(): void {
-    navigation.goBack();
-  }
-
-  async function onDoneClick(): Promise<void> {
-    await refetch();
-
-    if (typeof newDeviceId !== 'number') {
-      setIsSnackbarVisible(true);
-    }
+    setIsSnackbarVisible(true);
   }
 
   return (
@@ -80,11 +75,10 @@ export const DevicePairingScreen = ({
           <View style={[styles.container, { backgroundColor: background }]}>
             <View>
               <Text style={styles.pairingCode} variant="headlineMedium">
-                {isError ? 'Could not generate code' : pairingCode}
+                {isError ? t('could_not_generate_code') : pairingCode}
               </Text>
               <Text style={styles.informationBlock} variant="bodyLarge">
-                Use this code on website to pair your device with app. When you
-                finish setup, click Done button below.
+                {t('pairing_info')}
               </Text>
             </View>
             <View style={styles.buttonsContainer}>
@@ -93,7 +87,7 @@ export const DevicePairingScreen = ({
                 onPress={onCancelClick}
                 mode="outlined"
               >
-                Cancel
+                {t('cancel')}
               </Button>
               <Button
                 style={styles.button}
@@ -101,7 +95,7 @@ export const DevicePairingScreen = ({
                 mode="contained"
                 loading={isDevicesLoading || isDevicesRefetching}
               >
-                Done
+                {t('finish')}
               </Button>
             </View>
           </View>
@@ -115,7 +109,7 @@ export const DevicePairingScreen = ({
             label: 'Ok',
           }}
         >
-          Could not add new device
+          {t('could_not_add_device')}
         </Snackbar>
       </Portal>
     </>
@@ -145,6 +139,6 @@ const styles = StyleSheet.create({
     gap: 16,
   },
   button: {
-    width: 100,
+    width: 150,
   },
 });

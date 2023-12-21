@@ -49,7 +49,7 @@
   "device_assignment": "Przypisanie urządzenia",
   "plant_unassignment_from_device": "Odpisz od urządzenia",
   "unassign": "Odpisz",
-  "community_share_toggle": "Przełącznik udostępniania tej pozycji społeczności",
+  "community_share_toggle": "Czy udostępnianić te roślinę społeczności?",
   "configure_device": "Konfiguracja urządzenia",
   "use_system_settings": "Użyj ustawień systemowych",
   "light_theme": "Jasny",
@@ -71,5 +71,11 @@
   "plant_watering_busy": "Podlewanie roślin jest w trakcie lub w kolejce",
   "average_message": "Średnia {{label}} z ostatnich 7 dni",
   "light_intensity": "Natężenie światła",
-  "language": "Język"
+  "language": "Język",
+  "cancel": "Anuluj",
+  "yes": "Tak",
+  "finish": "Zakończ",
+  "could_not_add_device": "Dodanie urządzenia nie powiodło się",
+  "pairing_info": "Wpisz ten kod na stronie internetowej, aby połączyć Twoje urządzenie z aplikacją. Gdy konfiguracja będzie zakończona, naciśnij przycisk 'Zakończ'.",
+  "could_not_generate_code": "Nie udało się wygenerować kodu"
 }

@@ -46,7 +46,7 @@
   "cannot_assign_plant_message": "All devices has assigned plant",
   "assign_to_device": "Assign to device",
   "device_assignment": "Device assignment",
-  "community_share_toggle": "Toggle to share this item with the community",
+  "community_share_toggle": "Do you want to share this plant with the community?",
   "configure_device": "Configure device",
   "use_system_settings": "Use system settings",
   "light": "Light",
@@ -68,5 +68,11 @@
   "plant_watering_busy": "Plant watering is either underway or in the queue",
   "average_message": "Average {{label}} for the last 7 days",
   "light_intensity": "Light intensity",
-  "language": "Language"
+  "language": "Language",
+  "cancel": "Cancel",
+  "yes": "Yes",
+  "finish": "Finish",
+  "could_not_add_device": "Could not add new device",
+  "pairing_info": "Enter this code on the website to link your device with the app. Once the setup is complete, click the 'Finish' button.",
+  "could_not_generate_code": "Could not generate code"
 }

@@ -86,9 +86,9 @@ export const DeviceList = ({ devices, headerComponent }: DeviceListProps) => {
             <Text variant="bodyLarge">{t('proceed_message')}</Text>
           </Dialog.Content>
           <Dialog.Actions>
-            <Button onPress={hideDialog}>Cancel</Button>
+            <Button onPress={hideDialog}>{t('cancel')}</Button>
             <Button onPress={handleDeleteConfirmation} loading={isLoading}>
-              Yes
+              {t('yes')}
             </Button>
           </Dialog.Actions>
         </Dialog>
