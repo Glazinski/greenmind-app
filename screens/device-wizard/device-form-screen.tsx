@@ -113,7 +113,7 @@ export const DeviceFormScreen = ({
         required
       />
       <Button onPress={handleSubmit(onSubmit)} mode="contained">
-        {type === 'add' ? 'Add' : 'Edit'}
+        {type === 'add' ? t('add') : t('edit')}
       </Button>
       <ConfirmationDialog
         visible={visible}

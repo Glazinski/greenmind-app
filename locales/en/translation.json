@@ -74,5 +74,6 @@
   "finish": "Finish",
   "could_not_add_device": "Could not add new device",
   "pairing_info": "Enter this code on the website to link your device with the app. Once the setup is complete, click the 'Finish' button.",
-  "could_not_generate_code": "Could not generate code"
+  "could_not_generate_code": "Could not generate code",
+  "next": "Next"
 }

@@ -1,6 +1,7 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { Button } from 'react-native-paper';
+import { useTranslation } from 'react-i18next';
 
 import { usePlantFormStore } from 'store/use-plant-form-store';
 import { useWizard } from 'components/wizard-form/use-wizard';
@@ -10,15 +11,16 @@ interface PlantStepNavigationProps {
 }
 
 export const PlantStepNavigation = ({ onPress }: PlantStepNavigationProps) => {
+  const { t } = useTranslation();
   const { activeStep, stepCount } = useWizard();
   const type = usePlantFormStore((state) => state.stepParams.type);
 
   const getButtonContent = () => {
     if (activeStep === stepCount - 1) {
-      return type === 'add' ? <>Add</> : <>Edit</>;
+      return type === 'add' ? <>{t('add')}</> : <>{t('edit')}</>;
     }
 
-    return <>Go next</>;
+    return <>{t('next')}</>;
   };
 
   return (
