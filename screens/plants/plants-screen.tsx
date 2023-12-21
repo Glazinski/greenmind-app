@@ -57,6 +57,7 @@ export const PlantsScreen = ({
               <Text
                 variant="labelLarge"
                 style={{ color: focused ? primary : onSurfaceVariant }}
+                numberOfLines={1}
               >
                 {route.title}
               </Text>

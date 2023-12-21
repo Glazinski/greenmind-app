@@ -7,7 +7,7 @@
     "preview": {
       "distribution": "internal"
     },
-    "preview2": {
+    "production-apk": {
       "android": {
         "buildType": "apk"
       },
