@@ -11,7 +11,7 @@ export const GrowBoxWaterPlant = () => {
   const {
     colors: { tertiary },
   } = useTheme();
-  const { data: tasks, isLoading } = useDeviceTasks();
+  // const { data: tasks } = useDeviceTasks();
   const waterPlant = useDeviceWater();
 
   const handleWaterPlantPress = () => {
@@ -26,8 +26,8 @@ export const GrowBoxWaterPlant = () => {
           style={[styles.button, { backgroundColor: tertiary }]}
           mode="contained"
           onPress={() => handleWaterPlantPress()}
-          loading={waterPlant.isLoading || isLoading}
-          disabled={waterPlant.isLoading || isLoading}
+          loading={waterPlant.isLoading}
+          disabled={waterPlant.isLoading}
         >
           {t('water_plant')}
         </Button>
