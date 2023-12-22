@@ -11,6 +11,8 @@ import { useTranslation } from 'react-i18next';
 
 import { Layout } from 'components/layout';
 import { RootStackScreenProps } from 'navigation/types';
+import { useDeviceStats } from '../services/device/queries';
+import { FullPageLoadingSpinner } from '../components/ui/full-page-loading-spinner';
 
 const getWeekDays = (lang: string) => {
   const days =
@@ -33,6 +35,7 @@ const getWeekDays = (lang: string) => {
 };
 
 export const StatsScreen = ({ route }: RootStackScreenProps<'Stats'>) => {
+  const { data: deviceStats, isLoading, isError } = useDeviceStats();
   const { t, i18n } = useTranslation();
   const { height } = useWindowDimensions();
   const { typeOfSensor } = route.params;
@@ -42,7 +45,7 @@ export const StatsScreen = ({ route }: RootStackScreenProps<'Stats'>) => {
 
   const data = React.useMemo(
     () =>
-      dailyAvgs.map((dailyAvg, index) => ({
+      deviceStats?.map?.((dailyAvg, index) => ({
         day: index + 1,
         avg: dailyAvg[typeOfSensor],
       })),
@@ -74,10 +77,20 @@ export const StatsScreen = ({ route }: RootStackScreenProps<'Stats'>) => {
     }
   }, [typeOfSensor]);
 
-  const { label, tickSuffix } = getTypeOfSensorData();
+  const renderContent = () => {
+    if (isLoading) return <FullPageLoadingSpinner />;
 
-  return (
-    <Layout>
+    if (isError) {
+      return (
+        <View style={{ padding: 8 }}>
+          <Text variant="titleLarge">{t('stats_error')}</Text>
+        </View>
+      );
+    }
+
+    const { label, tickSuffix } = getTypeOfSensorData();
+
+    return (
       <View style={{ marginLeft: 15 }}>
         <Text variant="titleLarge">
           {t('average_message', {
@@ -105,72 +118,8 @@ export const StatsScreen = ({ route }: RootStackScreenProps<'Stats'>) => {
           />
         </VictoryChart>
       </View>
-    </Layout>
-  );
-};
+    );
+  };
 
-const dailyAvgs = [
-  {
-    id: 1,
-    avg_light: 230.0,
-    device_id: 1,
-    avg_air_hum: 48.0,
-    avg_temp: 19.5,
-    avg_soil_hum: 33.0,
-    date: '2023-11-26',
-  },
-  {
-    id: 2,
-    avg_light: 300.0,
-    device_id: 1,
-    avg_air_hum: 55.0,
-    avg_temp: 22.5,
-    avg_soil_hum: 40.0,
-    date: '2023-11-20',
-  },
-  {
-    id: 3,
-    avg_light: 320.0,
-    device_id: 1,
-    avg_air_hum: 57.0,
-    avg_temp: 23.0,
-    avg_soil_hum: 42.0,
-    date: '2023-11-21',
-  },
-  {
-    id: 4,
-    avg_light: 280.0,
-    device_id: 1,
-    avg_air_hum: 53.0,
-    avg_temp: 21.0,
-    avg_soil_hum: 38.0,
-    date: '2023-11-22',
-  },
-  {
-    id: 5,
-    avg_light: 350.0,
-    device_id: 1,
-    avg_air_hum: 60.0,
-    avg_temp: 24.0,
-    avg_soil_hum: 45.0,
-    date: '2023-11-23',
-  },
-  {
-    id: 6,
-    avg_light: 250.0,
-    device_id: 1,
-    avg_air_hum: 50.0,
-    avg_temp: 20.0,
-    avg_soil_hum: 35.0,
-    date: '2023-11-24',
-  },
-  {
-    id: 7,
-    avg_light: 370.0,
-    device_id: 1,
-    avg_air_hum: 63.0,
-    avg_temp: 25.0,
-    avg_soil_hum: 48.0,
-    date: '2023-11-25',
-  },
-];
+  return <Layout>{renderContent()}</Layout>;
+};

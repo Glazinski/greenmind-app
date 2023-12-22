@@ -78,5 +78,7 @@
   "could_not_add_device": "Dodanie urządzenia nie powiodło się",
   "pairing_info": "Wpisz ten kod na stronie internetowej, aby połączyć Twoje urządzenie z aplikacją. Gdy konfiguracja będzie zakończona, naciśnij przycisk 'Zakończ'.",
   "could_not_generate_code": "Nie udało się wygenerować kodu",
-  "next": "Dalej"
+  "next": "Dalej",
+  "stats_error": "Coś poszło nie tak przy pobieraniu statystyk",
+  "fetching_device_data_error": "Coś poszło nie tak z pobieraniem informacji urządzenia"
 }

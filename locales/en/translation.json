@@ -75,5 +75,7 @@
   "could_not_add_device": "Could not add new device",
   "pairing_info": "Enter this code on the website to link your device with the app. Once the setup is complete, click the 'Finish' button.",
   "could_not_generate_code": "Could not generate code",
-  "next": "Next"
+  "next": "Next",
+  "stats_error": "Something went wrong while retrieving device information",
+  "fetching_device_data_error": "Something went wrong while retrieving device information"
 }
