@@ -2,7 +2,7 @@ import React from 'react';
 
 import { useEditDevice } from 'services/device/mutations';
 import { BackendDevice } from 'schemas/devices';
-import { DEFAULT_IMAGES } from 'constants/default-images';
+import { useDefaultImages } from 'hooks/use-default-images';
 
 import { ImageSelector } from '../image-selector';
 
@@ -16,6 +16,11 @@ export const GrowBoxImageSelector = ({ device }: GrowBoxImageSelectorProps) => {
   const [selectedImage, setSelectedImage] = React.useState<string>(
     image_url ?? ''
   );
+  const { deviceURISource } = useDefaultImages();
+
+  React.useEffect(() => {
+    setSelectedImage(image_url ?? '');
+  }, [image_url]);
 
   const handleOnChange = (image: string): void => {
     setSelectedImage(image);
@@ -29,7 +34,7 @@ export const GrowBoxImageSelector = ({ device }: GrowBoxImageSelectorProps) => {
     <ImageSelector
       value={selectedImage}
       onChange={handleOnChange}
-      defaultImage={DEFAULT_IMAGES.device}
+      defaultImage={deviceURISource}
     />
   );
 };

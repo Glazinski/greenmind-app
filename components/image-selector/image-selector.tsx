@@ -1,15 +1,15 @@
 import React from 'react';
-import { Image, ImageSourcePropType, StyleSheet } from 'react-native';
+import { Image, ImageURISource, StyleSheet } from 'react-native';
 import { Surface, IconButton } from 'react-native-paper';
 import * as ImagePicker from 'expo-image-picker';
 
-import { replaceLocalhostToIP } from 'api';
 import { Camera } from 'components/camera';
+import { FullPageLoadingSpinner } from 'components/ui/full-page-loading-spinner';
 
 interface ImageSelectorProps {
   value: string;
   onChange: (image: string) => void;
-  defaultImage: ImageSourcePropType;
+  defaultImage: ImageURISource;
 }
 
 export const ImageSelector = ({
@@ -17,19 +17,27 @@ export const ImageSelector = ({
   onChange,
   defaultImage,
 }: ImageSelectorProps) => {
-  const [selectedImage, setSelectedImage] = React.useState<string | null>(
-    value || null
+  const [selectedImage, setSelectedImage] = React.useState<string | undefined>(
+    value || defaultImage?.uri || undefined
   );
   const [isCameraOpen, setIsCameraOpen] = React.useState(false);
 
   React.useEffect(() => {
     if (value) {
       setSelectedImage(value);
+    } else if (defaultImage) {
+      setSelectedImage(defaultImage.uri ?? '');
     }
-  }, [value]);
+  }, [value, defaultImage]);
+
+  React.useEffect(() => {
+    if (selectedImage) {
+      onChange?.(selectedImage);
+    }
+  }, [selectedImage]);
 
   const handleChange = (image: string) => {
-    onChange?.(image);
+    // onChange?.(image);
     setSelectedImage(image);
   };
 
@@ -44,33 +52,43 @@ export const ImageSelector = ({
     }
   };
 
-  const getSourceImage = React.useCallback(() => {
-    if (selectedImage) return { uri: replaceLocalhostToIP(selectedImage) };
+  function renderContent() {
+    if (!selectedImage) {
+      return <FullPageLoadingSpinner />;
+    }
 
-    // return require('../../assets/images/icon.png');
-    return defaultImage;
-  }, [selectedImage]);
+    return (
+      <>
+        <Image
+          style={styles.image}
+          source={{
+            uri: selectedImage,
+          }}
+        />
+        <IconButton
+          style={styles.editButton}
+          icon="pencil"
+          mode="contained"
+          onPress={() => pickImageAsync()}
+        />
+        <IconButton
+          style={styles.cameraButton}
+          icon="camera"
+          mode="contained"
+          onPress={() => setIsCameraOpen(true)}
+        />
+        <Camera
+          isCameraOpen={isCameraOpen}
+          onDismiss={() => setIsCameraOpen(false)}
+          onChange={(image) => handleChange(image)}
+        />
+      </>
+    );
+  }
 
   return (
     <Surface style={styles.container} mode="flat">
-      <Image style={styles.image} source={getSourceImage()} />
-      <IconButton
-        style={styles.editButton}
-        icon="pencil"
-        mode="contained"
-        onPress={() => pickImageAsync()}
-      />
-      <IconButton
-        style={styles.cameraButton}
-        icon="camera"
-        mode="contained"
-        onPress={() => setIsCameraOpen(true)}
-      />
-      <Camera
-        isCameraOpen={isCameraOpen}
-        onDismiss={() => setIsCameraOpen(false)}
-        onChange={(image) => handleChange(image)}
-      />
+      {renderContent()}
     </Surface>
   );
 };

@@ -40,4 +40,4 @@ export function setAuthToken(token: string | null) {
 // export const replaceLocalhostToIP = (str: string) =>
 //   str.replace('localhost', Constants.expoConfig?.extra?.myIpAddress);
 
-export const replaceLocalhostToIP = (str: string) => str;
+export const replaceLocalhostToIP = (str: any) => str;

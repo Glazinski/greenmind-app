@@ -23,8 +23,8 @@ export const PlantIdealConditionsScreen = () => {
     >();
 
   const onSubmit = (data: PlantIdealConditionsInputs) => {
-    setStepData(1, data);
     nextStep();
+    setStepData(1, data);
     navigation.navigate('PlantOtherInfo');
   };
 

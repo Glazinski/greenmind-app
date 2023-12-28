@@ -15,7 +15,7 @@ export const GrowBoxDeviceInformation = () => {
   }
 
   if (isError) {
-    return <Text>{t('something_went_wrong')} with fetching device data</Text>;
+    return <Text>{t('fetching_device_data_error')}</Text>;
   }
 
   if (!device) {

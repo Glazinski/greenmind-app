@@ -15,7 +15,7 @@ import { useTranslation } from 'react-i18next';
 import { BackendDevice } from 'schemas/devices';
 import { HomeDrawerScreenProps } from 'navigation/types';
 import { getImageUrl } from 'services/get-image-url';
-import { DEFAULT_IMAGES } from 'constants/default-images';
+import { useDefaultImages } from '../../hooks/use-default-images';
 
 interface DeviceItemProps {
   device: BackendDevice;
@@ -39,6 +39,7 @@ export const DeviceItem = ({
     colors: { primaryContainer, secondaryContainer },
   } = useTheme();
   const [visible, setVisible] = React.useState(false);
+  const { deviceURISource } = useDefaultImages();
 
   const openMenu = () => setVisible(true);
 
@@ -52,7 +53,7 @@ export const DeviceItem = ({
           { backgroundColor: isActive ? primaryContainer : secondaryContainer },
         ]}
       >
-        <Avatar.Image source={getImageUrl(image_url, DEFAULT_IMAGES.device)} />
+        <Avatar.Image source={getImageUrl(image_url, deviceURISource)} />
         <View style={styles.deviceName}>
           <Text variant="titleMedium">{name}</Text>
         </View>

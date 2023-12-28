@@ -15,7 +15,7 @@ import { BackendPlant, PlantBasicInfoInputs } from 'schemas/plants';
 import { usePlantFormStore } from 'store/use-plant-form-store';
 import { usePlant } from 'services/plants/queries';
 import { usePlantForm } from 'hooks/use-plant-form';
-import { DEFAULT_IMAGES } from '../../constants/default-images';
+import { useDefaultImages } from 'hooks/use-default-images';
 
 export const PlantBasicInfoScreen = ({
   route,
@@ -36,6 +36,7 @@ export const PlantBasicInfoScreen = ({
     >();
   const { isError } = usePlant(plantId, onSuccess);
   const isAssigned = stepData?.status === 'assigned';
+  const { plantURISource } = useDefaultImages();
 
   React.useEffect(() => {
     setStepParams({
@@ -97,8 +98,8 @@ export const PlantBasicInfoScreen = ({
   }
 
   const onSubmit = (data: PlantBasicInfoInputs) => {
-    setStepData(0, data);
     nextStep();
+    setStepData(0, data);
     navigation.navigate('PlantIdealConditions');
   };
 
@@ -120,7 +121,7 @@ export const PlantBasicInfoScreen = ({
               <ImageSelector
                 onChange={field.onChange}
                 value={field.value}
-                defaultImage={DEFAULT_IMAGES.plant}
+                defaultImage={plantURISource}
               />
             )}
             name="image"

@@ -13,6 +13,7 @@ import { PlantDetailsInfoSection } from './plant-details-info-section';
 import { PlantDetailsInfoRow } from './plant-details-info-row';
 import { PlantDetailsInfoMaxMinRow } from './plant-details-info-max-min-row';
 import { PlantActions } from '../plant-actions';
+import { useDefaultImages } from '../../../hooks/use-default-images';
 
 interface PlantDetailsProps {
   plant: BackendPlant;
@@ -41,6 +42,7 @@ export const PlantDetails = ({ plant }: PlantDetailsProps) => {
     blooming_time,
     common_diseases,
   } = plant;
+  const { plantURISource } = useDefaultImages();
 
   React.useEffect(() => {
     navigation.setOptions({
@@ -59,10 +61,7 @@ export const PlantDetails = ({ plant }: PlantDetailsProps) => {
     <Layout as={ScrollView}>
       <Image
         style={styles.imageContainer}
-        source={getImageUrl(
-          attached_image_url ?? image_url,
-          DEFAULT_IMAGES.plant
-        )}
+        source={getImageUrl(attached_image_url ?? image_url, plantURISource)}
         resizeMode="cover"
       />
       <View style={styles.dataContainer}>

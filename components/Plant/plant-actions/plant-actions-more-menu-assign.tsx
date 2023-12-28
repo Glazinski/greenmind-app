@@ -18,6 +18,7 @@ import { useDevices } from 'services/device/queries';
 import { useAssignedPlants } from 'services/plants/queries';
 import { getImageUrl } from 'services/get-image-url';
 import { DEFAULT_IMAGES } from 'constants/default-images';
+import { useDefaultImages } from '../../../hooks/use-default-images';
 
 interface PlantActionsMoreMenuAssignProps {
   plant: BackendPlant;
@@ -46,6 +47,7 @@ export const PlantActionsMoreMenuAssign = ({
   const [visible, setVisible] = React.useState(false);
   const isLoading = isDevicesLoading || isAssignedPlantsLoading;
   const isError = isDevicesError || isAssignedPlantsError;
+  const { deviceURISource } = useDefaultImages();
 
   const showDialog = () => setVisible(true);
 
@@ -58,8 +60,8 @@ export const PlantActionsMoreMenuAssign = ({
     showDialog();
   };
 
-  const handleDeviceItemPress = async (deviceId: number) => {
-    await assignPlantToDevice({ plant, deviceId });
+  const handleDeviceItemPress = (deviceId: number) => {
+    assignPlantToDevice({ plant, deviceId });
   };
 
   const hasAllDevicesAssignedPlant = (): boolean =>
@@ -97,7 +99,7 @@ export const PlantActionsMoreMenuAssign = ({
                 left={() => (
                   <Avatar.Image
                     size={30}
-                    source={getImageUrl(image_url, DEFAULT_IMAGES.device)}
+                    source={getImageUrl(image_url, deviceURISource)}
                   />
                 )}
               />

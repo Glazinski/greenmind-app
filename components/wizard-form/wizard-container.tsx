@@ -30,18 +30,6 @@ export const WizardContainer = (props: WizardContainerProps) => {
   const prevStep = () => setActiveStep(Math.max(activeStep - 1, 0));
 
   const resetSteps = () => setActiveStep(0);
-  // const nextStep = React.useCallback(
-  //   () => setActiveStep(Math.min(activeStep + 1, stepCount)),
-  //   [activeStep, stepCount]
-  // );
-  //
-  // const prevStep = () =>
-  //   React.useCallback(
-  //     () => setActiveStep(Math.max(activeStep - 1, 0)),
-  //     [activeStep, stepCount]
-  //   );
-  //
-  // const resetSteps = React.useCallback(() => setActiveStep(0), []);
 
   return (
     <WizardContext.Provider

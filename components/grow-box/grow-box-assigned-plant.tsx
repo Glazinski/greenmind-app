@@ -14,6 +14,7 @@ import { HomeDrawerScreenProps } from 'navigation/types';
 import { getImageUrl } from 'services/get-image-url';
 import { usePlantsAssignedToDevice } from 'services/plants/queries';
 import { DEFAULT_IMAGES } from 'constants/default-images';
+import { useDefaultImages } from '../../hooks/use-default-images';
 
 export const GrowBoxAssignedPlant = () => {
   const { t } = useTranslation();
@@ -29,6 +30,7 @@ export const GrowBoxAssignedPlant = () => {
   } = usePlantsAssignedToDevice();
   const assignedPlant = assignedPlants?.[0];
   const image = assignedPlant?.attached_image_url ?? assignedPlant?.image_url;
+  const { plantURISource } = useDefaultImages();
 
   const renderActivePlantName = (): string => {
     return assignedPlant?.name ?? t('no_plants_assigned');
@@ -71,7 +73,7 @@ export const GrowBoxAssignedPlant = () => {
           <View style={styles.imageContainer}>
             <Avatar.Image
               size={60}
-              source={getImageUrl(image, DEFAULT_IMAGES.plant)}
+              source={getImageUrl(image, plantURISource)}
             />
           </View>
         )}
