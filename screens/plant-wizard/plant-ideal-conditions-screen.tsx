@@ -16,7 +16,13 @@ export const PlantIdealConditionsScreen = () => {
   const { t } = useTranslation();
   const { setStepData } = usePlantFormStore();
   const { nextStep } = useWizard();
-  const { control, handleSubmit } = usePlantForm<PlantIdealConditionsInputs>();
+  const {
+    control,
+    handleSubmit,
+    watch,
+    setError,
+    formState: { errors, isSubmitted },
+  } = usePlantForm<PlantIdealConditionsInputs>();
   const navigation =
     useNavigation<
       PlantWizardStackScreenProps<'PlantBasicInfo'>['navigation']
@@ -31,33 +37,50 @@ export const PlantIdealConditionsScreen = () => {
   const renderMinMaxRow = (
     label: string,
     fieldName: 'light' | 'temp' | 'soil_humidity' | 'air_humidity'
-  ) => (
-    <>
-      <Text variant="titleMedium">{label}</Text>
-      <View style={styles.minMaxFields}>
-        <View style={styles.minMaxField}>
-          <TextField
-            mode="outlined"
-            label="min"
-            name={`${fieldName}_min`}
-            control={control}
-            keyboardType="numeric"
-            required
-          />
+  ) => {
+    const minFieldName = `${fieldName}_min` as const;
+    const maxFieldName = `${fieldName}_max` as const;
+    const minValue = watch(minFieldName);
+    const maxValue = watch(maxFieldName);
+
+    if (
+      isSubmitted &&
+      parseFloat(minValue) > parseFloat(maxValue) &&
+      !errors[minFieldName]?.message
+    ) {
+      setError(minFieldName, {
+        message: t('min_must_be_less_than_max') as string,
+      });
+    }
+
+    return (
+      <>
+        <Text variant="titleMedium">{label}</Text>
+        <View style={styles.minMaxFields}>
+          <View style={styles.minMaxField}>
+            <TextField
+              mode="outlined"
+              label="min"
+              name={minFieldName}
+              control={control}
+              required
+              keyboardType="numeric"
+            />
+          </View>
+          <View style={styles.minMaxField}>
+            <TextField
+              mode="outlined"
+              label="max"
+              name={maxFieldName}
+              control={control}
+              required
+              keyboardType="numeric"
+            />
+          </View>
         </View>
-        <View style={styles.minMaxField}>
-          <TextField
-            mode="outlined"
-            label="max"
-            name={`${fieldName}_max`}
-            control={control}
-            required
-            keyboardType="numeric"
-          />
-        </View>
-      </View>
-    </>
-  );
+      </>
+    );
+  };
 
   return (
     <PlantStep>

@@ -59,7 +59,7 @@
   "password_error": "The password must be at least 8 characters long",
   "password_match_error": "Passwords don't match",
   "required_error": "Field is required",
-  "not_number_error": "The field accepts only numerical values",
+  "not_number_error": "Enter a number from 0 to 100 (up to 2 decimal places)",
   "use_this_device": "Use this device",
   "stop_using_this_device": "Don't use this device",
   "fetching_assigned_plants_error": "Something went wrong with retrieving the assigned plants",
@@ -77,5 +77,6 @@
   "could_not_generate_code": "Could not generate code",
   "next": "Next",
   "stats_error": "Something went wrong while retrieving device information",
-  "fetching_device_data_error": "Something went wrong while retrieving device information"
+  "fetching_device_data_error": "Something went wrong while retrieving device information",
+  "min_must_be_less_than_max": "The min value must be less than the max value"
 }
