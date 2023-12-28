@@ -14,6 +14,7 @@ import { DeviceWizardStackScreenProps } from 'navigation/types';
 import { useDevice } from 'services/device/queries';
 import { useEditDevice } from 'services/device/mutations';
 import { ConfirmationDialog } from 'components/ui/confirmation-dialog';
+import { DEFAULT_IMAGES } from 'constants/default-images';
 
 export const DeviceFormScreen = ({
   navigation,
@@ -101,7 +102,11 @@ export const DeviceFormScreen = ({
         name="image"
         control={control}
         render={({ field }) => (
-          <ImageSelector value={field.value} onChange={field.onChange} />
+          <ImageSelector
+            value={field.value}
+            onChange={field.onChange}
+            defaultImage={DEFAULT_IMAGES.device}
+          />
         )}
       />
       <TextField

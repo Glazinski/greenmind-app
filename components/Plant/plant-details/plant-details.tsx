@@ -7,6 +7,7 @@ import { BackendPlant } from 'schemas/plants';
 import { Layout } from 'components/layout';
 import { RootStackScreenProps } from 'navigation/types';
 import { getImageUrl } from 'services/get-image-url';
+import { DEFAULT_IMAGES } from 'constants/default-images';
 
 import { PlantDetailsInfoSection } from './plant-details-info-section';
 import { PlantDetailsInfoRow } from './plant-details-info-row';
@@ -58,7 +59,10 @@ export const PlantDetails = ({ plant }: PlantDetailsProps) => {
     <Layout as={ScrollView}>
       <Image
         style={styles.imageContainer}
-        source={getImageUrl(attached_image_url ?? image_url)}
+        source={getImageUrl(
+          attached_image_url ?? image_url,
+          DEFAULT_IMAGES.plant
+        )}
         resizeMode="cover"
       />
       <View style={styles.dataContainer}>

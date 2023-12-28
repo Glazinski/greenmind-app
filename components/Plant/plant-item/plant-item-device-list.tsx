@@ -4,6 +4,7 @@ import { Chip, Avatar } from 'react-native-paper';
 import { useDevices } from 'services/device/queries';
 import { BackendPlant } from 'schemas/plants';
 import { getImageUrl } from 'services/get-image-url';
+import { DEFAULT_IMAGES } from 'constants/default-images';
 
 interface PlantItemDeviceListProps {
   plant: BackendPlant;
@@ -24,7 +25,10 @@ export const PlantItemDeviceList = ({ plant }: PlantItemDeviceListProps) => {
           mode="outlined"
           compact={true}
           avatar={
-            <Avatar.Image size={24} source={getImageUrl(item.image_url)} />
+            <Avatar.Image
+              size={24}
+              source={getImageUrl(item.image_url, DEFAULT_IMAGES.device)}
+            />
           }
         >
           {item.name}

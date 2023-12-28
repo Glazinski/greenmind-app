@@ -17,6 +17,7 @@ import { useAssignPlantToDevice } from 'services/plants/mutations';
 import { useDevices } from 'services/device/queries';
 import { useAssignedPlants } from 'services/plants/queries';
 import { getImageUrl } from 'services/get-image-url';
+import { DEFAULT_IMAGES } from 'constants/default-images';
 
 interface PlantActionsMoreMenuAssignProps {
   plant: BackendPlant;
@@ -94,7 +95,10 @@ export const PlantActionsMoreMenuAssign = ({
                 title={name}
                 onPress={() => handleDeviceItemPress(id)}
                 left={() => (
-                  <Avatar.Image size={30} source={getImageUrl(image_url)} />
+                  <Avatar.Image
+                    size={30}
+                    source={getImageUrl(image_url, DEFAULT_IMAGES.device)}
+                  />
                 )}
               />
             ))}

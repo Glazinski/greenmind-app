@@ -15,6 +15,7 @@ import { useTranslation } from 'react-i18next';
 import { BackendDevice } from 'schemas/devices';
 import { HomeDrawerScreenProps } from 'navigation/types';
 import { getImageUrl } from 'services/get-image-url';
+import { DEFAULT_IMAGES } from 'constants/default-images';
 
 interface DeviceItemProps {
   device: BackendDevice;
@@ -51,7 +52,7 @@ export const DeviceItem = ({
           { backgroundColor: isActive ? primaryContainer : secondaryContainer },
         ]}
       >
-        <Avatar.Image source={getImageUrl(image_url)} />
+        <Avatar.Image source={getImageUrl(image_url, DEFAULT_IMAGES.device)} />
         <View style={styles.deviceName}>
           <Text variant="titleMedium">{name}</Text>
         </View>

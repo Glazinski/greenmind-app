@@ -15,6 +15,7 @@ import { BackendPlant, PlantBasicInfoInputs } from 'schemas/plants';
 import { usePlantFormStore } from 'store/use-plant-form-store';
 import { usePlant } from 'services/plants/queries';
 import { usePlantForm } from 'hooks/use-plant-form';
+import { DEFAULT_IMAGES } from '../../constants/default-images';
 
 export const PlantBasicInfoScreen = ({
   route,
@@ -116,7 +117,11 @@ export const PlantBasicInfoScreen = ({
         <View style={styles.imageSelector}>
           <Controller
             render={({ field }) => (
-              <ImageSelector onChange={field.onChange} value={field.value} />
+              <ImageSelector
+                onChange={field.onChange}
+                value={field.value}
+                defaultImage={DEFAULT_IMAGES.plant}
+              />
             )}
             name="image"
             control={control}

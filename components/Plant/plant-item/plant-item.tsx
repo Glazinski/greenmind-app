@@ -13,6 +13,7 @@ import { useTranslation } from 'react-i18next';
 import { BackendPlant } from 'schemas/plants';
 import { HomeDrawerScreenProps } from 'navigation/types';
 import { getImageUrl } from 'services/get-image-url';
+import { DEFAULT_IMAGES } from 'constants/default-images';
 
 import { PlantItemDeviceList } from './plant-item-device-list';
 import { PlantActions } from '../plant-actions';
@@ -68,7 +69,10 @@ export const PlantItem = ({ plant }: PlantItemProps) => {
         <View style={styles.itemContent}>
           <Avatar.Image
             size={83}
-            source={getImageUrl(attached_image_url ?? image_url)}
+            source={getImageUrl(
+              attached_image_url ?? image_url,
+              DEFAULT_IMAGES.plant
+            )}
           />
           <View style={styles.itemInformation}>
             <Text variant="titleMedium">{name}</Text>
