@@ -2,6 +2,7 @@ import React from 'react';
 import { ScrollView } from 'react-native';
 
 import { Layout } from 'components/layout';
+
 import { PlantStepTitle } from './plant-step-title';
 import { PlantStepBody } from './plant-step-body';
 import { PlantStepNavigation } from './plant-step-navigation';

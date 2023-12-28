@@ -17,6 +17,7 @@ import { DEFAULT_IMAGES } from 'constants/default-images';
 
 import { PlantItemDeviceList } from './plant-item-device-list';
 import { PlantActions } from '../plant-actions';
+import { useDefaultImages } from '../../../hooks/use-default-images';
 
 interface PlantItemProps {
   plant: BackendPlant;
@@ -44,6 +45,7 @@ export const PlantItem = ({ plant }: PlantItemProps) => {
     air_humidity_max,
     status,
   } = plant;
+  const { plantURISource } = useDefaultImages();
 
   const renderMinMaxLabel = (
     label: string,
@@ -71,7 +73,7 @@ export const PlantItem = ({ plant }: PlantItemProps) => {
             size={83}
             source={getImageUrl(
               attached_image_url ?? image_url,
-              DEFAULT_IMAGES.plant
+              plantURISource
             )}
           />
           <View style={styles.itemInformation}>

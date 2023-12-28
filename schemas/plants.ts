@@ -14,7 +14,7 @@ export const PlantBasicInfoSchema = z.object({
 });
 
 const MinMaxSchema = RequiredStringSchema.refine(
-  (value) => !isNaN(parseFloat(value)),
+  (value) => /^(100(\.00?)?|(\d{1,2})(\.\d{1,2})?)$/.test(value),
   {
     message: i18n.t('not_number_error') as string,
   }

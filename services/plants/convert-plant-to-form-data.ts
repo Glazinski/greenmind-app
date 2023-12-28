@@ -16,6 +16,7 @@ export const convertPlantToFormData = (
     }
   });
 
+  console.log('convertPlantToFormData', plant.image);
   // TODO: Implement for image_url
   if (plant?.image?.length > 0) {
     if (plant.image.includes('file://')) {

@@ -1,6 +1,6 @@
 import React from 'react';
 import { BackHandler } from 'react-native';
-import { useFocusEffect } from '@react-navigation/native';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import { DeepPartial, FieldValues, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { ZodType } from 'zod';
@@ -28,7 +28,6 @@ export const usePlantForm = <TFormValues extends FieldValues>() => {
   const { stepsData, setStepData } = usePlantFormStore();
   const { activeStep, prevStep } = useWizard();
   const stepData = stepsData[activeStep];
-
   const methods = useForm<TFormValues>({
     defaultValues: stepData as unknown as DeepPartial<TFormValues>,
     resolver: zodResolver(getPlantSchema(activeStep) as ZodType),

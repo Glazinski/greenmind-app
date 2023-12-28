@@ -14,7 +14,7 @@ import { DeviceWizardStackScreenProps } from 'navigation/types';
 import { useDevice } from 'services/device/queries';
 import { useEditDevice } from 'services/device/mutations';
 import { ConfirmationDialog } from 'components/ui/confirmation-dialog';
-import { DEFAULT_IMAGES } from 'constants/default-images';
+import { useDefaultImages } from 'hooks/use-default-images';
 
 export const DeviceFormScreen = ({
   navigation,
@@ -40,6 +40,7 @@ export const DeviceFormScreen = ({
     defaultValues: formData,
     resolver: zodResolver(DeviceInputScheme),
   });
+  const { deviceURISource } = useDefaultImages();
 
   React.useEffect(() => {
     return () => {
@@ -105,7 +106,7 @@ export const DeviceFormScreen = ({
           <ImageSelector
             value={field.value}
             onChange={field.onChange}
-            defaultImage={DEFAULT_IMAGES.device}
+            defaultImage={deviceURISource}
           />
         )}
       />

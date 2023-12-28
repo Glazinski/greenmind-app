@@ -5,6 +5,7 @@ import { useDevices } from 'services/device/queries';
 import { BackendPlant } from 'schemas/plants';
 import { getImageUrl } from 'services/get-image-url';
 import { DEFAULT_IMAGES } from 'constants/default-images';
+import { useDefaultImages } from '../../../hooks/use-default-images';
 
 interface PlantItemDeviceListProps {
   plant: BackendPlant;
@@ -12,6 +13,7 @@ interface PlantItemDeviceListProps {
 
 export const PlantItemDeviceList = ({ plant }: PlantItemDeviceListProps) => {
   const { data: devices, isLoading, isError } = useDevices();
+  const { deviceURISource } = useDefaultImages();
 
   if (isLoading || isError || !devices || devices?.length === 0) return null;
 
@@ -27,7 +29,7 @@ export const PlantItemDeviceList = ({ plant }: PlantItemDeviceListProps) => {
           avatar={
             <Avatar.Image
               size={24}
-              source={getImageUrl(item.image_url, DEFAULT_IMAGES.device)}
+              source={getImageUrl(item.image_url, deviceURISource)}
             />
           }
         >
