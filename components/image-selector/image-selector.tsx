@@ -1,5 +1,5 @@
 import React from 'react';
-import { Image, StyleSheet } from 'react-native';
+import { Image, ImageSourcePropType, StyleSheet } from 'react-native';
 import { Surface, IconButton } from 'react-native-paper';
 import * as ImagePicker from 'expo-image-picker';
 
@@ -9,9 +9,14 @@ import { Camera } from 'components/camera';
 interface ImageSelectorProps {
   value: string;
   onChange: (image: string) => void;
+  defaultImage: ImageSourcePropType;
 }
 
-export const ImageSelector = ({ value, onChange }: ImageSelectorProps) => {
+export const ImageSelector = ({
+  value,
+  onChange,
+  defaultImage,
+}: ImageSelectorProps) => {
   const [selectedImage, setSelectedImage] = React.useState<string | null>(
     value || null
   );
@@ -42,7 +47,8 @@ export const ImageSelector = ({ value, onChange }: ImageSelectorProps) => {
   const getSourceImage = React.useCallback(() => {
     if (selectedImage) return { uri: replaceLocalhostToIP(selectedImage) };
 
-    return require('../../assets/images/icon.png');
+    // return require('../../assets/images/icon.png');
+    return defaultImage;
   }, [selectedImage]);
 
   return (

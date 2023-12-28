@@ -13,6 +13,7 @@ import { useNavigation } from '@react-navigation/native';
 import { HomeDrawerScreenProps } from 'navigation/types';
 import { getImageUrl } from 'services/get-image-url';
 import { usePlantsAssignedToDevice } from 'services/plants/queries';
+import { DEFAULT_IMAGES } from 'constants/default-images';
 
 export const GrowBoxAssignedPlant = () => {
   const { t } = useTranslation();
@@ -68,7 +69,10 @@ export const GrowBoxAssignedPlant = () => {
       >
         {assignedPlant && image && (
           <View style={styles.imageContainer}>
-            <Avatar.Image size={60} source={getImageUrl(image)} />
+            <Avatar.Image
+              size={60}
+              source={getImageUrl(image, DEFAULT_IMAGES.plant)}
+            />
           </View>
         )}
         <View>

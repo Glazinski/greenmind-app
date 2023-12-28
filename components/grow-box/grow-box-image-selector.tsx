@@ -2,6 +2,7 @@ import React from 'react';
 
 import { useEditDevice } from 'services/device/mutations';
 import { BackendDevice } from 'schemas/devices';
+import { DEFAULT_IMAGES } from 'constants/default-images';
 
 import { ImageSelector } from '../image-selector';
 
@@ -16,13 +17,19 @@ export const GrowBoxImageSelector = ({ device }: GrowBoxImageSelectorProps) => {
     image_url ?? ''
   );
 
-  const handleOnChange = async (image: string) => {
+  const handleOnChange = (image: string): void => {
     setSelectedImage(image);
-    await editDevice({
+    editDevice({
       formDevice: { image, name },
       deviceId: id,
     });
   };
 
-  return <ImageSelector value={selectedImage} onChange={handleOnChange} />;
+  return (
+    <ImageSelector
+      value={selectedImage}
+      onChange={handleOnChange}
+      defaultImage={DEFAULT_IMAGES.device}
+    />
+  );
 };
