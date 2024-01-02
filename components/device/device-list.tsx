@@ -20,6 +20,7 @@ export const DeviceList = ({ devices, headerComponent }: DeviceListProps) => {
   const [refreshing, setRefreshing] = React.useState(false);
   const deviceId = useActiveDeviceStore((state) => state.deviceId);
   const setDeviceId = useActiveDeviceStore((state) => state.setDeviceId);
+  const setDeviceUUID = useActiveDeviceStore((state) => state.setDeviceUUID);
   const [visible, setVisible] = React.useState(false);
   const [deviceIdToDelete, setDeviceIdToDelete] = React.useState(-1);
   const { mutate: deleteDevice, isLoading } = useDeleteDevice(
@@ -37,12 +38,14 @@ export const DeviceList = ({ devices, headerComponent }: DeviceListProps) => {
 
   const hideDialog = () => setVisible(false);
 
-  const onUseThisDeviceClick = (id: number) => {
+  const onUseThisDeviceClick = (id: number, uuid: string) => {
     setDeviceId(id);
+    setDeviceUUID(uuid);
   };
 
   const onStopUseThisDeviceClick = () => {
     setDeviceId(null);
+    setDeviceUUID(null);
   };
 
   const onDeleteClick = (id: number) => {
@@ -65,7 +68,9 @@ export const DeviceList = ({ devices, headerComponent }: DeviceListProps) => {
         renderItem={({ item }) => (
           <DeviceItem
             device={item}
-            onUseThisDeviceClick={() => onUseThisDeviceClick(item.id)}
+            onUseThisDeviceClick={() =>
+              onUseThisDeviceClick(item.id, item.uuid)
+            }
             onStopUseThisDeviceClick={onStopUseThisDeviceClick}
             onDeleteClick={() => onDeleteClick(item.id)}
             isActive={item.id === deviceId}

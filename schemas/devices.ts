@@ -9,6 +9,7 @@ export const DeviceInputScheme = z.object({
 
 export const DeviceBackendSchema = z.object({
   id: z.number(),
+  uuid: z.string(),
   name: z.string(),
   user: z.number(),
   image_url: z.string().or(z.null()),

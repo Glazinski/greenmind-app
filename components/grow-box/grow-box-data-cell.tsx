@@ -125,6 +125,7 @@ const styles = StyleSheet.create({
   dataContainer: {
     padding: 10,
     width: '75%',
+    justifyContent: 'space-between',
   },
   statsIcon: {
     marginTop: 'auto',

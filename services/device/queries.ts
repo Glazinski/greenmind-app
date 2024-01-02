@@ -35,12 +35,12 @@ export const useAssignedDevice = () => {
 };
 
 export const useDeviceLogs = () => {
-  const { deviceId } = useActiveDeviceStore();
+  const { deviceId, deviceUUID } = useActiveDeviceStore();
 
   return useQuery({
     queryFn: () =>
       api
-        .get<BackendDeviceLog[]>(`/python_microservice/data/${deviceId}`)
+        .get<BackendDeviceLog[]>(`/python_microservice/data/${deviceUUID}`)
         .then((res) => res.data),
     queryKey: ['devices', deviceId, 'data'],
     refetchInterval: 1000 * 30,
@@ -49,13 +49,13 @@ export const useDeviceLogs = () => {
 };
 
 export const useDeviceTasks = () => {
-  const { deviceId } = useActiveDeviceStore();
+  const { deviceId, deviceUUID } = useActiveDeviceStore();
 
   return useQuery({
     queryFn: () =>
       api
         .get<BackendTask[]>(
-          `/python_microservice/data/get_device_tasks/${deviceId}`
+          `/python_microservice/data/get_device_tasks/${deviceUUID}`
         )
         .then((res) => res.data),
     queryKey: ['devices', deviceId, 'tasks'],
@@ -64,13 +64,13 @@ export const useDeviceTasks = () => {
 };
 
 export const useDeviceStats = () => {
-  const { deviceId } = useActiveDeviceStore();
+  const { deviceId, deviceUUID } = useActiveDeviceStore();
 
   return useQuery({
     queryFn: () =>
       api
         .get<BackendDeviceStat[]>(
-          `/python_microservice/data/get_device_data_history/${deviceId}`
+          `/python_microservice/data/get_device_data_history/${deviceUUID}`
         )
         .then((res) => res.data),
     queryKey: ['devices', deviceId, 'stats'],

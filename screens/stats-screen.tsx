@@ -11,16 +11,16 @@ import { useTranslation } from 'react-i18next';
 
 import { Layout } from 'components/layout';
 import { RootStackScreenProps } from 'navigation/types';
-import { useDeviceStats } from '../services/device/queries';
-import { FullPageLoadingSpinner } from '../components/ui/full-page-loading-spinner';
+import { useDeviceStats } from 'services/device/queries';
+import { FullPageLoadingSpinner } from 'components/ui/full-page-loading-spinner';
 
-const getWeekDays = (lang: string) => {
+const getWeekDays = (lang: string): string[] => {
   const days =
     lang === 'en'
       ? ['S', 'M', 'T', 'W', 'T', 'F', 'S']
       : ['N', 'P', 'W', 'Ś', 'C', 'P', 'S'];
   const today = new Date();
-  let weekDays = [];
+  let weekDays: string[] = [];
 
   for (let i = 6; i >= 0; i--) {
     const day = new Date(
@@ -43,14 +43,37 @@ export const StatsScreen = ({ route }: RootStackScreenProps<'Stats'>) => {
     colors: { primary },
   } = useTheme();
 
-  const data = React.useMemo(
-    () =>
-      deviceStats?.map?.((dailyAvg, index) => ({
-        day: index + 1,
-        avg: dailyAvg[typeOfSensor],
-      })),
-    [typeOfSensor]
-  );
+  const data = React.useMemo(() => {
+    const data = [];
+    const totalDays = 7;
+    const existingLength = deviceStats?.length ?? 0;
+    const sortedDeviceStats = deviceStats?.sort((a, b) => {
+      const dateA = new Date(a.date);
+      const dateB = new Date(b.date);
+
+      return dateB.getTime() - dateA.getTime();
+    });
+
+    for (let i = 0; i < totalDays - existingLength; i++) {
+      data.push({
+        avg_temp: null,
+        avg_air_hum: null,
+        date: null,
+        avg_soil_hum: null,
+        daily_averages_id: null,
+        avg_light: null,
+      });
+    }
+
+    for (let i = 0; i < existingLength; i++) {
+      data.push(sortedDeviceStats?.[i]);
+    }
+
+    return data.map((dailyAvg, index) => ({
+      day: index + 1,
+      avg: dailyAvg?.[typeOfSensor],
+    }));
+  }, [deviceStats, typeOfSensor]);
 
   const getTypeOfSensorData = React.useCallback(() => {
     switch (typeOfSensor) {
@@ -66,7 +89,7 @@ export const StatsScreen = ({ route }: RootStackScreenProps<'Stats'>) => {
         };
       case 'avg_temp':
         return {
-          label: t('temperature'),
+          label: t('temperature').toLowerCase(),
           tickSuffix: '°C',
         };
       case 'avg_light':

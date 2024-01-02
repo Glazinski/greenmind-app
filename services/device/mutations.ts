@@ -8,11 +8,11 @@ import { convertDeviceToFormData } from './convert-device-to-form-data';
 import { useActiveDeviceStore } from '../../store/use-active-device-store';
 
 export const useDeviceWater = () => {
-  const { deviceId } = useActiveDeviceStore();
+  const { deviceUUID } = useActiveDeviceStore();
 
   return useMutation({
     mutationFn: () =>
-      api.post(`/python_microservice/data/add_device_task/${deviceId}`, {
+      api.post(`/python_microservice/data/add_device_task/${deviceUUID}`, {
         task_number: 0,
         status: 0,
       }),
