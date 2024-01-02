@@ -84,5 +84,6 @@ export const useDeviceStats = () => {
           ...rest,
         })
       ),
+    enabled: typeof deviceId === 'number',
   });
 };

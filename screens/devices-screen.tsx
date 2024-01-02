@@ -11,15 +11,8 @@ import { HomeDrawerScreenProps } from 'navigation/types';
 export const DevicesScreen = ({
   navigation,
 }: HomeDrawerScreenProps<'Devices'>): React.JSX.Element => {
-  const [refreshing, setRefreshing] = React.useState(false);
   const { t } = useTranslation();
   const { data: devices, isLoading, isError, refetch } = useDevices();
-
-  const handleDevicesRefresh = async () => {
-    setRefreshing(true);
-    await refetch();
-    setRefreshing(false);
-  };
 
   const renderContent = () => {
     if (isLoading) {

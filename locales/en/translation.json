@@ -81,5 +81,6 @@
   "next": "Next",
   "stats_error": "Something went wrong while retrieving device information",
   "fetching_device_data_error": "Something went wrong while retrieving device information",
-  "min_must_be_less_than_max": "The min value must be less than the max value"
+  "min_must_be_less_than_max": "The min value must be less than the max value",
+  "watering_in_queue": "Watering is already in the queue"
 }
