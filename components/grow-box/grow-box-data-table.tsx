@@ -2,14 +2,16 @@ import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import { ActivityIndicator, Portal, Snackbar, Text } from 'react-native-paper';
 import { useTranslation } from 'react-i18next';
+import { useNavigation } from '@react-navigation/native';
 
 import { usePlantsAssignedToDevice } from 'services/plants/queries';
 import { useDeviceLogs } from 'services/device/queries';
+import { HomeDrawerScreenProps } from 'navigation/types';
+import { TemperatureLabel } from 'components/ui/temperature-label';
+import { PercentageLabel } from 'components/ui/percentage-label';
 
 import { GrowBoxDataRow } from './grow-box-data-row';
 import { GrowBoxDataCell } from './grow-box-data-cell';
-import { useNavigation } from '@react-navigation/native';
-import { HomeDrawerScreenProps } from '../../navigation/types';
 
 export const GrowBoxDataTable = () => {
   const { t } = useTranslation();
@@ -38,12 +40,18 @@ export const GrowBoxDataTable = () => {
     showSnackbar();
   };
 
-  const onLevelProblemPress = (label: string, min?: number, max?: number) => {
+  const onLevelProblemPress = (
+    label: string,
+    min?: number,
+    max?: number,
+    neutralTranslation?: boolean
+  ) => {
     if (typeof min !== 'number' && typeof max !== 'number') return;
 
+    const translationType = neutralTranslation ? 'neutral' : 'default';
     hideSnackbar();
     setSnackbarText(
-      t('sensor_level_range_validation', {
+      t(`sensor_level_range_validation.${translationType}`, {
         label,
         min,
         max,
@@ -70,6 +78,7 @@ export const GrowBoxDataTable = () => {
         <GrowBoxDataRow>
           <GrowBoxDataCell
             label={t('temperature')}
+            LabelParent={TemperatureLabel}
             value={temp}
             onPress={() =>
               navigation.navigate('Stats', {
@@ -83,6 +92,7 @@ export const GrowBoxDataTable = () => {
           />
           <GrowBoxDataCell
             label={t('soil_humidity')}
+            LabelParent={PercentageLabel}
             value={soil_hum}
             onPress={() =>
               navigation.navigate('Stats', {
@@ -98,6 +108,7 @@ export const GrowBoxDataTable = () => {
         <GrowBoxDataRow>
           <GrowBoxDataCell
             label={t('air_humidity')}
+            LabelParent={PercentageLabel}
             value={air_hum}
             onPress={() =>
               navigation.navigate('Stats', {
@@ -111,6 +122,7 @@ export const GrowBoxDataTable = () => {
           />
           <GrowBoxDataCell
             label={t('light')}
+            LabelParent={PercentageLabel}
             value={light}
             onPress={() =>
               navigation.navigate('Stats', {
@@ -118,7 +130,9 @@ export const GrowBoxDataTable = () => {
               })
             }
             onSensorProblemPress={onSensorProblemPress}
-            onLevelProblemPress={onLevelProblemPress}
+            onLevelProblemPress={(label, min, max) =>
+              onLevelProblemPress(label, min, max, true)
+            }
             minValue={assignedPlant?.light_min}
             maxValue={assignedPlant?.light_max}
           />

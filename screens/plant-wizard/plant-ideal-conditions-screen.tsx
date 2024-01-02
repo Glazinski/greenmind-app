@@ -5,6 +5,8 @@ import { useTranslation } from 'react-i18next';
 import { useNavigation } from '@react-navigation/native';
 
 import { TextField } from 'components/ui/text-field';
+import { PercentageLabel } from 'components/ui/percentage-label';
+import { TemperatureLabel } from 'components/ui/temperature-label';
 import { PlantIdealConditionsInputs } from 'schemas/plants';
 import { usePlantForm } from 'hooks/use-plant-form';
 import { PlantStep } from 'components/plant/plant-form/plant-step';
@@ -35,7 +37,7 @@ export const PlantIdealConditionsScreen = () => {
   };
 
   const renderMinMaxRow = (
-    label: string,
+    label: React.ReactNode,
     fieldName: 'light' | 'temp' | 'soil_humidity' | 'air_humidity'
   ) => {
     const minFieldName = `${fieldName}_min` as const;
@@ -86,10 +88,22 @@ export const PlantIdealConditionsScreen = () => {
     <PlantStep>
       <PlantStep.Title>{t('ideal_conditions')}</PlantStep.Title>
       <PlantStep.Body>
-        {renderMinMaxRow(t('temperature'), 'temp')}
-        {renderMinMaxRow(t('air_humidity'), 'air_humidity')}
-        {renderMinMaxRow(t('soil_humidity'), 'soil_humidity')}
-        {renderMinMaxRow(t('light'), 'light')}
+        {renderMinMaxRow(
+          <TemperatureLabel>{t('temperature')}</TemperatureLabel>,
+          'temp'
+        )}
+        {renderMinMaxRow(
+          <PercentageLabel>{t('air_humidity')}</PercentageLabel>,
+          'air_humidity'
+        )}
+        {renderMinMaxRow(
+          <PercentageLabel>{t('soil_humidity')}</PercentageLabel>,
+          'soil_humidity'
+        )}
+        {renderMinMaxRow(
+          <PercentageLabel>{t('light')}</PercentageLabel>,
+          'light'
+        )}
       </PlantStep.Body>
       <PlantStep.Navigation onPress={handleSubmit(onSubmit)} />
     </PlantStep>

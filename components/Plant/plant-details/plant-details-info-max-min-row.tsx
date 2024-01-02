@@ -1,9 +1,10 @@
+import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import { Text } from 'react-native-paper';
 import { useTranslation } from 'react-i18next';
 
 interface PlantDetailsInfoRowProps {
-  label: string;
+  label: React.ReactNode;
   min: number;
   max: number;
 }
@@ -19,7 +20,7 @@ export const PlantDetailsInfoMaxMinRow = ({
 
   return (
     <View style={styles.container}>
-      <Text variant="titleSmall">{label}</Text>
+      {label}
       <Text variant="bodySmall">{renderValue()}</Text>
     </View>
   );

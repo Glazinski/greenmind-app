@@ -13,11 +13,10 @@ import { useTranslation } from 'react-i18next';
 import { BackendPlant } from 'schemas/plants';
 import { HomeDrawerScreenProps } from 'navigation/types';
 import { getImageUrl } from 'services/get-image-url';
-import { DEFAULT_IMAGES } from 'constants/default-images';
+import { useDefaultImages } from 'hooks/use-default-images';
 
 import { PlantItemDeviceList } from './plant-item-device-list';
 import { PlantActions } from '../plant-actions';
-import { useDefaultImages } from '../../../hooks/use-default-images';
 
 interface PlantItemProps {
   plant: BackendPlant;

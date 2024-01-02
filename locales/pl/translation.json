@@ -20,7 +20,7 @@
   "close": "Zamknij",
   "name": "Nazwa",
   "appearance": "Wygląd",
-  "temperature": "Temperatura °C",
+  "temperature": "Temperatura",
   "soil_humidity": "Wilgotność gleby",
   "air_humidity": "Wilgotność powietrza",
   "light": "Światło",
@@ -57,7 +57,10 @@
   "theme": "Motyw",
   "fetching_device_logs_error": "Coś poszło nie tak przy pobieraniu parametrów urządzenia",
   "sensor_error": "Czujnik może być uszkodzony lub odłączony",
-  "sensor_level_range_validation": "Poziom {{label}} powinien być pomiędzy {{min}} a {{max}}",
+  "sensor_level_range_validation": {
+    "neutral": "{{label}} powinien być pomiędzy {{min}} a {{max}}",
+    "default": "{{label}} powinna być pomiędzy {{min}} a {{max}}"
+  },
   "email_error": "Nieprawidłowy email",
   "password_error": "Hasło musi zawierać co najmniej 8 znaków",
   "password_match_error": "Podane hasła nie są zgodne",
