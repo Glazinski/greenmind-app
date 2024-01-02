@@ -1,11 +1,5 @@
 import React from 'react';
-import {
-  Text,
-  Surface,
-  IconButton,
-  TouchableRipple,
-  useTheme,
-} from 'react-native-paper';
+import { Text, Surface, IconButton, useTheme } from 'react-native-paper';
 import { View, StyleSheet } from 'react-native';
 
 import { PercentageLabel } from 'components/ui/percentage-label';
@@ -95,46 +89,44 @@ export const GrowBoxDataCell = ({
   };
 
   return (
-    <TouchableRipple
-      style={styles.touchableContainer}
-      borderless={true}
-      onPress={onPress}
+    <Surface
+      style={[
+        styles.container,
+        {
+          backgroundColor: getCellBackgroundColor(),
+        },
+      ]}
+      mode="flat"
     >
-      <Surface
-        style={[
-          styles.container,
-          {
-            backgroundColor: getCellBackgroundColor(),
-          },
-        ]}
-        mode="flat"
-      >
-        <View style={styles.titleContainer}>
-          <LabelParent style={{ color: getLabelColor() }}>{label}</LabelParent>
-          {/*<Text style={{ color: getLabelColor() }}>*/}
-          {/*  <Text>{label}</Text>*/}
-          {/*</Text>*/}
-          {renderIconButton()}
-        </View>
+      <View style={styles.dataContainer}>
+        <LabelParent style={{ color: getLabelColor() }}>{label}</LabelParent>
         <Text variant="titleMedium">{value}</Text>
-      </Surface>
-    </TouchableRipple>
+      </View>
+      <View>
+        {renderIconButton()}
+        <IconButton
+          style={styles.statsIcon}
+          icon="chart-bar"
+          size={20}
+          onPress={onPress}
+        />
+      </View>
+    </Surface>
   );
 };
 
 const styles = StyleSheet.create({
-  touchableContainer: {
+  container: {
     flex: 1,
     borderRadius: 12,
-  },
-  container: {
-    padding: 10,
-    paddingRight: 0,
-  },
-  titleContainer: {
-    height: 25,
     flexDirection: 'row',
-    alignItems: 'center',
     justifyContent: 'space-between',
+  },
+  dataContainer: {
+    padding: 10,
+    width: '75%',
+  },
+  statsIcon: {
+    marginTop: 'auto',
   },
 });
