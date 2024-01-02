@@ -7,13 +7,14 @@ import { BackendPlant } from 'schemas/plants';
 import { Layout } from 'components/layout';
 import { RootStackScreenProps } from 'navigation/types';
 import { getImageUrl } from 'services/get-image-url';
-import { DEFAULT_IMAGES } from 'constants/default-images';
+import { useDefaultImages } from 'hooks/use-default-images';
+import { TemperatureLabel } from 'components/ui/temperature-label';
+import { PercentageLabel } from 'components/ui/percentage-label';
 
 import { PlantDetailsInfoSection } from './plant-details-info-section';
 import { PlantDetailsInfoRow } from './plant-details-info-row';
 import { PlantDetailsInfoMaxMinRow } from './plant-details-info-max-min-row';
 import { PlantActions } from '../plant-actions';
-import { useDefaultImages } from '../../../hooks/use-default-images';
 
 interface PlantDetailsProps {
   plant: BackendPlant;
@@ -71,22 +72,38 @@ export const PlantDetails = ({ plant }: PlantDetailsProps) => {
         </PlantDetailsInfoSection>
         <PlantDetailsInfoSection title={t('ideal_conditions')} showDivider>
           <PlantDetailsInfoMaxMinRow
-            label={t('temperature')}
+            label={
+              <TemperatureLabel variant="titleSmall">
+                {t('temperature')}
+              </TemperatureLabel>
+            }
             min={temp_min}
             max={temp_max}
           />
           <PlantDetailsInfoMaxMinRow
-            label={t('soil_humidity')}
+            label={
+              <PercentageLabel variant="titleSmall">
+                {t('soil_humidity')}
+              </PercentageLabel>
+            }
             min={soil_humidity_min}
             max={soil_humidity_max}
           />
           <PlantDetailsInfoMaxMinRow
-            label={t('air_humidity')}
+            label={
+              <PercentageLabel variant="titleSmall">
+                {t('air_humidity')}
+              </PercentageLabel>
+            }
             min={air_humidity_min}
             max={air_humidity_max}
           />
           <PlantDetailsInfoMaxMinRow
-            label={t('light')}
+            label={
+              <PercentageLabel variant="titleSmall">
+                {t('light')}
+              </PercentageLabel>
+            }
             min={light_min}
             max={light_max}
           />

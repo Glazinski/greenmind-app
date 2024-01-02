@@ -20,7 +20,7 @@
   "close": "Close",
   "name": "Name",
   "appearance": "Appearance",
-  "temperature": "Temperature °C",
+  "temperature": "Temperature",
   "soil_humidity": "Soil humidity",
   "air_humidity": "Air humidity",
   "fertilizing": "Fertilizing",
@@ -54,7 +54,10 @@
   "theme": "Theme",
   "fetching_device_logs_error": "Something went wrong while retrieving device parameters",
   "sensor_error": "The sensor might be damaged or disconnected",
-  "sensor_level_range_validation": "The {{label}} level should be between {{min}} and {{max}}",
+  "sensor_level_range_validation": {
+    "neutral": "The {{label}} level should be between {{min}} and {{max}}",
+    "default": "The {{label}} level should be between {{min}} and {{max}}"
+  },
   "email_error": "Invalid email",
   "password_error": "The password must be at least 8 characters long",
   "password_match_error": "Passwords don't match",

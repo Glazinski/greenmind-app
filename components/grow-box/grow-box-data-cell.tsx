@@ -8,6 +8,9 @@ import {
 } from 'react-native-paper';
 import { View, StyleSheet } from 'react-native';
 
+import { PercentageLabel } from 'components/ui/percentage-label';
+import { TemperatureLabel } from 'components/ui/temperature-label';
+
 const isValueInRange = (value?: number, min?: number, max?: number) => {
   if (
     typeof value === 'number' &&
@@ -22,6 +25,7 @@ const isValueInRange = (value?: number, min?: number, max?: number) => {
 
 interface GrowBoxDataCellProps {
   label: string;
+  LabelParent: typeof PercentageLabel | typeof TemperatureLabel;
   value: number;
   onPress: () => void;
   onSensorProblemPress: () => void;
@@ -32,6 +36,7 @@ interface GrowBoxDataCellProps {
 
 export const GrowBoxDataCell = ({
   label,
+  LabelParent,
   value,
   onPress,
   onLevelProblemPress,
@@ -105,7 +110,10 @@ export const GrowBoxDataCell = ({
         mode="flat"
       >
         <View style={styles.titleContainer}>
-          <Text style={{ color: getLabelColor() }}>{label}</Text>
+          <LabelParent style={{ color: getLabelColor() }}>{label}</LabelParent>
+          {/*<Text style={{ color: getLabelColor() }}>*/}
+          {/*  <Text>{label}</Text>*/}
+          {/*</Text>*/}
           {renderIconButton()}
         </View>
         <Text variant="titleMedium">{value}</Text>
