@@ -42,6 +42,7 @@ export const StatsScreen = ({ route }: RootStackScreenProps<'Stats'>) => {
   const {
     colors: { primary },
   } = useTheme();
+  const hasStats = (deviceStats?.length ?? -1) > 0;
 
   const data = React.useMemo(() => {
     const data = [];
@@ -107,6 +108,14 @@ export const StatsScreen = ({ route }: RootStackScreenProps<'Stats'>) => {
       return (
         <View style={{ padding: 8 }}>
           <Text variant="titleLarge">{t('stats_error')}</Text>
+        </View>
+      );
+    }
+
+    if (!hasStats) {
+      return (
+        <View style={{ padding: 8 }}>
+          <Text variant="titleLarge">{t('no_stats_found')}</Text>
         </View>
       );
     }

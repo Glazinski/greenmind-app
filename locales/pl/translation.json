@@ -85,5 +85,6 @@
   "stats_error": "Coś poszło nie tak przy pobieraniu statystyk",
   "fetching_device_data_error": "Coś poszło nie tak z pobieraniem informacji urządzenia",
   "min_must_be_less_than_max": "Wartość min musi być mniejsza od wartości max",
-  "watering_in_queue": "Podlewanie jest już w kolejce"
+  "watering_in_queue": "Podlewanie jest już w kolejce",
+  "no_stats_found": "Statystyki z ostatnich 7 dni są w trakcie przygotowania i będą dostępne po zakończeniu każdego dnia"
 }
