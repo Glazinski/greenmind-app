@@ -41,7 +41,14 @@ export const useDeviceLogs = () => {
     queryFn: () =>
       api
         .get<BackendDeviceLog[]>(`/python_microservice/data/${deviceUUID}`)
-        .then((res) => res.data),
+        .then((res) => res.data)
+        .catch((error) => {
+          if (error.response?.status === 404) {
+            return [];
+          }
+
+          throw error;
+        }),
     queryKey: ['devices', deviceId, 'data'],
     refetchInterval: 1000 * 30,
     enabled: typeof deviceId === 'number',
@@ -57,7 +64,14 @@ export const useDeviceTasks = () => {
         .get<BackendTask[]>(
           `/python_microservice/data/get_device_tasks/${deviceUUID}`
         )
-        .then((res) => res.data),
+        .then((res) => res.data)
+        .catch((error) => {
+          if (error.response?.status === 404) {
+            return [];
+          }
+
+          throw error;
+        }),
     queryKey: ['devices', deviceId, 'tasks'],
     enabled: typeof deviceId === 'number',
   });
@@ -72,7 +86,14 @@ export const useDeviceStats = () => {
         .get<BackendDeviceStat[]>(
           `/python_microservice/data/get_device_data_history/${deviceUUID}`
         )
-        .then((res) => res.data),
+        .then((res) => res.data)
+        .catch((error) => {
+          if (error.response?.status === 404) {
+            return [];
+          }
+
+          throw error;
+        }),
     queryKey: ['devices', deviceId, 'stats'],
     select: (data) =>
       data.map(

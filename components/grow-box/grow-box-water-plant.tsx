@@ -25,6 +25,8 @@ export const GrowBoxWaterPlant = () => {
 
   const hasPendingTasks = (tasks?.length ?? -1) > 0;
 
+  console.log(tasks);
+
   return (
     <>
       <View style={styles.container}>
