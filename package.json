@@ -2,7 +2,8 @@
   "name": "growbox-app-v2",
   "version": "1.0.0",
   "scripts": {
-    "start": "expo start --dev-client",
+    "start:dev": "npx cross-env NODE_ENV=development npx expo start --dev-client",
+    "start:prod": "npx cross-env NODE_ENV=production npx expo start --dev-client",
     "android": "expo run:android",
     "ios": "expo run:ios",
     "web": "expo start --web",

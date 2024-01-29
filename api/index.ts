@@ -7,9 +7,13 @@ import { useAuthStore } from 'store/use-auth-store';
  * An Axios instance configured with a predefined base URL.
  */
 export const api = axios.create({
-  baseURL: Constants.expoConfig?.extra?.apiBaseUrl,
+  baseURL: Constants.expoConfig?.extra?.apiUrl,
 });
 
+/**
+ * An Axios interceptor for clearing user auth data
+ * when 401 status code occurs
+ */
 api.interceptors.response.use(
   (response) => response,
   (error: AxiosError) => {
@@ -36,8 +40,3 @@ export function setAuthToken(token: string | null) {
     delete api.defaults.headers.common['Authorization'];
   }
 }
-
-// export const replaceLocalhostToIP = (str: string) =>
-//   str.replace('localhost', Constants.expoConfig?.extra?.myIpAddress);
-
-export const replaceLocalhostToIP = (str: any) => str;

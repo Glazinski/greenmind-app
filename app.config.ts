@@ -25,8 +25,8 @@ export default {
     package: 'com.glazinski.growboxappv2',
   },
   extra: {
-    apiBaseUrl: process.env.EXPO_PUBLIC_API_BASE_URL,
-    myIpAddress: process.env.EXPO_PUBLIC_MY_IP_ADDRESS,
+    apiUrl: process.env.EXPO_PUBLIC_API_URL ?? null,
+    ipAddress: process.env.EXPO_PUBLIC_IP_ADDRESS ?? null,
     eas: {
       projectId: '9ec4dd1f-d361-4e93-adda-9a2b2b360043',
     },
