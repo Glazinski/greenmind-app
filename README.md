@@ -13,6 +13,7 @@ and app for managing this device.
 
 ## Features
 * Authentication and authorization using JWT.
+* Different types of navigator like Stack, Drawer.
 * Reading device parameters: air/soil humidity, temperature, and light intensity.
 * Watering plants with a button click.
 * Validating the watering queue to prevent overwatering.
