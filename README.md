@@ -22,13 +22,16 @@ It also allows users to water their plants remotely.
 * English and Polish languages, which can be changed in settings.
 
 ## Installation
-First, you need to setup growbox-backend on docker or locally on Linux.
-As a result, you'll be able to develop app.
-### 1. Install necessary dependencies
+### 1. Setup microservices
+First, you need to set up following microservices: 
+* [to be done]() (Ruby on Rails) using docker or locally on Linux
+* [fastapi-microservice](https://github.com/finematte/fastapi-microservice) (Python, FastAPI)
+
+### 2. Install necessary dependencies
 ```
 npm install
 ```
-### 2. Login to eas
+### 3. Login to eas
 You'll need eas account to create development build. 
 I use them to make native libraries work with expo.
 You can find more information about them here
@@ -42,7 +45,7 @@ npm install -g eas-cli
 ```
 eas login
 ```
-### 3. Run EAS build
+### 4. Run EAS build
 After signing up, you can run following command to create development build
 ```
 npm run build:prod-apk
