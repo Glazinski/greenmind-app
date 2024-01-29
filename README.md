@@ -1,11 +1,9 @@
 # GreenMind Android App
 
 ## Introduction
-This app is designed for a group engineering project. 
-The project's objective was to create a device for taking care of plants. 
-Its basic features include reading plant parameters 
-such as air and soil humidity, temperature, and light density. 
-It also allows users to water their plants remotely.
+This app was designed and created for an engineering project. 
+The project's objective was to create a device for taking care of plants
+and app for managing this device.
 
 ## Features
 * Authentication and authorization using JWT.
