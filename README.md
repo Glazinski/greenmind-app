@@ -1,15 +1,15 @@
 # GreenMind Android App
 
+## Introduction
+This app was designed and created for an engineering project.
+The project's objective was to create a device for taking care of plants
+and app for managing this device.
+
 ## UI design
 App was designed entirely in Figma using [Material Design 3](https://m3.material.io/) 
 framework.
 
 [Figma design project](https://www.figma.com/file/T0IaA2ZHINZMKn7GitY2UO/GrowBox-Design?type=design&node-id=11%3A1833&mode=design&t=wfPJBGPbgukZsi7a-1).
-
-## Introduction
-This app was designed and created for an engineering project. 
-The project's objective was to create a device for taking care of plants
-and app for managing this device.
 
 ## Features
 * Authentication and authorization using JWT.
