@@ -4,15 +4,12 @@
       "developmentClient": true,
       "distribution": "internal"
     },
-    "preview": {
-      "distribution": "internal"
-    },
     "production-apk": {
       "android": {
         "buildType": "apk"
       },
       "env": {
-        "EXPO_PUBLIC_API_BASE_URL": "https://ruby-backend-api.greenmind.site/api/v1/"
+        "EXPO_PUBLIC_API_URL": "https://ruby-backend-api.greenmind.site/api/v1/",
       }
     },
     "production": {}
