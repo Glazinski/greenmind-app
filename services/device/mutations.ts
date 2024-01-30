@@ -1,7 +1,7 @@
 import { AxiosError } from 'axios';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
-import { api } from 'api';
+import { api } from 'services/api-service';
 import { FormDevice } from 'schemas/devices';
 
 import { convertDeviceToFormData } from './convert-device-to-form-data';

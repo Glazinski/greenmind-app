@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { setAuthToken } from 'api';
+import { setAuthToken } from 'services/api-service';
 import { useAuthStore } from 'store/use-auth-store';
 
 export const useAuth = () => {

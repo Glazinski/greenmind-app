@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 
-import { api } from 'api';
+import { api } from 'services/api-service';
 import { useAuthStore } from 'store/use-auth-store';
 
 interface PairingCode {
@@ -9,6 +9,7 @@ interface PairingCode {
 
 export const useUserPairingCode = () => {
   const userId = useAuthStore((state) => state.userId);
+
   return useQuery({
     queryKey: ['users', userId, 'code'],
     queryFn: () =>

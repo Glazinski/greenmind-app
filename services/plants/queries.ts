@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 
-import { api } from 'api';
+import { api } from 'services/api-service';
 import { BackendPlant } from 'schemas/plants';
 import { useActiveDeviceStore } from 'store/use-active-device-store';
 

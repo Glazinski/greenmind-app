@@ -1,7 +1,7 @@
 import { useMutation } from '@tanstack/react-query';
 import jwtDecode from 'jwt-decode';
 
-import { api, setAuthToken } from 'api';
+import { api, setAuthToken } from 'services/api-service';
 import { useAuthStore } from 'store/use-auth-store';
 import { UserSignInData, UserSignUpData } from 'schemas/auth';
 

@@ -70,7 +70,7 @@ Select the `debug/app-debug.apk` application in the terminal
 
 ![expo app to run](./assets/readme/expo-app-to-run.png)
 
-In case of problems related to ADB, uninstall your app with following command:
+In cas[mutations.ts](services%2Fauth%2Fmutations.ts)e of problems related to ADB, uninstall your app with following command:
 ```
 adb uninstall growbox-app-v2
 ```

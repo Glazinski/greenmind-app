@@ -5,7 +5,7 @@ import {
 } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 
-import { api } from 'api';
+import { api } from 'services/api-service';
 import { BackendPlant, PlantCompleteInfoInputs } from 'schemas/plants';
 
 import { convertPlantToFormData } from './convert-plant-to-form-data';

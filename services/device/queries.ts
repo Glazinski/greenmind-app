@@ -1,6 +1,6 @@
 import { useQuery, UseQueryOptions } from '@tanstack/react-query';
 
-import { api } from 'api';
+import { api } from 'services/api-service';
 import {
   BackendDevice,
   BackendDeviceLog,
